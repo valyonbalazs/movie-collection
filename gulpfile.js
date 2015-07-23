@@ -147,7 +147,7 @@ gulp.task('build:js', function () {
 gulp.task('build', function (cb) {
   runSequence(
     'clean',
-    ['jscs', 'lint'],
+    ['lint'],
     ['build:scss', 'build:js'],
     ['copy:html','copy:js-lib', 'copy:css-lib'],
     cb
