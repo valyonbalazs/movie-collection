@@ -1,6 +1,6 @@
 /*jshint esnext: true */
 
-class Movie {
+/*class Movie {
   constructor(title, overview, rating, publishDate, backdropPath, posterPath) {
     this.title = title;
     this.overview = overview;
@@ -14,6 +14,26 @@ class Movie {
     return this.title;
   }
 
+  getOverview() {
+    return this.overview;
+  }
+
+  getRating() {
+    return this.rating;
+  }
+
+  getPublishDate() {
+    return this.publishDate;
+  }
+
+  getBackdropPath() {
+    return this.backdropPath;
+  }
+
+  getPosterPath() {
+    return this.posterPath;
+  }
 }
 
-var movie = new Movie('star wars', 'overview', 7.2, '2005', '/gnavakvkla.jph', '/cvsacsa.jpg');
+var movie = new Movie('star wars', 'overview', '7.2', '2005', '/gnavakvkla.jph', '/cvsacsa.jpg');
+*/
