@@ -165,7 +165,7 @@ gulp.task('connect', function () {
 gulp.task('watch', ['build', 'connect'], function () {
   util.log(util.colors.yellow('Watching html, scss, js files'));
   gulp.watch(files.html, ['copy:html']);
-  gulp.watch(files.scss, ['build:css']);
+  gulp.watch(files.scss, ['build:scss']);
   gulp.watch(files.js, ['build:js']);
 });
 
