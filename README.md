@@ -1,4 +1,4 @@
-# rss_reader
+# Movie Collection
 
 ### Purpose of the project
 This is a tech-demo project with studying purpose for myself, which consist of

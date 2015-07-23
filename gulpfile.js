@@ -31,6 +31,7 @@ directory.client.html = directory.client.root + 'html/';
 directory.client.js = directory.client.root + 'js/';
 directory.client.jslib = directory.client.root + 'jslib/';
 directory.client.scss = directory.client.root + 'scss/';
+directory.client.csslib = directory.client.root + 'csslib/';
 
 //TO (destination)
 directory.dest = {};
@@ -40,6 +41,7 @@ directory.dest.js = directory.dest.build + 'js/';
 directory.dest.jslib = directory.dest.build + 'jslib/';
 directory.dest.img = directory.dest.build + 'img/';
 directory.dest.css = directory.dest.build + 'css/';
+directory.dest.csslib = directory.dest.build + 'csslib/';
 
 //TESTING
 directory.test = {};
@@ -67,6 +69,8 @@ files.html = directory.client.html + extension.html;
 files.js = directory.client.js + extension.js;
 files.jslib = directory.client.jslib + extension.js;
 files.scss = directory.client.scss + extension.scss;
+files.csslib = directory.client.csslib + extension.css;
+
 files.test = {};
 files.test.api = directory.test.api + extension.js;
 files.test.browser = directory.test.browser + extension.js;
@@ -103,22 +107,28 @@ gulp.task('copy:html', function () {
     .pipe(connect.reload());
 });
 
-gulp.task('build:css', function () {
+gulp.task('build:scss', function () {
   return gulp.src([files.scss])
     .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
-    .pipe(concat('all.css'))
+    .pipe(concat('allscss.css'))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(directory.dest.css))
-    .pipe(size({"title": "Concatenated CSS file size is "}))
+    .pipe(size({"title": "Compiled SCSS to CSS file size is "}))
     .pipe(connect.reload());
+});
+
+gulp.task('copy:css-lib', function () {
+  return gulp.src([files.csslib])
+    .pipe(gulp.dest(directory.dest.csslib))
+    .pipe(size({"title": "Copied CSS lib files size is "}));
 });
 
 gulp.task('copy:js-lib', function () {
   return gulp.src([files.jslib])
-    .pipe(babel())
-    .pipe(gulp.dest(directory.dest.jslib));
+    .pipe(gulp.dest(directory.dest.jslib))
+    .pipe(size({"title": "Copied JAVASCRIPT lib files size is "}));
 });
 
 gulp.task('build:js', function () {
@@ -138,8 +148,8 @@ gulp.task('build', function (cb) {
   runSequence(
     'clean',
     ['jscs', 'lint'],
-    ['build:css','build:js'],
-    ['copy:html','copy:js-lib'],
+    ['build:scss', 'build:js'],
+    ['copy:html','copy:js-lib', 'copy:css-lib'],
     cb
   );
 });
