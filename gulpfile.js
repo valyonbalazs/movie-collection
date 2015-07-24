@@ -11,6 +11,7 @@ var minify = require('gulp-minify');
 var minifyHTML = require('gulp-minify-html');
 var mocha = require('gulp-mocha');
 var plumber = require('gulp-plumber');
+var react = require('gulp-react');
 var rename = require('gulp-rename');
 var runSequence = require('run-sequence');
 var sass = require('gulp-sass');
@@ -29,6 +30,8 @@ directory.client = {};
 directory.client.root = './client/';
 directory.client.html = directory.client.root + 'html/';
 directory.client.js = directory.client.root + 'js/';
+directory.client.jsx = directory.client.root + 'jsx/';
+directory.client.tempJsx = directory.client.root + 'temp-jsx/';
 directory.client.jslib = directory.client.root + 'jslib/';
 directory.client.scss = directory.client.root + 'scss/';
 directory.client.csslib = directory.client.root + 'csslib/';
@@ -38,6 +41,7 @@ directory.dest = {};
 directory.dest.build = './build/';
 directory.dest.html = directory.dest.build + 'html/';
 directory.dest.js = directory.dest.build + 'js/';
+directory.dest.jsx = directory.client.root + 'temp-jsx/';
 directory.dest.jslib = directory.dest.build + 'jslib/';
 directory.dest.img = directory.dest.build + 'img/';
 directory.dest.css = directory.dest.build + 'css/';
@@ -54,6 +58,7 @@ directory.test.browser = directory.test.root + 'browser/';
 var extension = {};
 extension.html = '**/*.{htm,html}';
 extension.js = '**/*.js';
+extension.jsx = '**/*.jsx';
 extension.css = '**/*.css';
 extension.scss = '**/*.scss';
 extension.bundle = 'bundle.js';
@@ -67,6 +72,8 @@ extension.bundle = 'bundle.js';
 var files = {};
 files.html = directory.client.html + extension.html;
 files.js = directory.client.js + extension.js;
+files.jsx = directory.client.jsx + extension.jsx;
+files.compiledJsx = directory.client.tempJsx + extension.js;
 files.jslib = directory.client.jslib + extension.js;
 files.scss = directory.client.scss + extension.scss;
 files.csslib = directory.client.csslib + extension.css;
@@ -80,7 +87,7 @@ files.test.browser = directory.test.browser + extension.js;
 
 //The old dev and build files must be cleaned, deleted before every build
 gulp.task('clean', function (cb) {
-  return del([directory.dest.build], cb);
+  return del([directory.dest.build, directory.dest.jsx], cb);
 });
 
 gulp.task('jscs', function() {
@@ -107,18 +114,6 @@ gulp.task('copy:html', function () {
     .pipe(connect.reload());
 });
 
-gulp.task('build:scss', function () {
-  return gulp.src([files.scss])
-    .pipe(plumber())
-    .pipe(sourcemaps.init())
-    .pipe(sass().on('error', sass.logError))
-    .pipe(concat('allscss.css'))
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest(directory.dest.css))
-    .pipe(size({"title": "Compiled SCSS to CSS file size is "}))
-    .pipe(connect.reload());
-});
-
 gulp.task('copy:css-lib', function () {
   return gulp.src([files.csslib])
     .pipe(gulp.dest(directory.dest.csslib))
@@ -131,8 +126,20 @@ gulp.task('copy:js-lib', function () {
     .pipe(size({"title": "Copied JAVASCRIPT lib files size is "}));
 });
 
+gulp.task('build:scss', function () {
+  return gulp.src([files.scss])
+    .pipe(plumber())
+    .pipe(sourcemaps.init())
+    .pipe(sass())
+    .pipe(concat('allscss.css'))
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest(directory.dest.css))
+    .pipe(size({"title": "Compiled SCSS to CSS file size is "}))
+    .pipe(connect.reload());
+});
+
 gulp.task('build:js', function () {
-  return gulp.src([files.js])
+  return gulp.src([files.js, files.compiledJsx])
     .pipe(plumber())
     .pipe(babel())
     .pipe(concat('all.js'))
@@ -144,10 +151,20 @@ gulp.task('build:js', function () {
     .pipe(connect.reload());
 });
 
+gulp.task('build:jsx', function () {
+  return gulp.src([files.jsx])
+    .pipe(plumber())
+    .pipe(react())
+    .pipe(gulp.dest(directory.dest.jsx))
+    .pipe(size({"title": "Converted JSX file to JS file size is "}))
+    .pipe(connect.reload());
+});
+
 gulp.task('build', function (cb) {
   runSequence(
     'clean',
     ['lint'],
+    'build:jsx',
     ['build:scss', 'build:js'],
     ['copy:html','copy:js-lib', 'copy:css-lib'],
     cb
@@ -163,10 +180,11 @@ gulp.task('connect', function () {
 });
 
 gulp.task('watch', ['build', 'connect'], function () {
-  util.log(util.colors.yellow('Watching html, scss, js files'));
+  util.log(util.colors.yellow('Watching html, scss, js, jsx files'));
   gulp.watch(files.html, ['copy:html']);
   gulp.watch(files.scss, ['build:scss']);
   gulp.watch(files.js, ['build:js']);
+  gulp.watch(files.jsx, ['build:jsx', 'build:js']);
 });
 
 gulp.task('test:api', function(){
