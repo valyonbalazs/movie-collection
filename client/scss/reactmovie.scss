@@ -1,5 +1,43 @@
 $posterSize: 100%;
+$detailsContainerZIndex: 1;
+$detailsContainerFontColor: #000000;
+
+div.col-md-2.poster {
+  padding: 0px;
+  padding-left: 1em;
+}
 
 .poster > img {
   max-width: $posterSize;
+  padding: 0px;
+}
+
+div.col-md-7.textContainer {
+  padding-right: 0px;
+}
+
+.col-md-12 .detailsContainer {
+  padding: 0;
+  z-index: $detailsContainerZIndex;
+  position: absolute;
+  bottom: 0;
+  color: $detailsContainerFontColor;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.ratingYearContainer {
+    text-align: right;
+}
+
+.backdrop {
+  position: absolute;
+  z-index: 0;
+}
+
+.backdrop > img {
+  width: auto;
+}
+
+.movie {
+  display: inline;
 }

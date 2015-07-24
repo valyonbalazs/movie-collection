@@ -27,7 +27,7 @@ var Description = React.createClass({
 var TextContainer = React.createClass({
   render: function() {
     return(
-      <div className="col-md-8 textContainer">
+      <div className="col-md-7 textContainer">
         <Title title="Star Wars Episode IV." />
         <Description description="Star wars description" />
       </div>
@@ -65,7 +65,7 @@ var RatingYearContainer = React.createClass({
 var DetailsContainer = React.createClass({
   render: function() {
     return(
-      <div className="col-md-6">
+      <div className="col-md-12 detailsContainer">
         <Poster />
         <TextContainer />
         <RatingYearContainer />
@@ -74,4 +74,25 @@ var DetailsContainer = React.createClass({
   }
 });
 
-React.render(<DetailsContainer />, document.getElementById("innerContainer"));
+var Backdrop = React.createClass({
+  render: function() {
+    return(
+      <div className="col-md-12 backdrop">
+        <img src="http://image.tmdb.org/t/p/w500/4iJfYYoQzZcONB9hNzg0J0wWyPH.jpg" />
+      </div>
+    )
+  }
+});
+
+var Movie = React.createClass({
+  render: function() {
+    return(
+      <div className="col-md-6 movie">
+        <Backdrop />
+        <DetailsContainer />
+      </div>
+    )
+  }
+});
+
+React.render(<Movie />, document.getElementById("innerContainer"));

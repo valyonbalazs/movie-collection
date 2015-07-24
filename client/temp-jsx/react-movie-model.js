@@ -27,7 +27,7 @@ var Description = React.createClass({displayName: "Description",
 var TextContainer = React.createClass({displayName: "TextContainer",
   render: function() {
     return(
-      React.createElement("div", {className: "col-md-8 textContainer"}, 
+      React.createElement("div", {className: "col-md-7 textContainer"}, 
         React.createElement(Title, {title: "Star Wars Episode IV."}), 
         React.createElement(Description, {description: "Star wars description"})
       )
@@ -65,7 +65,7 @@ var RatingYearContainer = React.createClass({displayName: "RatingYearContainer",
 var DetailsContainer = React.createClass({displayName: "DetailsContainer",
   render: function() {
     return(
-      React.createElement("div", {className: "col-md-6"}, 
+      React.createElement("div", {className: "col-md-12 detailsContainer"}, 
         React.createElement(Poster, null), 
         React.createElement(TextContainer, null), 
         React.createElement(RatingYearContainer, null)
@@ -74,4 +74,25 @@ var DetailsContainer = React.createClass({displayName: "DetailsContainer",
   }
 });
 
-React.render(React.createElement(DetailsContainer, null), document.getElementById("innerContainer"));
+var Backdrop = React.createClass({displayName: "Backdrop",
+  render: function() {
+    return(
+      React.createElement("div", {className: "col-md-12 backdrop"}, 
+        React.createElement("img", {src: "http://image.tmdb.org/t/p/w500/4iJfYYoQzZcONB9hNzg0J0wWyPH.jpg"})
+      )
+    )
+  }
+});
+
+var Movie = React.createClass({displayName: "Movie",
+  render: function() {
+    return(
+      React.createElement("div", {className: "col-md-6 movie"}, 
+        React.createElement(Backdrop, null), 
+        React.createElement(DetailsContainer, null)
+      )
+    )
+  }
+});
+
+React.render(React.createElement(Movie, null), document.getElementById("innerContainer"));
