@@ -3,20 +3,6 @@ $posterSize: 100%;
 $detailsContainerZIndex: 1;
 $detailsContainerFontColor: #000000;
 
-.poster {
-  padding: 0px;
-  padding-left: 1em;
-
-  img {
-    max-width: $posterSize;
-    padding: 0px;
-  }
-}
-
-.textContainer {
-  padding-right: 0px;
-}
-
 .col-md-12 .detailsContainer {
   color: $detailsContainerFontColor;
   background: rgba(255, 255, 255, 0.5);
@@ -26,11 +12,44 @@ $detailsContainerFontColor: #000000;
   bottom: 0;
 
   z-index: $detailsContainerZIndex;
+
+  .poster {
+    padding: 0px;
+    padding-left: 1em;
+
+    img {
+      max-width: $posterSize;
+      padding: 0px;
+      padding-left: 1px;
+    }
+  }
+
+  .textContainer {
+    padding-right: 0px;
+
+    h3 {
+      margin-top: 0.4em;
+    }
+  }
+
+  .ratingYearContainer {
+    text-align: right;
+    padding-left: 0;
+    padding-right: 0.3em;
+
+    h3 {
+      font-size: 1.3em;
+      margin-top: 0.4em;
+
+      i {
+        margin-left: 0.3em;
+      }
+    }
+
+  }
 }
 
-.ratingYearContainer {
-    text-align: right;
-}
+
 
 .backdrop {
   position: absolute;

@@ -1,3 +1,13 @@
+var data = [
+  { title: "Star Wars Episode IV",
+    description: "the new hope",
+    poster: "http://image.tmdb.org/t/p/w500/tvSlBzAdRE29bZe5yYWrJ2ds137.jpg",
+    backdrop: "http://image.tmdb.org/t/p/w500/4iJfYYoQzZcONB9hNzg0J0wWyPH.jpg",
+    rating: "8.1",
+    year: "1977"
+  }
+];
+
 var Poster = React.createClass({displayName: "Poster",
   render: function() {
     return (
@@ -26,10 +36,12 @@ var Description = React.createClass({displayName: "Description",
 
 var TextContainer = React.createClass({displayName: "TextContainer",
   render: function() {
+    var title = "hello";
+    var description = "";
     return(
       React.createElement("div", {className: "col-md-7 textContainer"}, 
-        React.createElement(Title, {title: "Star Wars Episode IV."}), 
-        React.createElement(Description, {description: "Star wars description"})
+        React.createElement(Title, {title: title}), 
+        React.createElement(Description, {description: description})
       )
     );
   }
@@ -39,8 +51,8 @@ var Rating = React.createClass({displayName: "Rating",
   render: function() {
     return(
       React.createElement("h3", {className: "rating"}, 
-        React.createElement("i", {className: "fa fa-star"}), 
-        this.props.rating
+        this.props.rating, 
+        React.createElement("i", {className: "fa fa-star"})
       )
     );
   }
@@ -49,7 +61,10 @@ var Rating = React.createClass({displayName: "Rating",
 var PublishYear = React.createClass({displayName: "PublishYear",
   render: function() {
     return(
-      React.createElement("h3", {className: "publishYear"}, this.props.year)
+      React.createElement("h3", {className: "publishYear"}, 
+        this.props.year, 
+        React.createElement("i", {className: "fa fa-calendar"})
+      )
     );
   }
 });
@@ -58,8 +73,8 @@ var RatingYearContainer = React.createClass({displayName: "RatingYearContainer",
   render: function(){
     return(
       React.createElement("div", {className: "col-md-2 ratingYearContainer"}, 
-        React.createElement(Rating, {rating: "8"}), 
-        React.createElement(PublishYear, {year: "1980"})
+        React.createElement(Rating, null), 
+        React.createElement(PublishYear, null)
       )
     );
   }
@@ -70,8 +85,8 @@ var DetailsContainer = React.createClass({displayName: "DetailsContainer",
     return(
       React.createElement("div", {className: "col-md-12 detailsContainer"}, 
         React.createElement(Poster, null), 
-        React.createElement(TextContainer, null), 
-        React.createElement(RatingYearContainer, {rating: "9"})
+        React.createElement(TextContainer, {data: this.props.data}), 
+        React.createElement(RatingYearContainer, null)
       )
     );
   }
@@ -92,10 +107,10 @@ var Movie = React.createClass({displayName: "Movie",
     return(
       React.createElement("div", {className: "col-md-6 movie"}, 
         React.createElement(Backdrop, null), 
-        React.createElement(DetailsContainer, null)
+        React.createElement(DetailsContainer, {data: this.props.data})
       )
     )
   }
 });
 
-React.render(React.createElement(Movie, null), document.getElementById("innerContainer"));
+React.render(React.createElement(Movie, {data: data}), document.getElementById("innerContainer"));

@@ -1,3 +1,13 @@
+var data = [
+  { title: "Star Wars Episode IV",
+    description: "the new hope",
+    poster: "http://image.tmdb.org/t/p/w500/tvSlBzAdRE29bZe5yYWrJ2ds137.jpg",
+    backdrop: "http://image.tmdb.org/t/p/w500/4iJfYYoQzZcONB9hNzg0J0wWyPH.jpg",
+    rating: "8.1",
+    year: "1977"
+  }
+];
+
 var Poster = React.createClass({
   render: function() {
     return (
@@ -26,10 +36,12 @@ var Description = React.createClass({
 
 var TextContainer = React.createClass({
   render: function() {
+    var title = "hello";
+    var description = "";
     return(
       <div className="col-md-7 textContainer">
-        <Title title="Star Wars Episode IV." />
-        <Description description="Star wars description" />
+        <Title title={title} />
+        <Description description={description} />
       </div>
     );
   }
@@ -39,8 +51,8 @@ var Rating = React.createClass({
   render: function() {
     return(
       <h3 className="rating">
-        <i className="fa fa-star"></i>
         {this.props.rating}
+        <i className="fa fa-star"></i>
       </h3>
     );
   }
@@ -49,7 +61,10 @@ var Rating = React.createClass({
 var PublishYear = React.createClass({
   render: function() {
     return(
-      <h3 className="publishYear">{this.props.year}</h3>
+      <h3 className="publishYear">
+        {this.props.year}
+        <i className="fa fa-calendar"></i>
+      </h3>
     );
   }
 });
@@ -58,8 +73,8 @@ var RatingYearContainer = React.createClass({
   render: function(){
     return(
       <div className="col-md-2 ratingYearContainer">
-        <Rating rating="8"/>
-        <PublishYear year="1980"/>
+        <Rating />
+        <PublishYear />
       </div>
     );
   }
@@ -67,11 +82,12 @@ var RatingYearContainer = React.createClass({
 
 var DetailsContainer = React.createClass({
   render: function() {
+    var movieData = {this.props.data}
     return(
       <div className="col-md-12 detailsContainer">
         <Poster />
-        <TextContainer />
-        <RatingYearContainer rating="9" />
+        <TextContainer data={movieData} />
+        <RatingYearContainer />
       </div>
     );
   }
@@ -92,10 +108,10 @@ var Movie = React.createClass({
     return(
       <div className="col-md-6 movie">
         <Backdrop />
-        <DetailsContainer />
+        <DetailsContainer data={this.props.data}/>
       </div>
     )
   }
 });
 
-React.render(<Movie />, document.getElementById("innerContainer"));
+React.render(<Movie data={data} />, document.getElementById("innerContainer"));
