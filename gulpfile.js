@@ -35,6 +35,7 @@ directory.client.tempJsx = directory.client.root + 'temp-jsx/';
 directory.client.jslib = directory.client.root + 'jslib/';
 directory.client.scss = directory.client.root + 'scss/';
 directory.client.csslib = directory.client.root + 'csslib/';
+directory.client.fonts = directory.client.root + 'fonts/';
 
 //TO (destination)
 directory.dest = {};
@@ -46,6 +47,7 @@ directory.dest.jslib = directory.dest.build + 'jslib/';
 directory.dest.img = directory.dest.build + 'img/';
 directory.dest.css = directory.dest.build + 'css/';
 directory.dest.csslib = directory.dest.build + 'csslib/';
+directory.dest.fonts = directory.dest.build + 'fonts/';
 
 //TESTING
 directory.test = {};
@@ -61,7 +63,7 @@ extension.js = '**/*.js';
 extension.jsx = '**/*.jsx';
 extension.css = '**/*.css';
 extension.scss = '**/*.scss';
-extension.bundle = 'bundle.js';
+extension.fonts = '**/*.{otf,eot,svg,ttf,woff,woff2}';
 
 //------------------------------------------------------------------------------
 //Defining specific files in specific folders
@@ -77,6 +79,7 @@ files.compiledJsx = directory.client.tempJsx + extension.js;
 files.jslib = directory.client.jslib + extension.js;
 files.scss = directory.client.scss + extension.scss;
 files.csslib = directory.client.csslib + extension.css;
+files.fonts = directory.client.fonts + extension.fonts;
 
 files.test = {};
 files.test.api = directory.test.api + extension.js;
@@ -126,6 +129,12 @@ gulp.task('copy:js-lib', function () {
     .pipe(size({"title": "Copied JAVASCRIPT lib files size is "}));
 });
 
+gulp.task('copy:fonts', function () {
+  return gulp.src([files.fonts])
+    .pipe(gulp.dest(directory.dest.fonts))
+    .pipe(size({"title": "Copied FONTS lib files size is "}));
+});
+
 gulp.task('build:scss', function () {
   return gulp.src([files.scss])
     .pipe(plumber())
@@ -166,7 +175,7 @@ gulp.task('build', function (cb) {
     ['lint'],
     'build:jsx',
     ['build:scss', 'build:js'],
-    ['copy:html','copy:js-lib', 'copy:css-lib'],
+    ['copy:html','copy:js-lib', 'copy:css-lib', 'copy:fonts'],
     cb
   );
 });

@@ -1,28 +1,31 @@
+$fontColor: #ffffff;
 $posterSize: 100%;
 $detailsContainerZIndex: 1;
 $detailsContainerFontColor: #000000;
 
-div.col-md-2.poster {
+.poster {
   padding: 0px;
   padding-left: 1em;
+
+  img {
+    max-width: $posterSize;
+    padding: 0px;
+  }
 }
 
-.poster > img {
-  max-width: $posterSize;
-  padding: 0px;
-}
-
-div.col-md-7.textContainer {
+.textContainer {
   padding-right: 0px;
 }
 
 .col-md-12 .detailsContainer {
-  padding: 0;
-  z-index: $detailsContainerZIndex;
-  position: absolute;
-  bottom: 0;
   color: $detailsContainerFontColor;
   background: rgba(255, 255, 255, 0.5);
+
+  position: absolute;
+  padding: 0;
+  bottom: 0;
+
+  z-index: $detailsContainerZIndex;
 }
 
 .ratingYearContainer {
@@ -32,10 +35,10 @@ div.col-md-7.textContainer {
 .backdrop {
   position: absolute;
   z-index: 0;
-}
 
-.backdrop > img {
-  width: auto;
+  img {
+      width: auto;
+  }
 }
 
 .movie {

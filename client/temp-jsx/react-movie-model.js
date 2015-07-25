@@ -38,7 +38,10 @@ var TextContainer = React.createClass({displayName: "TextContainer",
 var Rating = React.createClass({displayName: "Rating",
   render: function() {
     return(
-      React.createElement("h3", {className: "rating"}, this.props.rating)
+      React.createElement("h3", {className: "rating"}, 
+        React.createElement("i", {className: "fa fa-star"}), 
+        this.props.rating
+      )
     );
   }
 });
@@ -68,7 +71,7 @@ var DetailsContainer = React.createClass({displayName: "DetailsContainer",
       React.createElement("div", {className: "col-md-12 detailsContainer"}, 
         React.createElement(Poster, null), 
         React.createElement(TextContainer, null), 
-        React.createElement(RatingYearContainer, null)
+        React.createElement(RatingYearContainer, {rating: "9"})
       )
     );
   }

@@ -38,7 +38,10 @@ var TextContainer = React.createClass({
 var Rating = React.createClass({
   render: function() {
     return(
-      <h3 className="rating">{this.props.rating}</h3>
+      <h3 className="rating">
+        <i className="fa fa-star"></i>
+        {this.props.rating}
+      </h3>
     );
   }
 });
@@ -68,7 +71,7 @@ var DetailsContainer = React.createClass({
       <div className="col-md-12 detailsContainer">
         <Poster />
         <TextContainer />
-        <RatingYearContainer />
+        <RatingYearContainer rating="9" />
       </div>
     );
   }
