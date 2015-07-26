@@ -1,19 +1,4 @@
-var data = [
-  { title: "Star Wars Episode IV",
-    description: "the new hope",
-    poster: "http://image.tmdb.org/t/p/w500/tvSlBzAdRE29bZe5yYWrJ2ds137.jpg",
-    backdrop: "http://image.tmdb.org/t/p/w500/4iJfYYoQzZcONB9hNzg0J0wWyPH.jpg",
-    rating: "8.1",
-    year: "1977"
-  },
-  { title: "Star Wars Episode V",
-    description: "the empire strikes back",
-    poster: "http://image.tmdb.org/t/p/w500/6u1fYtxG5eqjhtCPDx04pJphQRW.jpg",
-    backdrop: "http://image.tmdb.org/t/p/w500/AkE7LQs2hPMG5tpWYcum847Knre.jpg",
-    rating: "7.9",
-    year: "1980"
-  }
-];
+var data = moviesData;  
 
 var Poster = React.createClass({displayName: "Poster",
   render: function() {
