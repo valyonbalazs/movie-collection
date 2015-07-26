@@ -47,7 +47,7 @@ var TextContainer = React.createClass({
     var title = this.props.data.title;
     var description = this.props.data.description;
     return(
-      <div className="col-md-7 textContainer">
+      <div className="col-md-8  textContainer">
         <Title title={title} />
         <Description description={description} />
       </div>
