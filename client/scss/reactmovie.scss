@@ -10,6 +10,7 @@ $detailsContainerFontColor: #000000;
   position: absolute;
   padding: 0;
   bottom: 0;
+  width: auto;
 
   z-index: $detailsContainerZIndex;
 
@@ -48,8 +49,6 @@ $detailsContainerFontColor: #000000;
 
   }
 }
-
-
 
 .backdrop {
   position: absolute;

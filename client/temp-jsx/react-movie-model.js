@@ -5,14 +5,22 @@ var data = [
     backdrop: "http://image.tmdb.org/t/p/w500/4iJfYYoQzZcONB9hNzg0J0wWyPH.jpg",
     rating: "8.1",
     year: "1977"
+  },
+  { title: "Star Wars Episode V",
+    description: "the empire strikes back",
+    poster: "http://image.tmdb.org/t/p/w500/6u1fYtxG5eqjhtCPDx04pJphQRW.jpg",
+    backdrop: "http://image.tmdb.org/t/p/w500/AkE7LQs2hPMG5tpWYcum847Knre.jpg",
+    rating: "7.9",
+    year: "1980"
   }
 ];
 
 var Poster = React.createClass({displayName: "Poster",
   render: function() {
+    var posterPath = this.props.path;
     return (
       React.createElement("div", {className: "col-md-2 poster"}, 
-        React.createElement("img", {src: "http://image.tmdb.org/t/p/w500/tvSlBzAdRE29bZe5yYWrJ2ds137.jpg"})
+        React.createElement("img", {src: posterPath})
       )
     );
   }
@@ -36,8 +44,8 @@ var Description = React.createClass({displayName: "Description",
 
 var TextContainer = React.createClass({displayName: "TextContainer",
   render: function() {
-    var title = "hello";
-    var description = "";
+    var title = this.props.data.title;
+    var description = this.props.data.description;
     return(
       React.createElement("div", {className: "col-md-7 textContainer"}, 
         React.createElement(Title, {title: title}), 
@@ -73,8 +81,8 @@ var RatingYearContainer = React.createClass({displayName: "RatingYearContainer",
   render: function(){
     return(
       React.createElement("div", {className: "col-md-2 ratingYearContainer"}, 
-        React.createElement(Rating, null), 
-        React.createElement(PublishYear, null)
+        React.createElement(Rating, {rating: this.props.rating}), 
+        React.createElement(PublishYear, {year: this.props.year})
       )
     );
   }
@@ -82,11 +90,12 @@ var RatingYearContainer = React.createClass({displayName: "RatingYearContainer",
 
 var DetailsContainer = React.createClass({displayName: "DetailsContainer",
   render: function() {
+    var movieData = this.props.data;
     return(
       React.createElement("div", {className: "col-md-12 detailsContainer"}, 
-        React.createElement(Poster, null), 
-        React.createElement(TextContainer, {data: this.props.data}), 
-        React.createElement(RatingYearContainer, null)
+        React.createElement(Poster, {path: movieData.poster}), 
+        React.createElement(TextContainer, {data: movieData}), 
+        React.createElement(RatingYearContainer, {rating: movieData.rating, year: movieData.year})
       )
     );
   }
@@ -94,9 +103,10 @@ var DetailsContainer = React.createClass({displayName: "DetailsContainer",
 
 var Backdrop = React.createClass({displayName: "Backdrop",
   render: function() {
+    var backdropPath = this.props.backdrop;
     return(
       React.createElement("div", {className: "col-md-12 backdrop"}, 
-        React.createElement("img", {src: "http://image.tmdb.org/t/p/w500/4iJfYYoQzZcONB9hNzg0J0wWyPH.jpg"})
+        React.createElement("img", {src: backdropPath})
       )
     )
   }
@@ -106,11 +116,27 @@ var Movie = React.createClass({displayName: "Movie",
   render: function() {
     return(
       React.createElement("div", {className: "col-md-6 movie"}, 
-        React.createElement(Backdrop, null), 
-        React.createElement(DetailsContainer, {data: this.props.data})
+        React.createElement(Backdrop, {backdrop: this.props.movie.backdrop}), 
+        React.createElement(DetailsContainer, {data: this.props.movie})
       )
-    )
+    );
   }
 });
 
-React.render(React.createElement(Movie, {data: data}), document.getElementById("innerContainer"));
+var MoviesContainer = React.createClass({displayName: "MoviesContainer",
+  render: function () {
+      var movieNodes = this.props.movies.map(function (movie) {
+        return (
+          React.createElement(Movie, {movie: movie})
+        );
+      });
+
+      return (
+        React.createElement("div", {className: "col-md-12 moviesContainer"}, 
+          movieNodes
+        )
+      );
+  }
+});
+
+React.render(React.createElement(MoviesContainer, {movies: data}), document.getElementById("innerContainer"));

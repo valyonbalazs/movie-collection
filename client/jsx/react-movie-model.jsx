@@ -5,14 +5,22 @@ var data = [
     backdrop: "http://image.tmdb.org/t/p/w500/4iJfYYoQzZcONB9hNzg0J0wWyPH.jpg",
     rating: "8.1",
     year: "1977"
+  },
+  { title: "Star Wars Episode V",
+    description: "the empire strikes back",
+    poster: "http://image.tmdb.org/t/p/w500/6u1fYtxG5eqjhtCPDx04pJphQRW.jpg",
+    backdrop: "http://image.tmdb.org/t/p/w500/AkE7LQs2hPMG5tpWYcum847Knre.jpg",
+    rating: "7.9",
+    year: "1980"
   }
 ];
 
 var Poster = React.createClass({
   render: function() {
+    var posterPath = this.props.path;
     return (
       <div className="col-md-2 poster">
-        <img src="http://image.tmdb.org/t/p/w500/tvSlBzAdRE29bZe5yYWrJ2ds137.jpg" />
+        <img src={posterPath} />
       </div>
     );
   }
@@ -36,8 +44,8 @@ var Description = React.createClass({
 
 var TextContainer = React.createClass({
   render: function() {
-    var title = "hello";
-    var description = "";
+    var title = this.props.data.title;
+    var description = this.props.data.description;
     return(
       <div className="col-md-7 textContainer">
         <Title title={title} />
@@ -73,8 +81,8 @@ var RatingYearContainer = React.createClass({
   render: function(){
     return(
       <div className="col-md-2 ratingYearContainer">
-        <Rating />
-        <PublishYear />
+        <Rating rating={this.props.rating} />
+        <PublishYear year={this.props.year} />
       </div>
     );
   }
@@ -82,12 +90,12 @@ var RatingYearContainer = React.createClass({
 
 var DetailsContainer = React.createClass({
   render: function() {
-    var movieData = {this.props.data}
+    var movieData = this.props.data;
     return(
       <div className="col-md-12 detailsContainer">
-        <Poster />
+        <Poster path={movieData.poster} />
         <TextContainer data={movieData} />
-        <RatingYearContainer />
+        <RatingYearContainer rating={movieData.rating} year={movieData.year}/>
       </div>
     );
   }
@@ -95,9 +103,10 @@ var DetailsContainer = React.createClass({
 
 var Backdrop = React.createClass({
   render: function() {
+    var backdropPath = this.props.backdrop;
     return(
       <div className="col-md-12 backdrop">
-        <img src="http://image.tmdb.org/t/p/w500/4iJfYYoQzZcONB9hNzg0J0wWyPH.jpg" />
+        <img src={backdropPath} />
       </div>
     )
   }
@@ -107,11 +116,27 @@ var Movie = React.createClass({
   render: function() {
     return(
       <div className="col-md-6 movie">
-        <Backdrop />
-        <DetailsContainer data={this.props.data}/>
+        <Backdrop backdrop={this.props.movie.backdrop} />
+        <DetailsContainer data={this.props.movie}/>
       </div>
-    )
+    );
   }
 });
 
-React.render(<Movie data={data} />, document.getElementById("innerContainer"));
+var MoviesContainer = React.createClass({
+  render: function () {
+      var movieNodes = this.props.movies.map(function (movie) {
+        return (
+          <Movie movie={movie} />
+        );
+      });
+
+      return (
+        <div className="col-md-12 moviesContainer" >
+          {movieNodes}
+        </div>
+      );
+  }
+});
+
+React.render(<MoviesContainer movies={data} />, document.getElementById("innerContainer"));
