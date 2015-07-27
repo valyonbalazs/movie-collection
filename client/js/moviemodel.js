@@ -3,11 +3,11 @@
 class MovieElement {
   constructor(title, overview, rating, publishDate, backdropPath, posterPath) {
     this.title = title;
-    this.overview = overview;
+    this.description = overview;
     this.rating = rating;
-    this.publishDate = publishDate;
-    this.backdropPath = backdropPath;
-    this.posterPath = posterPath;
+    this.year = publishDate;
+    this.backdrop = backdropPath;
+    this.poster = posterPath;
   }
 
   getTitle() {
@@ -34,8 +34,6 @@ class MovieElement {
     return this.posterPath;
   }
 }
-
-var moviesData = [];
 
 var movies = {
   getMovie: function (movieName) {
@@ -139,6 +137,14 @@ var callback = {
     var bestVoted = movies.getMaxVotedElement(movieData, callback.title);
     var backdropPath = movies.createImageUrl(bestVoted.backdrop_path);
     var posterPath = movies.createImageUrl(bestVoted.poster_path);
+    /*var movie =  {
+      title: bestVoted.title,
+      description: bestVoted.overview,
+      rating: bestVoted.vote_average,
+      year: bestVoted.release_date,
+      backdrop: backdropPath,
+      poster: posterPath
+    };*/
     var movie = new MovieElement(
       bestVoted.title,
       bestVoted.overview,
@@ -155,6 +161,7 @@ var callback = {
   title: ""
 };
 
+
 function getMoviesWithPromise () {
   var movieList = [
     {title: "star wars episode iv"},
@@ -170,6 +177,6 @@ function getMoviesWithPromise () {
   }
 }
 
-(function() {
+/*(function() {
   getMoviesWithPromise();
-}());
+}());*/

@@ -1,19 +1,4 @@
-var movieListData = [
-  { title: "Star Wars Episode IV",
-    description: "the new hope",
-    poster: "http://image.tmdb.org/t/p/w500/tvSlBzAdRE29bZe5yYWrJ2ds137.jpg",
-    backdrop: "http://image.tmdb.org/t/p/w500/4iJfYYoQzZcONB9hNzg0J0wWyPH.jpg",
-    rating: "8.1",
-    year: "1977"
-  },
-  { title: "Star Wars Episode V",
-    description: "the empire strikes back",
-    poster: "http://image.tmdb.org/t/p/w500/6u1fYtxG5eqjhtCPDx04pJphQRW.jpg",
-    backdrop: "http://image.tmdb.org/t/p/w500/AkE7LQs2hPMG5tpWYcum847Knre.jpg",
-    rating: "7.9",
-    year: "1980"
-  }
-];
+var movieListData = [];
 
 var Poster = React.createClass({
   render: function() {
@@ -128,12 +113,28 @@ var MoviesContainer = React.createClass({
     return {data: []};
   },
   componentDidMount: function() {
+     setInterval(this.loadMovies,2000);
+     this.setState({data: movieListData});
+  }, 
+  loadMovies: function() {
+    var movieList = [
+      {title: "star wars episode iv"},
+      {title: "avengers"}
+    ];
+
+    for(var key in movieList) {
+      callback.title = movieList[key].title;
+      http(movies.createMovieUrl(callback.title))
+        .get()
+        .then(callback.success)
+        .catch(callback.error);
+    }
     this.setState({data: movieListData});
   },
   render: function () {
-      //var movieNodes = this.props.movies.map(function (movie) {
+      console.log(this.state.data);
       var moviesArray = this.state.data.map(function (movie) {
-        return ( 
+        return (
           <Movie movie={movie} />
         );
       });
