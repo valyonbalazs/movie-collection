@@ -152,8 +152,6 @@ gulp.task('build:js', function () {
     .pipe(plumber())
     .pipe(babel())
     .pipe(concat('all.js'))
-    .pipe(uglify())
-    .pipe(minify())
     .pipe(rename('all.min.js'))
     .pipe(gulp.dest(directory.dest.js))
     .pipe(size({"title": "Concatenated JAVASCRIPT file size is "}))
