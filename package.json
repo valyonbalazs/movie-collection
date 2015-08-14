@@ -1,5 +1,5 @@
 {
-  "name": "rss-reader",
+  "name": "movie-collection",
   "version": "0.1.0",
   "description": "Online, responsive, RSS-reader web application",
   "main": "gulpfile.js",
