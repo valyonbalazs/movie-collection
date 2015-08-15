@@ -107,6 +107,9 @@ files.test.browser = directory.test.browser + extension.js;
 gulp.task('clean', function(cb) {
   return del([directory.dest.build,
     directory.dest.jsx,
+    directory.dest.tempjs,
+    directory.dest.tempcss,
+    directory.dest.versioned,
     directory.client.revmanifest
   ], cb);
 });
@@ -172,8 +175,11 @@ gulp.task('copy:cssversioned', function() {
 
 var handlebarOpts = {
   helpers: {
-    assetPath: function(path, context) {
-      return ['/assets', context.data.root[path]].join('/');
+    jsPath: function(path, context) {
+      return ['../js', context.data.root[path]].join('/');
+    },
+    cssPath: function(path, context) {
+      return ['../css', context.data.root[path]].join('/');
     }
   }
 };
@@ -192,7 +198,6 @@ gulp.task('build:scss', function() {
     .pipe(sass())
     .pipe(concat('allscss.css'))
     .pipe(sourcemaps.write('.'))
-    .pipe(rev())
     .pipe(gulp.dest(directory.dest.tempcss))
     .pipe(size({
       "title": "Compiled SCSS to CSS file size is "
@@ -206,7 +211,6 @@ gulp.task('build:js', function() {
     .pipe(babel())
     .pipe(concat('all.js'))
     .pipe(rename('all.min.js'))
-    .pipe(rev())
     .pipe(gulp.dest(directory.dest.tempjs))
     .pipe(size({
       "title": "Concatenated JAVASCRIPT file size is "
