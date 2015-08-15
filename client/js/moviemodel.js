@@ -60,5 +60,16 @@ var movies = {
     var urlFirstPart = "https://api.themoviedb.org/3/search/movie?query=";
     var url = urlFirstPart + movieTitle + api_key;
     return url;
+  },
+  modifyOverview: function(overview) {
+    var originalOverview = overview;
+    var newOverview;
+    if(originalOverview.length > 150) {
+      newOverview = originalOverview.substr(0,150) + "...";
+      return newOverview;
+    }
+    else {
+      return originalOverview;
+    }
   }
 };

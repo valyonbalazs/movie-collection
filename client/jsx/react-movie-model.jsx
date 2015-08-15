@@ -1,3 +1,9 @@
+var starterMovieTitles = [
+  {title: "blade runner"},
+  {title: "avengers"},
+  {title: "batman"},
+  {title: "star wars episode iv"}
+];
 var movieListData = [];
 
 var Poster = React.createClass({
@@ -116,15 +122,9 @@ var MoviesContainer = React.createClass({
      this.loadMovies();
   },
   loadMovies: function() {
-    var movieList = [
-      {title: "blade runner"},
-      {title: "avengers"},
-      {title: "batman"},
-      {title: "star wars episode iv"} 
-    ];
-
-    for (var key in movieList) {
-      var title = movieList[key].title;
+    movieListData = [];
+    for (var key in starterMovieTitles) {
+      var title = starterMovieTitles[key].title;
       this.ajax(movies.createMovieUrl(title))
         .get()
         .then(this.success);
@@ -167,9 +167,10 @@ var MoviesContainer = React.createClass({
     var bestVoted = movies.getMaxVotedElement(movieData);
     var backdropPath = movies.createImageUrl(bestVoted.backdrop_path);
     var posterPath = movies.createImageUrl(bestVoted.poster_path);
+    var overview = movies.modifyOverview(bestVoted.overview);
     var movie = new MovieElement(
       bestVoted.title,
-      bestVoted.overview,
+      overview,
       bestVoted.vote_average,
       bestVoted.release_date,
       backdropPath,
