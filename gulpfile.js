@@ -1,4 +1,4 @@
-//Gulp plugins from NPM
+// Gulp plugins from NPM
 var babel = require('gulp-babel');
 var concat = require('gulp-concat');
 var connect = require('gulp-connect');
@@ -24,11 +24,11 @@ var uglify = require('gulp-uglify');
 var util = require('gulp-util');
 
 
-//------------------------------------------------------------------------------
-//Defining directories
+// ------------------------------------------------------------------------------
+// Defining directories
 
 var directory = {};
-//FROM
+// FROM
 directory.client = {};
 directory.client.root = './client/';
 directory.client.html = directory.client.root + 'html/';
@@ -42,7 +42,7 @@ directory.client.fonts = directory.client.root + 'fonts/';
 directory.client.hbs = directory.client.root + 'hbs/';
 directory.client.revmanifest = directory.client.root + 'rev-manifest/';
 
-//TO (destination)
+// TO (destination)
 directory.dest = {};
 directory.dest.build = './build/';
 directory.dest.html = directory.dest.build + 'html/';
@@ -57,14 +57,14 @@ directory.dest.csslib = directory.dest.build + 'csslib/';
 directory.dest.fonts = directory.dest.build + 'fonts/';
 directory.dest.versioned = directory.client.root + 'temp-versioned/';
 
-//TESTING
+// TESTING
 directory.test = {};
 directory.test.root = './test/';
 directory.test.api = directory.test.root + 'api/';
 directory.test.browser = directory.test.root + 'browser/';
 
-//------------------------------------------------------------------------------
-//Defining file EXTensions
+// ------------------------------------------------------------------------------
+// Defining file EXTensions
 var extension = {};
 extension.html = '**/*.{htm,html}';
 extension.js = '**/*.js';
@@ -74,11 +74,11 @@ extension.scss = '**/*.scss';
 extension.fonts = '**/*.{otf,eot,svg,ttf,woff,woff2}';
 extension.hbs = '**/*.hbs';
 
-//------------------------------------------------------------------------------
-//Defining specific files in specific folders
-//A file is: directory/*.extension, such as: ./client/html/**/*.html
-//files.js: my javascript files
-//files.jslib: external javascript libraries, dependencies
+// ------------------------------------------------------------------------------
+// Defining specific files in specific folders
+// A file is: directory/*.extension, such as: ./client/html/**/*.html
+// files.js: my javascript files
+// files.jslib: external javascript libraries, dependencies
 
 var files = {};
 files.html = directory.client.html + extension.html;
@@ -100,11 +100,11 @@ files.test = {};
 files.test.api = directory.test.api + extension.js;
 files.test.browser = directory.test.browser + extension.js;
 
-//------------------------------------------------------------------------------
-//Defining Gulp-tasks, which are the steps of the building-process
+// ------------------------------------------------------------------------------
+// Defining Gulp-tasks, which are the steps of the building-process
 
-//The old dev and build files must be cleaned, deleted before every build
-gulp.task('clean', function(cb) {
+// The old dev and build files must be cleaned, deleted before every build
+gulp.task('clean', function (cb) {
   return del([directory.dest.build,
     directory.dest.jsx,
     directory.dest.tempjs,
@@ -114,20 +114,20 @@ gulp.task('clean', function(cb) {
   ], cb);
 });
 
-gulp.task('jscs', function() {
+gulp.task('jscs', function () {
   return gulp.src([files.js])
     .pipe(jscs());
 });
 
-//Syntax check of the js files with JSHint
-gulp.task('lint', function() {
+// Syntax check of the js files with JSHint
+gulp.task('lint', function () {
   return gulp.src([files.js])
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
     .pipe(jshint.reporter('fail'));
 });
 
-gulp.task('copy:html', function() {
+gulp.task('copy:html', function () {
   return gulp.src([files.html])
     .pipe(plumber())
     .pipe(minifyHTML({
@@ -138,36 +138,36 @@ gulp.task('copy:html', function() {
     .pipe(connect.reload());
 });
 
-gulp.task('copy:css-lib', function() {
+gulp.task('copy:css-lib', function () {
   return gulp.src([files.csslib])
     .pipe(gulp.dest(directory.dest.csslib))
     .pipe(size({
-      "title": "Copied CSS lib files size is "
+      'title': 'Copied CSS lib files size is '
     }));
 });
 
-gulp.task('copy:js-lib', function() {
+gulp.task('copy:js-lib', function () {
   return gulp.src([files.jslib])
     .pipe(gulp.dest(directory.dest.jslib))
     .pipe(size({
-      "title": "Copied JAVASCRIPT lib files size is "
+      'title': 'Copied JAVASCRIPT lib files size is '
     }));
 });
 
-gulp.task('copy:fonts', function() {
+gulp.task('copy:fonts', function () {
   return gulp.src([files.fonts])
     .pipe(gulp.dest(directory.dest.fonts))
     .pipe(size({
-      "title": "Copied FONTS lib files size is "
+      'title': 'Copied FONTS lib files size is '
     }));
 });
 
-gulp.task('copy:jsversioned', function() {
+gulp.task('copy:jsversioned', function () {
   return gulp.src([files.jsversioned])
     .pipe(gulp.dest(directory.dest.js));
 });
 
-gulp.task('copy:cssversioned', function() {
+gulp.task('copy:cssversioned', function () {
   return gulp.src([files.cssversioned])
     .pipe(gulp.dest(directory.dest.css));
 });
@@ -175,15 +175,15 @@ gulp.task('copy:cssversioned', function() {
 
 var handlebarOpts = {
   helpers: {
-    jsPath: function(path, context) {
+    jsPath: function (path, context) {
       return ['../js', context.data.root[path]].join('/');
     },
-    cssPath: function(path, context) {
+    cssPath: function (path, context) {
       return ['../css', context.data.root[path]].join('/');
     }
   }
 };
-gulp.task('compile-hbs-into-html', function() {
+gulp.task('compile-hbs-into-html', function () {
   var manifest = JSON.parse(fs.readFileSync(files.revmanifest, 'utf8'));
   return gulp.src([files.hbs])
     .pipe(handlebars(manifest, handlebarOpts))
@@ -191,7 +191,7 @@ gulp.task('compile-hbs-into-html', function() {
     .pipe(gulp.dest(directory.client.html));
 });
 
-gulp.task('build:scss', function() {
+gulp.task('build:scss', function () {
   return gulp.src([files.scss])
     .pipe(plumber())
     .pipe(sourcemaps.init())
@@ -200,12 +200,12 @@ gulp.task('build:scss', function() {
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(directory.dest.tempcss))
     .pipe(size({
-      "title": "Compiled SCSS to CSS file size is "
+      'title': 'Compiled SCSS to CSS file size is '
     }))
     .pipe(connect.reload());
 });
 
-gulp.task('build:js', function() {
+gulp.task('build:js', function () {
   return gulp.src([files.js, files.compiledJsx])
     .pipe(plumber())
     .pipe(babel())
@@ -213,23 +213,23 @@ gulp.task('build:js', function() {
     .pipe(rename('all.min.js'))
     .pipe(gulp.dest(directory.dest.tempjs))
     .pipe(size({
-      "title": "Concatenated JAVASCRIPT file size is "
+      'title': 'Concatenated JAVASCRIPT file size is '
     }))
     .pipe(connect.reload());
 });
 
-gulp.task('build:jsx', function() {
+gulp.task('build:jsx', function () {
   return gulp.src([files.jsx])
     .pipe(plumber())
     .pipe(react())
     .pipe(gulp.dest(directory.dest.jsx))
     .pipe(size({
-      "title": "Converted JSX file to JS file size is "
+      'title': 'Converted JSX file to JS file size is '
     }))
     .pipe(connect.reload());
 });
 
-gulp.task('versioning', function() {
+gulp.task('versioning', function () {
   return gulp.src([files.tempjs, files.tempcss])
     .pipe(rev())
     .pipe(gulp.dest(directory.dest.versioned))
@@ -237,7 +237,7 @@ gulp.task('versioning', function() {
     .pipe(gulp.dest(directory.client.revmanifest));
 });
 
-gulp.task('build', function(cb) {
+gulp.task('build', function (cb) {
   runSequence(
     'clean',
     ['lint'],
@@ -250,7 +250,7 @@ gulp.task('build', function(cb) {
   );
 });
 
-gulp.task('connect', function() {
+gulp.task('connect', function () {
   connect.server({
     root: [directory.dest.build],
     port: 80,
@@ -258,7 +258,7 @@ gulp.task('connect', function() {
   });
 });
 
-gulp.task('watch', ['build', 'connect'], function() {
+gulp.task('watch', ['build', 'connect'], function () {
   util.log(util.colors.yellow('Watching html, scss, js, jsx files'));
   gulp.watch(files.html, ['copy:html']);
   gulp.watch(files.scss, ['build:scss']);
@@ -266,7 +266,7 @@ gulp.task('watch', ['build', 'connect'], function() {
   gulp.watch(files.jsx, ['build:jsx', 'build:js']);
 });
 
-gulp.task('test:api', function() {
+gulp.task('test:api', function () {
   return gulp.src(files.test.api)
     .pipe(plumber())
     .pipe(mocha({
@@ -275,7 +275,7 @@ gulp.task('test:api', function() {
     }));
 });
 
-gulp.task('test:browser', function() {
+gulp.task('test:browser', function () {
   return gulp.src(files.test.browser)
     .pipe(plumber())
     .pipe(karma({
@@ -284,7 +284,7 @@ gulp.task('test:browser', function() {
     }));
 });
 
-gulp.task('test', function(cb) {
+gulp.task('test', function (cb) {
   runSequence(
     'test:api',
     'test:browser',
