@@ -71,5 +71,10 @@ var movies = {
     else {
       return originalOverview;
     }
+  },
+  modifyReleaseDate: function(releaseDate) {
+    var originalReleaseDate = releaseDate;
+    var newReleaseDate = originalReleaseDate.substr(0,4); 
+    return newReleaseDate;
   }
 };

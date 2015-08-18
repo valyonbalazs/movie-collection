@@ -23,7 +23,6 @@ var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 var util = require('gulp-util');
 
-
 // ------------------------------------------------------------------------------
 // Defining directories
 
@@ -162,16 +161,15 @@ gulp.task('copy:fonts', function () {
     }));
 });
 
-gulp.task('copy:jsversioned', function () {
+gulp.task('copy:jsversioned', ['build:js', 'versioning'] , function () {
   return gulp.src([files.jsversioned])
     .pipe(gulp.dest(directory.dest.js));
 });
 
-gulp.task('copy:cssversioned', function () {
+gulp.task('copy:cssversioned', ['build:scss', 'versioning'] , function () {
   return gulp.src([files.cssversioned])
     .pipe(gulp.dest(directory.dest.css));
 });
-
 
 var handlebarOpts = {
   helpers: {
@@ -183,7 +181,7 @@ var handlebarOpts = {
     }
   }
 };
-gulp.task('compile-hbs-into-html', function () {
+gulp.task('compile-hbs-into-html',['copy:cssversioned'] , function () {
   var manifest = JSON.parse(fs.readFileSync(files.revmanifest, 'utf8'));
   return gulp.src([files.hbs])
     .pipe(handlebars(manifest, handlebarOpts))
@@ -229,7 +227,7 @@ gulp.task('build:jsx', function () {
     .pipe(connect.reload());
 });
 
-gulp.task('versioning', function () {
+gulp.task('versioning', ['build:scss'] ,  function () {
   return gulp.src([files.tempjs, files.tempcss])
     .pipe(rev())
     .pipe(gulp.dest(directory.dest.versioned))
@@ -261,9 +259,9 @@ gulp.task('connect', function () {
 gulp.task('watch', ['build', 'connect'], function () {
   util.log(util.colors.yellow('Watching html, scss, js, jsx files'));
   gulp.watch(files.html, ['copy:html']);
-  gulp.watch(files.scss, ['build:scss']);
-  gulp.watch(files.js, ['build:js']);
-  gulp.watch(files.jsx, ['build:jsx', 'build:js']);
+  gulp.watch(files.scss, ['build:scss', 'versioning', 'copy:cssversioned', 'compile-hbs-into-html']);
+  gulp.watch(files.js, ['build:js', 'versioning', 'copy:jsversioned']);
+  gulp.watch(files.jsx, ['build:jsx', 'build:js', 'versioning', 'copy:jsversioned']);
 });
 
 gulp.task('test:api', function () {

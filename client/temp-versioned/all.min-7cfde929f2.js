@@ -88,17 +88,26 @@ var movies = {
     } else {
       return originalOverview;
     }
+  },
+  modifyReleaseDate: function modifyReleaseDate(releaseDate) {
+    var originalReleaseDate = releaseDate;
+    var newReleaseDate = originalReleaseDate.substr(0, 4);
+    return newReleaseDate;
   }
 };
 "use strict";
 
 var starterMovieTitles = [{ title: "blade runner" }, { title: "avengers" }, { title: "batman" }, { title: "star wars episode iv" }];
+/*var starterMovieTitles = [
+  {title: "blade runner"}
+];*/
+
 var movieListData = [];
 
 var Poster = React.createClass({ displayName: "Poster",
   render: function render() {
     var posterPath = this.props.path;
-    return React.createElement("div", { className: "col-md-2 poster" }, React.createElement("img", { src: posterPath }));
+    return React.createElement("div", { className: "col-md-2 col-xs-3 poster" }, React.createElement("img", { src: posterPath }));
   }
 });
 
@@ -118,7 +127,7 @@ var TextContainer = React.createClass({ displayName: "TextContainer",
   render: function render() {
     var title = this.props.data.title;
     var description = this.props.data.description;
-    return React.createElement("div", { className: "col-md-7 textContainer" }, React.createElement(Title, { title: title }), React.createElement(Description, { description: description }));
+    return React.createElement("div", { className: "col-md-7 col-xs-8 textContainer" }, React.createElement(Title, { title: title }), React.createElement(Description, { description: description }));
   }
 });
 
@@ -136,27 +145,27 @@ var PublishYear = React.createClass({ displayName: "PublishYear",
 
 var RatingYearContainer = React.createClass({ displayName: "RatingYearContainer",
   render: function render() {
-    return React.createElement("div", { className: "col-md-2 ratingYearContainer" }, React.createElement(Rating, { rating: this.props.rating }), React.createElement(PublishYear, { year: this.props.year }));
+    return React.createElement("div", { className: "col-md-2 col-xs-4 ratingYearContainer" }, React.createElement(Rating, { rating: this.props.rating }), React.createElement(PublishYear, { year: this.props.year }));
   }
 });
 
 var DetailsContainer = React.createClass({ displayName: "DetailsContainer",
   render: function render() {
     var movieData = this.props.data;
-    return React.createElement("div", { className: "col-md-12 detailsContainer" }, React.createElement(Poster, { path: movieData.poster }), React.createElement(TextContainer, { data: movieData }), React.createElement(RatingYearContainer, { rating: movieData.rating, year: movieData.year }));
+    return React.createElement("div", { className: "col-md-12 col-xs-12 detailsContainer" }, React.createElement(Poster, { path: movieData.poster }), React.createElement(TextContainer, { data: movieData }), React.createElement(RatingYearContainer, { rating: movieData.rating, year: movieData.year }));
   }
 });
 
 var Backdrop = React.createClass({ displayName: "Backdrop",
   render: function render() {
     var backdropPath = this.props.backdrop;
-    return React.createElement("div", { className: "col-md-12 backdrop" }, React.createElement("img", { src: backdropPath }));
+    return React.createElement("div", { className: "col-md-12 col-xs-12 backdrop" }, React.createElement("img", { src: backdropPath }));
   }
 });
 
 var Movie = React.createClass({ displayName: "Movie",
   render: function render() {
-    return React.createElement("div", { className: "col-md-6 movie" }, React.createElement(Backdrop, { backdrop: this.props.movie.backdrop }), React.createElement(DetailsContainer, { data: this.props.movie }));
+    return React.createElement("div", { className: "col-md-6 col-xs-12 movie" }, React.createElement(Backdrop, { backdrop: this.props.movie.backdrop }), React.createElement(DetailsContainer, { data: this.props.movie }));
   }
 });
 
@@ -212,7 +221,8 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
     var backdropPath = movies.createImageUrl(bestVoted.backdrop_path);
     var posterPath = movies.createImageUrl(bestVoted.poster_path);
     var overview = movies.modifyOverview(bestVoted.overview);
-    var movie = new MovieElement(bestVoted.title, overview, bestVoted.vote_average, bestVoted.release_date, backdropPath, posterPath);
+    var releaseDate = movies.modifyReleaseDate(bestVoted.release_date);
+    var movie = new MovieElement(bestVoted.title, overview, bestVoted.vote_average, releaseDate, backdropPath, posterPath);
     movieListData.push(movie);
     this.setState({ data: movieListData });
   },
@@ -222,7 +232,7 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
       return React.createElement(Movie, { movie: movie });
     });
 
-    return React.createElement("div", { className: "col-md-12 moviesContainer" }, moviesArray);
+    return React.createElement("div", { className: "col-md-12 col-xs-12 moviesContainer" }, moviesArray);
   }
 });
 

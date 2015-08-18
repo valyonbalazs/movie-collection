@@ -1,72 +1,117 @@
-$fontColor: #ffffff;
+$fontColor: #fff;
+$screen-small-max: 767px;
+$screen-medium-min: 768px;
+$screen-high-min: 992px;
+$screen-ultrahigh-min: 1200px;
 $posterSize: 80%;
 $detailsContainerZIndex: 1;
-$detailsContainerFontColor: #000000;
+$detailsContainerFontColor: #000;
+
+
+
 
 .col-md-12 .detailsContainer {
   color: $detailsContainerFontColor;
   background: rgba(255, 255, 255, 0.5);
-
   position: absolute;
   padding: 0;
   bottom: 0;
   width: auto;
-
   z-index: $detailsContainerZIndex;
-
   .poster {
-    padding: 0px;
-
+    padding: 0;
     img {
       max-width: $posterSize;
-      padding: 0px;
-      padding-left: 1px;
+      padding: 0 0 0 1px;
     }
   }
-
   .textContainer {
-    padding: 0px;
-
+    padding: 0;
     h3 {
       margin-top: 0.4em;
     }
   }
-
   .ratingYearContainer {
     text-align: right;
     padding-left: 0;
     padding-right: 1.5em;
-
     h3 {
       font-size: 1.3em;
       margin-top: 0.4em;
-
       i {
         margin-left: 0.3em;
       }
     }
-
     img {
-        width: auto;
+      width: auto;
     }
   }
 }
-
 .col-md-12 .moviesContainer {
-  padding: 0px;
-
+  padding: 0;
   .movie {
     display: block;
     padding: 0 15px 0 0;
     margin-top: 1em;
-
     .backdrop {
       z-index: 0;
-      padding: 0px;
-
+      padding: 0;
       img {
         width: 100%;
       }
     }
+  }
+}
+
+//SMALLEST RESOLUTION
+@media(max-width: $screen-small-max) {
+
+  .container {
+    padding: 0;
+  }
+
+  #innerContainer {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .col-md-12 .moviesContainer {
+
+    .movie {
+      padding-right: 0px;
+      box-shadow: 3px 3px 5px #888888;
+
+      .textContainer {
+        h5 {
+          font-size: 1.3em;
+        }
+      }
+    }
+  }
+
+  .col-md-12 .backdrop {
+    img {
+
+    }
+  }
+  .col-md-12 .detailsContainer {
+    width: 100%;
+    .poster {
+      display: none;
+    }
+    .textContainer {
+      text-align: center;
+      h3 {
+        margin-top: 0.8em;
+      }
+    }
+    .description {
+      display:none;
+    }
+  }
+}
+@media(min-width: $screen-medium-min) {
+  .col-md-6 .col-xs-12 .movie {
+    padding-top: 170px;
   }
 }

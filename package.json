@@ -45,6 +45,8 @@
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.6",
+    "gulp-watch": "^4.3.4",
+    "gulp-watch-sequence": "0.0.4",
     "jshint-stylish": "^2.0.1",
     "karma": "^0.12.37",
     "karma-chai": "^0.1.0",
