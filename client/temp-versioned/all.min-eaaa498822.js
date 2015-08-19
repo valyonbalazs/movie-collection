@@ -83,7 +83,7 @@ var movies = {
     var originalOverview = overview;
     var newOverview;
     if (originalOverview.length > 150) {
-      newOverview = originalOverview.substr(0, 150) + "...";
+      newOverview = originalOverview.substr(0, 130) + "...";
       return newOverview;
     } else {
       return originalOverview;
@@ -112,7 +112,7 @@ var movieListData = [];
 var Poster = React.createClass({ displayName: "Poster",
   render: function render() {
     var posterPath = this.props.path;
-    return React.createElement("div", { className: "col-md-2 col-xs-3 poster" }, React.createElement("img", { src: posterPath }));
+    return React.createElement("div", { className: "col-lg-2 col-md-2 col-xs-3 poster" }, React.createElement("img", { src: posterPath }));
   }
 });
 
@@ -132,7 +132,7 @@ var TextContainer = React.createClass({ displayName: "TextContainer",
   render: function render() {
     var title = this.props.data.title;
     var description = this.props.data.description;
-    return React.createElement("div", { className: "col-md-8 col-xs-9 textContainer" }, React.createElement(Title, { title: title }), React.createElement(Description, { description: description }));
+    return React.createElement("div", { className: "col-lg-8 col-md-8 col-xs-9 textContainer" }, React.createElement(Title, { title: title }), React.createElement(Description, { description: description }));
   }
 });
 
@@ -150,27 +150,27 @@ var PublishYear = React.createClass({ displayName: "PublishYear",
 
 var RatingYearContainer = React.createClass({ displayName: "RatingYearContainer",
   render: function render() {
-    return React.createElement("div", { className: "col-md-2 col-xs-3 ratingYearContainer" }, React.createElement(Rating, { rating: this.props.rating }), React.createElement(PublishYear, { year: this.props.year }));
+    return React.createElement("div", { className: "col-lg-2 col-md-2 col-xs-3 ratingYearContainer" }, React.createElement(Rating, { rating: this.props.rating }), React.createElement(PublishYear, { year: this.props.year }));
   }
 });
 
 var DetailsContainer = React.createClass({ displayName: "DetailsContainer",
   render: function render() {
     var movieData = this.props.data;
-    return React.createElement("div", { className: "col-md-12 col-xs-12 detailsContainer" }, React.createElement(Poster, { path: movieData.poster }), React.createElement(TextContainer, { data: movieData }), React.createElement(RatingYearContainer, { rating: movieData.rating, year: movieData.year }));
+    return React.createElement("div", { className: "col-lg-12 col-md-12 col-xs-12 detailsContainer" }, React.createElement(Poster, { path: movieData.poster }), React.createElement(TextContainer, { data: movieData }), React.createElement(RatingYearContainer, { rating: movieData.rating, year: movieData.year }));
   }
 });
 
 var Backdrop = React.createClass({ displayName: "Backdrop",
   render: function render() {
     var backdropPath = this.props.backdrop;
-    return React.createElement("div", { className: "col-md-12 col-xs-12 backdrop" }, React.createElement("img", { src: backdropPath }));
+    return React.createElement("div", { className: "col-lg-12 col-md-12 col-xs-12 backdrop" }, React.createElement("img", { src: backdropPath }));
   }
 });
 
 var Movie = React.createClass({ displayName: "Movie",
   render: function render() {
-    return React.createElement("div", { className: "col-md-6 col-xs-12 movie" }, React.createElement(Backdrop, { backdrop: this.props.movie.backdrop }), React.createElement(DetailsContainer, { data: this.props.movie }));
+    return React.createElement("div", { className: "col-lg-4 col-md-6 col-xs-12 movie" }, React.createElement(Backdrop, { backdrop: this.props.movie.backdrop }), React.createElement(DetailsContainer, { data: this.props.movie }));
   }
 });
 
@@ -238,7 +238,7 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
       return React.createElement(Movie, { movie: movie });
     });
 
-    return React.createElement("div", { className: "col-md-12 col-xs-12 moviesContainer" }, moviesArray);
+    return React.createElement("div", { className: "col-lg-12 col-md-12 col-xs-12 moviesContainer" }, moviesArray);
   }
 });
 

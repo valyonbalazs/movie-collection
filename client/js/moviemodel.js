@@ -65,7 +65,7 @@ var movies = {
     var originalOverview = overview;
     var newOverview;
     if(originalOverview.length > 150) {
-      newOverview = originalOverview.substr(0,150) + "...";
+      newOverview = originalOverview.substr(0,130) + "...";
       return newOverview;
     }
     else {

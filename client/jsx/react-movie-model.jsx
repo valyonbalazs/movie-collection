@@ -14,7 +14,7 @@ var Poster = React.createClass({
   render: function() {
     var posterPath = this.props.path;
     return (
-      <div className="col-md-2 col-xs-3 poster">
+      <div className="col-lg-2 col-md-2 col-xs-3 poster">
         <img src={posterPath} />
       </div>
     );
@@ -42,7 +42,7 @@ var TextContainer = React.createClass({
     var title = this.props.data.title;
     var description = this.props.data.description;
     return(
-      <div className="col-md-8 col-xs-9 textContainer">
+      <div className="col-lg-8 col-md-8 col-xs-9 textContainer">
         <Title title={title} />
         <Description description={description} />
       </div>
@@ -75,7 +75,7 @@ var PublishYear = React.createClass({
 var RatingYearContainer = React.createClass({
   render: function(){
     return(
-      <div className="col-md-2 col-xs-3 ratingYearContainer">
+      <div className="col-lg-2 col-md-2 col-xs-3 ratingYearContainer">
         <Rating rating={this.props.rating} />
         <PublishYear year={this.props.year} />
       </div>
@@ -87,7 +87,7 @@ var DetailsContainer = React.createClass({
   render: function() {
     var movieData = this.props.data;
     return(
-      <div className="col-md-12 col-xs-12 detailsContainer">
+      <div className="col-lg-12 col-md-12 col-xs-12 detailsContainer">
         <Poster path={movieData.poster} />
         <TextContainer data={movieData} />
         <RatingYearContainer rating={movieData.rating} year={movieData.year}/>
@@ -100,7 +100,7 @@ var Backdrop = React.createClass({
   render: function() {
     var backdropPath = this.props.backdrop;
     return(
-      <div className="col-md-12 col-xs-12 backdrop">
+      <div className="col-lg-12 col-md-12 col-xs-12 backdrop">
         <img src={backdropPath} />
       </div>
     )
@@ -110,7 +110,7 @@ var Backdrop = React.createClass({
 var Movie = React.createClass({
   render: function() {
     return(
-      <div className="col-md-6 col-xs-12 movie">
+      <div className="col-lg-4 col-md-6 col-xs-12 movie">
         <Backdrop backdrop={this.props.movie.backdrop} />
         <DetailsContainer data={this.props.movie}/>
       </div>
@@ -194,7 +194,7 @@ var MoviesContainer = React.createClass({
       });
 
       return (
-        <div className="col-md-12 col-xs-12 moviesContainer" >
+        <div className="col-lg-12 col-md-12 col-xs-12 moviesContainer" >
           {moviesArray}
         </div>
       );
