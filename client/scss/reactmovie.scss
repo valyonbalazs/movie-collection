@@ -15,7 +15,15 @@ $detailsContainerPadding: 0;
 $detailsContainerBottom: 0;
 $detailsContainerWidth: auto;
 
-
+.detailsContainer {
+  color: $detailsContainerFontColor;
+  background: $detailsContainerBackgroundColor;
+  position: $detailsContainerPosition;
+  padding: $detailsContainerPadding;
+  bottom: $detailsContainerBottom;
+  width: $detailsContainerWidth;
+  z-index: $detailsContainerZIndex;
+}
 
 //SMALLEST RESOLUTION
 @media(max-width: $screen-small-max) {
@@ -29,28 +37,26 @@ $detailsContainerWidth: auto;
       .moviesContainer {
 
         .movie {
-          padding-right: 0px;
+          margin-top: 1em;
+          padding: 0 0 0 0;
           box-shadow: $movieBoxShadow;
 
           .backdrop {
+            padding: 0 0 0 0;
             img {
-
+              width: 100%;
             }
           }
 
           .detailsContainer {
-            color: $detailsContainerFontColor;
-            background: $detailsContainerBackgroundColor;
-            position: $detailsContainerPosition;
-            padding: $detailsContainerPadding;
-            bottom: $detailsContainerBottom;
-            width: $detailsContainerWidth;
-            z-index: $detailsContainerZIndex;
+            width: 100%;
             max-height: 5em;
             .poster {
               display: none;
             }
             .textContainer {
+              padding: 0 0 0 0;
+              padding-left: 0.3em;
               text-align: center;
               h3 {
                 margin-top: 0.3em;
@@ -62,12 +68,23 @@ $detailsContainerWidth: auto;
             .description {
               display:none;
             }
+            .ratingYearContainer {
+              text-align: right;
+              h3 {
+                font-size: 1.2em;
+                margin: 0 0 0 0;
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+              }
+            }
           }
         }
       }
     }
   }
 }
+
+//MEDIUM RESOLUTION
 @media(min-width: $screen-medium-min) {
   .container {
     padding-left: 0px;
@@ -95,13 +112,7 @@ $detailsContainerWidth: auto;
 
 
           .detailsContainer {
-            color: $detailsContainerFontColor;
-            background: $detailsContainerBackgroundColor;
-            position: $detailsContainerPosition;
-            padding: $detailsContainerPadding;
-            bottom: $detailsContainerBottom;
-            width: $detailsContainerWidth;
-            z-index: $detailsContainerZIndex;
+
             max-height: 10em;
             .poster {
               padding: 0;

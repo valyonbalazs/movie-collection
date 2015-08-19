@@ -132,7 +132,7 @@ var TextContainer = React.createClass({ displayName: "TextContainer",
   render: function render() {
     var title = this.props.data.title;
     var description = this.props.data.description;
-    return React.createElement("div", { className: "col-md-8 col-xs-8 textContainer" }, React.createElement(Title, { title: title }), React.createElement(Description, { description: description }));
+    return React.createElement("div", { className: "col-md-8 col-xs-9 textContainer" }, React.createElement(Title, { title: title }), React.createElement(Description, { description: description }));
   }
 });
 
@@ -150,7 +150,7 @@ var PublishYear = React.createClass({ displayName: "PublishYear",
 
 var RatingYearContainer = React.createClass({ displayName: "RatingYearContainer",
   render: function render() {
-    return React.createElement("div", { className: "col-md-2 col-xs-4 ratingYearContainer" }, React.createElement(Rating, { rating: this.props.rating }), React.createElement(PublishYear, { year: this.props.year }));
+    return React.createElement("div", { className: "col-md-2 col-xs-3 ratingYearContainer" }, React.createElement(Rating, { rating: this.props.rating }), React.createElement(PublishYear, { year: this.props.year }));
   }
 });
 

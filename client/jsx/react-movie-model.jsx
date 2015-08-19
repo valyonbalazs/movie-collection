@@ -42,7 +42,7 @@ var TextContainer = React.createClass({
     var title = this.props.data.title;
     var description = this.props.data.description;
     return(
-      <div className="col-md-8 col-xs-8 textContainer">
+      <div className="col-md-8 col-xs-9 textContainer">
         <Title title={title} />
         <Description description={description} />
       </div>
@@ -75,7 +75,7 @@ var PublishYear = React.createClass({
 var RatingYearContainer = React.createClass({
   render: function(){
     return(
-      <div className="col-md-2 col-xs-4 ratingYearContainer">
+      <div className="col-md-2 col-xs-3 ratingYearContainer">
         <Rating rating={this.props.rating} />
         <PublishYear year={this.props.year} />
       </div>

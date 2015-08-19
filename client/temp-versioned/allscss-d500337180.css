@@ -1,3 +1,12 @@
+.detailsContainer {
+  color: #000;
+  background: rgba(255, 255, 255, 0.7);
+  position: absolute;
+  padding: 0;
+  bottom: 0;
+  width: auto;
+  z-index: 1; }
+
 @media (max-width: 767px) {
   .container {
     padding: 0; }
@@ -5,16 +14,15 @@
       padding-left: 0px;
       padding-right: 0px; }
       .container #innerContainer .moviesContainer .movie {
-        padding-right: 0px;
+        margin-top: 1em;
+        padding: 0 0 0 0;
         box-shadow: 3px 3px 5px #888888; }
+        .container #innerContainer .moviesContainer .movie .backdrop {
+          padding: 0 0 0 0; }
+          .container #innerContainer .moviesContainer .movie .backdrop img {
+            width: 100%; }
         .container #innerContainer .moviesContainer .movie .detailsContainer {
-          color: #000;
-          background: rgba(255, 255, 255, 0.5);
-          position: absolute;
-          padding: 0;
-          bottom: 0;
-          width: auto;
-          z-index: 1;
+          width: 100%;
           max-height: 5em; }
           .container #innerContainer .moviesContainer .movie .detailsContainer .poster {
             display: none; }
@@ -25,7 +33,14 @@
             .container #innerContainer .moviesContainer .movie .detailsContainer .textContainer h5 {
               font-size: 0.8em; }
           .container #innerContainer .moviesContainer .movie .detailsContainer .description {
-            display: none; } }
+            display: none; }
+          .container #innerContainer .moviesContainer .movie .detailsContainer .ratingYearContainer {
+            text-align: right; }
+            .container #innerContainer .moviesContainer .movie .detailsContainer .ratingYearContainer h3 {
+              font-size: 1.2em;
+              margin: 0 0 0 0;
+              margin-top: 0.5em;
+              margin-bottom: 0.5em; } }
 
 @media (min-width: 768px) {
   .container {
@@ -39,7 +54,7 @@
         .container #innerContainer .moviesContainer .movie {
           display: block;
           padding: 0 0 0 0;
-          padding-right: 1em;
+          margin-right: 0em;
           margin-top: 1em;
           box-shadow: 3px 3px 5px #888888; }
           .container #innerContainer .moviesContainer .movie .backdrop {
@@ -48,13 +63,6 @@
             .container #innerContainer .moviesContainer .movie .backdrop img {
               width: 100%; }
           .container #innerContainer .moviesContainer .movie .detailsContainer {
-            color: #000;
-            background: rgba(255, 255, 255, 0.5);
-            position: absolute;
-            padding: 0;
-            bottom: 0;
-            width: auto;
-            z-index: 1;
             max-height: 10em; }
             .container #innerContainer .moviesContainer .movie .detailsContainer .poster {
               padding: 0; }
@@ -71,7 +79,7 @@
             .container #innerContainer .moviesContainer .movie .detailsContainer .ratingYearContainer {
               text-align: right;
               padding-left: 0;
-              padding-right: 1.5em; }
+              padding-right: 0.5em; }
               .container #innerContainer .moviesContainer .movie .detailsContainer .ratingYearContainer h3 {
                 font-size: 1.3em;
                 margin-top: 0.4em; }
