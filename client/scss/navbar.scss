@@ -1,0 +1,37 @@
+$screen-small-max: 767px;
+$screen-medium-min: 768px;
+$screen-high-min: 992px;
+$screen-ultrahigh-min: 1200px;
+
+$navbarBackground: #878787;
+$navbarBoxShadow: 3px 3px 5px #888888;
+
+//SMALLEST RESOLUTION
+@media(max-width: $screen-small-max) {
+  .nav {
+    display: none;
+  }
+}
+
+//MEDIUM RESOLUTION
+@media(min-width: $screen-medium-min) {
+  #navBar {
+
+    .nav {
+      width: 100%;
+      float: left;
+      margin: 0 0 0.3em 0;
+      list-style: none;
+
+      background: $navbarBackground;
+      box-shadow: $navbarBoxShadow;
+      li {
+        float:right;
+      }
+    }
+  }
+
+}
+@media(min-width: $screen-ultrahigh-min) {
+
+}

@@ -1,3 +1,22 @@
+@media (max-width: 767px) {
+  .nav {
+    display: none; } }
+
+@media (min-width: 768px) {
+  #navBar {
+    left: -30; }
+    #navBar .nav {
+      width: 100%;
+      float: left;
+      margin: 0 0 0.3em 0;
+      list-style: none;
+      background: #878787;
+      box-shadow: 3px 3px 5px #888888; }
+      #navBar .nav li {
+        float: right; } }
+
+
+
 .detailsContainer {
   color: #000;
   background: rgba(255, 255, 255, 0.7);

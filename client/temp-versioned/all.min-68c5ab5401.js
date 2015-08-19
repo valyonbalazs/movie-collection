@@ -243,3 +243,27 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
 });
 
 React.render(React.createElement(MoviesContainer, null), document.getElementById("innerContainer"));
+'use strict';
+
+var menuItems = [{ 'item': 'link1' }, { 'item': 'link2' }, { 'item': 'link3' }];
+
+var MenuItem = React.createClass({ displayName: "MenuItem",
+  render: function render() {
+    return React.createElement("li", null, this.props.menuItem);
+  }
+});
+
+var Navbar = React.createClass({ displayName: "Navbar",
+  getInitialState: function getInitialState() {
+    return { data: menuItems };
+  },
+  render: function render() {
+    var menuItemArray = this.state.data.map(function (item) {
+      return React.createElement(MenuItem, { menuItem: item });
+    });
+
+    return React.createElement("ul", { className: "nav" }, menuItemArray);
+  }
+});
+
+React.render(React.createElement(Navbar, null), document.getElementById("navBar"));
