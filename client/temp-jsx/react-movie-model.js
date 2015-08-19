@@ -42,7 +42,7 @@ var TextContainer = React.createClass({displayName: "TextContainer",
     var title = this.props.data.title;
     var description = this.props.data.description;
     return(
-      React.createElement("div", {className: "col-md-7 col-xs-8 textContainer"}, 
+      React.createElement("div", {className: "col-md-8 col-xs-8 textContainer"}, 
         React.createElement(Title, {title: title}), 
         React.createElement(Description, {description: description})
       )
@@ -169,12 +169,13 @@ var MoviesContainer = React.createClass({displayName: "MoviesContainer",
     var movieData;
     movieData = JSON.parse(data);
     var bestVoted = movies.getMaxVotedElement(movieData);
+    var title = movies.modifyTitle(bestVoted.title);
     var backdropPath = movies.createImageUrl(bestVoted.backdrop_path);
     var posterPath = movies.createImageUrl(bestVoted.poster_path);
     var overview = movies.modifyOverview(bestVoted.overview);
     var releaseDate = movies.modifyReleaseDate(bestVoted.release_date);
     var movie = new MovieElement(
-      bestVoted.title,
+      title,
       overview,
       bestVoted.vote_average,
       releaseDate,
