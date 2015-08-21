@@ -18,7 +18,8 @@
     top: 2.85em;
     position: fixed;
     z-index: 4;
-    width: 85%; }
+    width: 85%;
+    -webkit-transition-duration: 0.8s; }
     #mobileNavBarLinks .navbarDivOpened {
       background: rgba(58, 146, 255, 0.95);
       text-align: left;

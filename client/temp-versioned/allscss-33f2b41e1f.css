@@ -21,7 +21,7 @@
     width: 85%; }
     #mobileNavBarLinks .navbarDivOpened {
       background: rgba(58, 146, 255, 0.95);
-      text-align: left;
+      text-align: center;
       padding-top: 1em;
       width: 100%;
       min-height: 50em;
@@ -96,9 +96,7 @@
             .container #innerContainer .moviesContainer .movie .detailsContainer .description {
               display: none; }
             .container #innerContainer .moviesContainer .movie .detailsContainer .ratingYearContainer {
-              text-align: right;
-              padding: 0;
-              padding-right: 0.5em; }
+              text-align: right; }
               .container #innerContainer .moviesContainer .movie .detailsContainer .ratingYearContainer h3 {
                 font-size: 1.2em;
                 margin: 0 0 0 0;

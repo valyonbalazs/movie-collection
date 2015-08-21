@@ -36,14 +36,16 @@ $navbarBoxShadow: 0px 5px 5px #D1D1D1;
     z-index: 4;
     width: 85%;
 
+
     .navbarDivOpened {
       background: $navbarMobileOpenedBackground;
-      text-align: center;
-      padding-top: 3em;
+      text-align: left;
+      padding-top: 1em;
       width: 100%;
       min-height: 50em;
 
       font-size: 2em;
+      color: white;
     }
   }
 
