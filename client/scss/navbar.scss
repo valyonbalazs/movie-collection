@@ -3,8 +3,8 @@ $screen-medium-min: 768px;
 $screen-high-min: 992px;
 $screen-ultrahigh-min: 1200px;
 
-$navbarBackground: #878787;
-$navbarBoxShadow: 3px 3px 5px #888888;
+$navbarBackground: #90C3D4;
+$navbarBoxShadow: 0px 5px 5px #D1D1D1;
 
 //SMALLEST RESOLUTION
 @media(max-width: $screen-small-max) {
@@ -16,17 +16,27 @@ $navbarBoxShadow: 3px 3px 5px #888888;
 //MEDIUM RESOLUTION
 @media(min-width: $screen-medium-min) {
   #navBar {
+    text-align: center;
+    top: 0px;
+    position: fixed;
+    width: 100%;
+    z-index: 2;
 
     .nav {
       width: 100%;
-      float: left;
-      margin: 0 0 0.3em 0;
-      list-style: none;
+      height: 3em;
+      text-align: center;
+      padding-top: 0.6em;
 
       background: $navbarBackground;
+      opacity: 0.8;
+      filter: alpha(opacity=50);
       box-shadow: $navbarBoxShadow;
+
       li {
-        float:right;
+        display: inline;
+        padding: 0 1em 0 1em;
+        font-size: 1.2em;
       }
     }
   }

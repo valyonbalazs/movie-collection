@@ -87,6 +87,7 @@ $detailsContainerWidth: auto;
 //MEDIUM RESOLUTION
 @media(min-width: $screen-medium-min) {
   .container {
+    margin-top: 3em;
     padding-left: 0px;
     padding-right: 0px;
 
@@ -158,6 +159,7 @@ $detailsContainerWidth: auto;
 
 @media(min-width: $screen-ultrahigh-min) {
   .container {
+    margin-top: 3em;
     padding-left: 0px;
     padding-right: 0px;
 

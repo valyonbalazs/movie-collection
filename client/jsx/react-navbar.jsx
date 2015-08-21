@@ -1,7 +1,7 @@
 var menuItems = [
-  {'item': 'link1'},
+  {'item': 'LINK1'},
   {'item': 'link2'},
-  {'item': 'link3'}
+  {'item': 'LINK3'}
 ];
 
 var MenuItem = React.createClass({
@@ -20,13 +20,15 @@ var Navbar = React.createClass({
   },
   render: function () {
     var menuItemArray = this.state.data.map(function (item) {
+      var itemValue = item.item;
+      var uppercaseItem = itemValue.toString().toUpperCase();
       return(
-          <MenuItem menuItem={item} />
+          <MenuItem menuItem={uppercaseItem} />
       );
     });
 
     return(
-      <ul className="nav"> 
+      <ul className="nav">
         {menuItemArray}
       </ul>
     );

@@ -245,7 +245,7 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
 React.render(React.createElement(MoviesContainer, null), document.getElementById("innerContainer"));
 'use strict';
 
-var menuItems = [{ 'item': 'link1' }, { 'item': 'link2' }, { 'item': 'link3' }];
+var menuItems = [{ 'item': 'LINK1' }, { 'item': 'link2' }, { 'item': 'LINK3' }];
 
 var MenuItem = React.createClass({ displayName: "MenuItem",
   render: function render() {
@@ -259,7 +259,9 @@ var Navbar = React.createClass({ displayName: "Navbar",
   },
   render: function render() {
     var menuItemArray = this.state.data.map(function (item) {
-      return React.createElement(MenuItem, { menuItem: item });
+      var itemValue = item.item;
+      var uppercaseItem = itemValue.toString().toUpperCase();
+      return React.createElement(MenuItem, { menuItem: uppercaseItem });
     });
 
     return React.createElement("ul", { className: "nav" }, menuItemArray);
