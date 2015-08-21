@@ -3,30 +3,35 @@
     display: none; }
   .navbarMobileClosed {
     display: inline;
-    text-align: center;
+    text-align: left;
+    padding-left: 1em;
     top: 0px;
     position: fixed;
     width: 100%;
     z-index: 2;
     width: 100%;
-    height: 3em;
-    text-align: center;
-    padding-top: 0.6em;
-    background: rgba(58, 146, 255, 0.95); }
+    height: 2.5em;
+    padding-top: 0.5em;
+    background: rgba(58, 146, 255, 0.95);
+    font-size: 1.4em; }
   #mobileNavBarLinks {
-    display: none;
+    display: block;
     top: 2.85em;
     position: fixed;
     z-index: 4;
-    width: 85%; }
+    width: 0;
+    -webkit-transition: width 300ms ease; }
     #mobileNavBarLinks .navbarDivOpened {
+      visibility: hidden;
       background: rgba(58, 146, 255, 0.95);
-      text-align: center;
+      text-align: left;
+      padding: 0;
       padding-top: 1em;
-      width: 100%;
       min-height: 50em;
+      opacity: 1;
       font-size: 2em;
-      color: white; } }
+      color: white;
+      -webkit-transition: visibility 100ms ease; } }
 
 @media (min-width: 768px) {
   #mobileNavBar {

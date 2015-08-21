@@ -53,7 +53,7 @@ var NavbarMobileOpen =  React.createClass({
     });
 
     return(
-      <div className="navbarDivOpened col-xs-12">
+      <div id="navbarDivOpenedDiv" className="navbarDivOpened col-xs-12">
         <ul className="nav">
           {menuItemArray}
         </ul>
@@ -67,10 +67,12 @@ var NavbarMobileClosed = React.createClass({
   handleClick: function (event) {
     if(opened == false) {
       opened = true;
-      document.getElementById('mobileNavBarLinks').style.display = 'inline';
+      document.getElementById('mobileNavBarLinks').style.width = '85%';
+      document.getElementById('navbarDivOpenedDiv').style.visibility = 'visible';
     } else {
       opened = false;
-      document.getElementById('mobileNavBarLinks').style.display = 'none';
+      document.getElementById('mobileNavBarLinks').style.width = '0%';
+      document.getElementById('navbarDivOpenedDiv').style.visibility = 'hidden';
     }
   },
   render: function () {

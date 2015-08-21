@@ -282,7 +282,7 @@ var NavbarMobileOpen = React.createClass({ displayName: "NavbarMobileOpen",
       return React.createElement(MenuItem, { menuItem: uppercaseItem });
     });
 
-    return React.createElement("div", { className: "navbarDivOpened col-xs-12" }, React.createElement("ul", { className: "nav" }, menuItemArray));
+    return React.createElement("div", { id: "navbarDivOpenedDiv", className: "navbarDivOpened col-xs-12" }, React.createElement("ul", { className: "nav" }, menuItemArray));
   }
 });
 
@@ -291,10 +291,12 @@ var NavbarMobileClosed = React.createClass({ displayName: "NavbarMobileClosed",
   handleClick: function handleClick(event) {
     if (opened == false) {
       opened = true;
-      document.getElementById('mobileNavBarLinks').style.display = 'inline';
+      document.getElementById('mobileNavBarLinks').style.width = '85%';
+      document.getElementById('navbarDivOpenedDiv').style.visibility = 'visible';
     } else {
       opened = false;
-      document.getElementById('mobileNavBarLinks').style.display = 'none';
+      document.getElementById('mobileNavBarLinks').style.width = '0%';
+      document.getElementById('navbarDivOpenedDiv').style.visibility = 'hidden';
     }
   },
   render: function render() {

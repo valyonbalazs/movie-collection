@@ -3,29 +3,35 @@
     display: none; }
   .navbarMobileClosed {
     display: inline;
-    text-align: center;
+    text-align: left;
+    padding-left: 1em;
     top: 0px;
     position: fixed;
     width: 100%;
     z-index: 2;
     width: 100%;
-    height: 3em;
-    text-align: center;
-    padding-top: 0.6em;
-    background: rgba(58, 146, 255, 0.8); }
+    height: 2.5em;
+    padding-top: 0.5em;
+    background: rgba(58, 146, 255, 0.95);
+    font-size: 1.4em; }
   #mobileNavBarLinks {
-    display: none;
-    top: 2.8em;
+    display: block;
+    top: 2.85em;
     position: fixed;
     z-index: 4;
-    width: 85%; }
+    width: 0;
+    -webkit-transition: width 300ms ease; }
     #mobileNavBarLinks .navbarDivOpened {
+      visibility: hidden;
       background: rgba(58, 146, 255, 0.95);
-      text-align: center;
-      padding-top: 3em;
-      width: 100%;
+      text-align: left;
+      padding: 0;
+      padding-top: 1em;
       min-height: 50em;
-      font-size: 2em; } }
+      opacity: 1;
+      font-size: 2em;
+      color: white;
+      -webkit-transition: visibility 300ms ease; } }
 
 @media (min-width: 768px) {
   #mobileNavBar {
@@ -43,7 +49,7 @@
       height: 3em;
       text-align: center;
       padding-top: 0.6em;
-      background: rgba(58, 146, 255, 0.8);
+      background: rgba(58, 146, 255, 0.95);
       box-shadow: 0px 5px 5px #D1D1D1; }
       #navBar .nav li {
         display: inline;
@@ -95,7 +101,9 @@
             .container #innerContainer .moviesContainer .movie .detailsContainer .description {
               display: none; }
             .container #innerContainer .moviesContainer .movie .detailsContainer .ratingYearContainer {
-              text-align: right; }
+              text-align: right;
+              padding: 0;
+              padding-right: 0.5em; }
               .container #innerContainer .moviesContainer .movie .detailsContainer .ratingYearContainer h3 {
                 font-size: 1.2em;
                 margin: 0 0 0 0;
