@@ -10,7 +10,7 @@ var starterMovieTitles = [
   {title: "django"},
   {title: "alien"},
   {title: "predator"},
-  {title: "jurassic park"} 
+  {title: "jurassic park"}
 ];
 /*var starterMovieTitles = [
   {title: "blade runner"}
@@ -194,7 +194,6 @@ var MoviesContainer = React.createClass({displayName: "MoviesContainer",
     this.setState({data: movieListData});
   },
   render: function () {
-      console.log(this.state.data);
       var moviesArray = this.state.data.map(function (movie) {
         return (
           React.createElement(Movie, {movie: movie})

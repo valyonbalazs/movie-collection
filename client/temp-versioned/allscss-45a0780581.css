@@ -1,8 +1,33 @@
 @media (max-width: 767px) {
-  .nav {
-    display: none; } }
+  #navBar {
+    display: none; }
+  .navbarMobileClosed {
+    display: inline;
+    text-align: center;
+    top: 0px;
+    position: fixed;
+    width: 100%;
+    z-index: 2;
+    width: 100%;
+    height: 3em;
+    text-align: center;
+    padding-top: 0.6em;
+    background: rgba(58, 146, 255, 0.8); }
+  #mobileNavBarLinks {
+    display: none;
+    z-index: 3;
+    position: absolute; }
+    #mobileNavBarLinks .navbarDivOpened {
+      background: rgba(58, 146, 255, 0.8);
+      text-align: center;
+      padding-top: 3em;
+      width: 100%; } }
 
 @media (min-width: 768px) {
+  #mobileNavBar {
+    display: none; }
+  #mobileNavBarLinks {
+    display: none; }
   #navBar {
     text-align: center;
     top: 0px;
@@ -14,14 +39,13 @@
       height: 3em;
       text-align: center;
       padding-top: 0.6em;
-      background: #90C3D4;
-      opacity: 0.8;
-      filter: alpha(opacity=50);
+      background: rgba(58, 146, 255, 0.8);
       box-shadow: 0px 5px 5px #D1D1D1; }
       #navBar .nav li {
         display: inline;
         padding: 0 1em 0 1em;
-        font-size: 1.2em; } }
+        font-size: 1.5em;
+        color: white; } }
 
 
 
@@ -36,6 +60,7 @@
 
 @media (max-width: 767px) {
   .container {
+    margin-top: 3em;
     padding: 0; }
     .container #innerContainer {
       padding-left: 0px;

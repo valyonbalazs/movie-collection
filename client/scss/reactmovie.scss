@@ -28,6 +28,7 @@ $detailsContainerWidth: auto;
 //SMALLEST RESOLUTION
 @media(max-width: $screen-small-max) {
   .container {
+    margin-top: 3em;
     padding: 0;
 
     #innerContainer {
