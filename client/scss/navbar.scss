@@ -2,7 +2,8 @@ $screen-small-max: 767px;
 $screen-medium-min: 768px;
 $screen-high-min: 992px;
 $screen-ultrahigh-min: 1200px;
-$navbarBackground: rgba(58, 146, 255, 0.8);
+$navbarBackground: rgba(58, 146, 255, 0.95);
+$navbarMobileOpenedBackground: rgba(58, 146, 255, 0.95);
 $navbarBoxShadow: 0px 5px 5px #D1D1D1;
 
 //SMALLEST RESOLUTION
@@ -30,14 +31,19 @@ $navbarBoxShadow: 0px 5px 5px #D1D1D1;
 
   #mobileNavBarLinks {
     display: none;
-    z-index: 3;
-    position: absolute;
+    top: 2.85em;
+    position: fixed;
+    z-index: 4;
+    width: 85%;
 
     .navbarDivOpened {
-      background: $navbarBackground;
+      background: $navbarMobileOpenedBackground;
       text-align: center;
       padding-top: 3em;
       width: 100%;
+      min-height: 50em;
+
+      font-size: 2em;
     }
   }
 

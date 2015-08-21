@@ -291,7 +291,7 @@ var NavbarMobileClosed = React.createClass({ displayName: "NavbarMobileClosed",
   handleClick: function handleClick(event) {
     if (opened == false) {
       opened = true;
-      document.getElementById('mobileNavBarLinks').style.display = 'block';
+      document.getElementById('mobileNavBarLinks').style.display = 'inline';
     } else {
       opened = false;
       document.getElementById('mobileNavBarLinks').style.display = 'none';
