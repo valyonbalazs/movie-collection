@@ -13,16 +13,19 @@
     height: 2.5em;
     padding-top: 0.5em;
     background: rgba(58, 146, 255, 0.95);
-    font-size: 1.4em;
-    color: white; }
+    font-size: 1.4em; }
   #mobileNavBarLinks {
     display: block;
     top: 2.85em;
     position: fixed;
     z-index: 4;
     width: 0;
-    -webkit-transition: width 300ms ease;
-    -moz-transition: width 300ms ease; }
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-transform: width 300ms ease; }
     #mobileNavBarLinks .navbarDivOpened {
       visibility: hidden;
       background: rgba(58, 146, 255, 0.95);
@@ -33,10 +36,7 @@
       opacity: 1;
       font-size: 2em;
       color: white;
-      -webkit-transition: visibility 100ms ease-out;
-      -moz-transition: visibility 100ms ease-out; }
-      #mobileNavBarLinks .navbarDivOpened ul {
-        padding-left: 0.8em; } }
+      -webkit-transition: visibility 100ms ease-out; } }
 
 @media (min-width: 768px) {
   #mobileNavBar {

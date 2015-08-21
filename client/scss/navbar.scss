@@ -5,6 +5,8 @@ $screen-ultrahigh-min: 1200px;
 $navbarBackground: rgba(58, 146, 255, 0.95);
 $navbarMobileOpenedBackground: rgba(58, 146, 255, 0.95);
 $navbarBoxShadow: 0px 5px 5px #D1D1D1;
+$mobileNavBarLinksTransition: width 300ms ease;
+$mobileNavBarDivOpenedTransition: visibility 100ms ease-out;
 
 //SMALLEST RESOLUTION
 @media(max-width: $screen-small-max) {
@@ -28,6 +30,7 @@ $navbarBoxShadow: 0px 5px 5px #D1D1D1;
     background: $navbarBackground;
 
     font-size: 1.4em;
+    color: white;
   }
 
   #mobileNavBarLinks {
@@ -36,7 +39,8 @@ $navbarBoxShadow: 0px 5px 5px #D1D1D1;
     position: fixed;
     z-index: 4;
     width: 0;
-    -webkit-transition: width 300ms ease;
+    -webkit-transition: $mobileNavBarLinksTransition;
+    -moz-transition: $mobileNavBarLinksTransition;
 
     .navbarDivOpened {
       visibility: hidden;
@@ -48,7 +52,12 @@ $navbarBoxShadow: 0px 5px 5px #D1D1D1;
       opacity: 1;
       font-size: 2em;
       color: white;
-      -webkit-transition: visibility 100ms ease-out;
+      -webkit-transition: $mobileNavBarDivOpenedTransition;
+      -moz-transition: $mobileNavBarDivOpenedTransition;
+
+      ul {
+        padding-left: 0.8em;
+      }
     }
   }
 
