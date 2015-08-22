@@ -1,3 +1,18 @@
+"use strict";
+
+var ref = new Firebase("https://brilliant-inferno-2926.firebaseio.com");
+function loginBtnClick() {
+  ref.authWithOAuthPopup("facebook", function (error, authData) {
+    if (error) {
+      console.log("Login Failed!", error);
+    } else {
+      console.log("Authenticated successfully with payload:", authData);
+    }
+  }, {
+    remember: "sessionOnly",
+    scope: "email,user_likes"
+  });
+}
 /*jshint esnext: true */
 
 "use strict";
@@ -248,8 +263,11 @@ var menuItems = [{ 'item': 'fa fa-home' }, { 'item': 'fa fa-home' }, { 'item': '
 
 //MEDIUM AND HIGH RESOLUTION NAVBAR
 var MenuItem = React.createClass({ displayName: "MenuItem",
+  handleClick: function handleClick() {
+    loginBtnClick();
+  },
   render: function render() {
-    return React.createElement("li", null, React.createElement("i", { className: this.props.menuItem }));
+    return React.createElement("li", null, React.createElement("button", { onClick: this.handleClick }, React.createElement("i", { className: this.props.menuItem })));
   }
 });
 

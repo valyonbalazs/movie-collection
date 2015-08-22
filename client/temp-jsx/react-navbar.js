@@ -6,10 +6,13 @@ var menuItems = [
 
 //MEDIUM AND HIGH RESOLUTION NAVBAR
 var MenuItem = React.createClass({displayName: "MenuItem",
+  handleClick: function () {
+    loginBtnClick();
+  },
   render: function () {
     return(
       React.createElement("li", null, 
-        React.createElement("i", {className: this.props.menuItem})
+        React.createElement("button", {onClick: this.handleClick}, React.createElement("i", {className: this.props.menuItem}))
       )
     );
   }
