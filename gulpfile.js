@@ -40,6 +40,10 @@ directory.client.csslib = directory.client.root + 'csslib/';
 directory.client.fonts = directory.client.root + 'fonts/';
 directory.client.hbs = directory.client.root + 'hbs/';
 directory.client.revmanifest = directory.client.root + 'rev-manifest/';
+directory.client.images = directory.client.root + 'images/';
+directory.client.img_high_res = directory.client.images + 'img_high_res/';
+directory.client.img_medium_res = directory.client.images + 'img_medium_res/';
+directory.client.img_low_res = directory.client.images + 'img_low_res/';
 
 // TO (destination)
 directory.dest = {};
@@ -55,6 +59,10 @@ directory.dest.tempcss = directory.client.root + 'temp-css/';
 directory.dest.csslib = directory.dest.build + 'csslib/';
 directory.dest.fonts = directory.dest.build + 'fonts/';
 directory.dest.versioned = directory.client.root + 'temp-versioned/';
+directory.dest.images = directory.dest.build + 'images/';
+directory.dest.img_high_res = directory.dest.images + 'img_high_res/';
+directory.dest.img_medium_res = directory.dest.images + 'img_medium_res/';
+directory.dest.img_low_res = directory.dest.images + 'img_low_res/';
 
 // TESTING
 directory.test = {};
@@ -72,6 +80,7 @@ extension.css = '**/*.css';
 extension.scss = '**/*.scss';
 extension.fonts = '**/*.{otf,eot,svg,ttf,woff,woff2}';
 extension.hbs = '**/*.hbs';
+extension.jpg = '**/*.jpg';
 
 // ------------------------------------------------------------------------------
 // Defining specific files in specific folders
@@ -94,6 +103,9 @@ files.tempjs = directory.dest.tempjs + extension.js;
 files.tempcss = directory.dest.tempcss + extension.css;
 files.jsversioned = directory.dest.versioned + extension.js;
 files.cssversioned = directory.dest.versioned + extension.css;
+files.img_high_res = directory.client.img_high_res + extension.jpg;
+files.img_medium_res = directory.client.img_medium_res + extension.jpg;
+files.img_low_res = directory.client.img_low_res + extension.jpg;
 
 files.test = {};
 files.test.api = directory.test.api + extension.js;
@@ -124,6 +136,24 @@ gulp.task('lint', function () {
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
     .pipe(jshint.reporter('fail'));
+});
+
+gulp.task('copy:low_res_images', function () {
+  return gulp.src([files.img_low_res])
+    .pipe(gulp.dest(directory.dest.img_low_res))
+    .pipe(connect.reload());
+});
+
+gulp.task('copy:medium_res_images', function () {
+  return gulp.src([files.img_medium_res])
+    .pipe(gulp.dest(directory.dest.img_medium_res))
+    .pipe(connect.reload());
+});
+
+gulp.task('copy:high_res_images', function () {
+  return gulp.src([files.img_high_res])
+    .pipe(gulp.dest(directory.dest.img_high_res))
+    .pipe(connect.reload());
 });
 
 gulp.task('copy:html', function () {
@@ -243,6 +273,7 @@ gulp.task('build', function (cb) {
     ['build:scss', 'build:js'],
     'versioning',
     'compile-hbs-into-html',
+    ['copy:low_res_images', 'copy:medium_res_images', 'copy:high_res_images'],
     ['copy:html', 'copy:jsversioned', 'copy:cssversioned', 'copy:js-lib', 'copy:css-lib', 'copy:fonts'],
     cb
   );

@@ -27,7 +27,9 @@ function loginBtnClick() {
       var userProfilePicUrl = facebookLoginData.profileImageURL;
       let user = new User(userName, userEmail, userProfilePicUrl);
       console.log(user);
+      renderNavbar();
       renderElements();
+      React.unmountComponentAtNode(document.getElementById('loginContainer'));
     }
   }, {
     remember: "sessionOnly",

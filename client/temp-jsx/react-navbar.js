@@ -39,8 +39,6 @@ var Navbar = React.createClass({displayName: "Navbar",
   }
 });
 
-React.render(React.createElement(Navbar, null), document.getElementById("navBar"));
-
 //SMALL OR MOBILE RESOLUTION NAVBAR
 var NavbarMobileOpen =  React.createClass({displayName: "NavbarMobileOpen",
   getInitialState: function () {
@@ -87,6 +85,8 @@ var NavbarMobileClosed = React.createClass({displayName: "NavbarMobileClosed",
   }
 });
 
-React.render(React.createElement(NavbarMobileClosed, null), document.getElementById('mobileNavBar'));
-
-React.render(React.createElement(NavbarMobileOpen, null), document.getElementById('mobileNavBarLinks'));
+function renderNavbar() {
+  React.render(React.createElement(Navbar, null), document.getElementById("navBar"));
+  React.render(React.createElement(NavbarMobileClosed, null), document.getElementById('mobileNavBar'));
+  React.render(React.createElement(NavbarMobileOpen, null), document.getElementById('mobileNavBarLinks'));
+};

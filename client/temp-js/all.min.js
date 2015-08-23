@@ -31,7 +31,9 @@ function loginBtnClick() {
       var userProfilePicUrl = facebookLoginData.profileImageURL;
       var user = new User(userName, userEmail, userProfilePicUrl);
       console.log(user);
+      renderNavbar();
       renderElements();
+      React.unmountComponentAtNode(document.getElementById('loginContainer'));
     }
   }, {
     remember: "sessionOnly",
@@ -313,8 +315,6 @@ var Navbar = React.createClass({ displayName: "Navbar",
   }
 });
 
-React.render(React.createElement(Navbar, null), document.getElementById("navBar"));
-
 //SMALL OR MOBILE RESOLUTION NAVBAR
 var NavbarMobileOpen = React.createClass({ displayName: "NavbarMobileOpen",
   getInitialState: function getInitialState() {
@@ -349,9 +349,11 @@ var NavbarMobileClosed = React.createClass({ displayName: "NavbarMobileClosed",
   }
 });
 
-React.render(React.createElement(NavbarMobileClosed, null), document.getElementById('mobileNavBar'));
-
-React.render(React.createElement(NavbarMobileOpen, null), document.getElementById('mobileNavBarLinks'));
+function renderNavbar() {
+  React.render(React.createElement(Navbar, null), document.getElementById("navBar"));
+  React.render(React.createElement(NavbarMobileClosed, null), document.getElementById('mobileNavBar'));
+  React.render(React.createElement(NavbarMobileOpen, null), document.getElementById('mobileNavBarLinks'));
+};
 "use strict";
 
 var Route = ReactRouter.Route;
@@ -369,24 +371,18 @@ var App = React.createClass({ displayName: "App",
   },
   render: function render() {
     var name = this.context.router.getCurrentPath();
-    return React.createElement("div", { "class": "col-lg-3 col-md-3 col-xs-10" }, React.createElement("h3", null, "LOGIN"), React.createElement(Link, { className: "btn btn-primary", to: "page1", onClick: this.handleClick }, "Facebook"), React.createElement(RouteHandler, null));
+    return React.createElement("div", { id: "loginInnerDiv", className: "col-lg-3 col-md-3 col-xs-8 center" }, React.createElement("h3", null, "LOGIN"), React.createElement(Link, { className: "btn btn-primary", to: "movies", onClick: this.handleClick }, "Facebook"), React.createElement(RouteHandler, null));
   }
 });
 
-var Page1 = React.createClass({ displayName: "Page1",
+var MoviesPage = React.createClass({ displayName: "MoviesPage",
   render: function render() {
     return React.createElement("div", null);
   }
 });
 
-var Page2 = React.createClass({ displayName: "Page2",
-  render: function render() {
-    return React.createElement("div", { className: "Image" }, React.createElement("h1", null, "Page 2"), React.createElement("p", null, "Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."));
-  }
-});
-
-var routes = React.createElement(Route, { handler: App }, React.createElement(Route, { name: "page1", handler: Page1 }), React.createElement(Route, { name: "page2", handler: Page2 }));
+var routes = React.createElement(Route, { handler: App }, React.createElement(Route, { name: "movies", handler: MoviesPage }));
 
 ReactRouter.run(routes, function (Handler) {
-  React.render(React.createElement(Handler, null), document.getElementById('innerContainer'));
+  React.render(React.createElement(Handler, null), document.getElementById('loginContainer'));
 });
