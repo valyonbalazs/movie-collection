@@ -208,4 +208,4 @@ var MoviesContainer = React.createClass({
   }
 });
 
-React.render(<MoviesContainer />, document.getElementById("innerContainer"));
+//React.render(<MoviesContainer />, document.getElementById("innerContainer"));
