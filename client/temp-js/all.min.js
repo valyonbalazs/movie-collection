@@ -25,13 +25,13 @@ function loginBtnClick() {
       console.log("Login Failed!", error);
     } else {
       console.log("Authenticated successfully with payload:", authData);
-
       var facebookLoginData = authData.facebook;
       var userName = facebookLoginData.displayName;
       var userEmail = facebookLoginData.email;
       var userProfilePicUrl = facebookLoginData.profileImageURL;
       var user = new User(userName, userEmail, userProfilePicUrl);
       console.log(user);
+      renderElements();
     }
   }, {
     remember: "sessionOnly",
@@ -281,7 +281,9 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
   }
 });
 
-//React.render(<MoviesContainer />, document.getElementById("innerContainer"));
+function renderElements() {
+  React.render(React.createElement(MoviesContainer, null), document.getElementById("innerContainer"));
+};
 'use strict';
 
 var menuItems = [{ 'item': 'fa fa-home' }, { 'item': 'fa fa-home' }, { 'item': 'fa fa-home' }];
@@ -362,16 +364,18 @@ var App = React.createClass({ displayName: "App",
   contextTypes: {
     router: React.PropTypes.func
   },
-
+  handleClick: function handleClick() {
+    loginBtnClick();
+  },
   render: function render() {
     var name = this.context.router.getCurrentPath();
-    return React.createElement("div", null, React.createElement("ul", null, React.createElement("li", null, React.createElement(Link, { to: "page1" }, "Page 1")), React.createElement("li", null, React.createElement(Link, { to: "page2" }, "Page 2"))), React.createElement(RouteHandler, null));
+    return React.createElement("div", { "class": "col-lg-3 col-md-3 col-xs-10" }, React.createElement("h3", null, "LOGIN"), React.createElement(Link, { className: "btn btn-primary", to: "page1", onClick: this.handleClick }, "Facebook"), React.createElement(RouteHandler, null));
   }
 });
 
 var Page1 = React.createClass({ displayName: "Page1",
   render: function render() {
-    return React.createElement("div", { className: "Image" }, React.createElement("h1", null, "Page 1"), React.createElement("p", null, "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."));
+    return React.createElement("div", null);
   }
 });
 

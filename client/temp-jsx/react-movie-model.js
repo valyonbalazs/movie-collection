@@ -208,4 +208,7 @@ var MoviesContainer = React.createClass({displayName: "MoviesContainer",
   }
 });
 
-//React.render(<MoviesContainer />, document.getElementById("innerContainer"));
+
+function renderElements() {
+  React.render(React.createElement(MoviesContainer, null), document.getElementById("innerContainer"));
+};

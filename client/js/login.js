@@ -21,13 +21,13 @@ function loginBtnClick() {
       console.log("Login Failed!", error);
     } else {
       console.log("Authenticated successfully with payload:", authData);
-
       var facebookLoginData = authData.facebook;
       var userName = facebookLoginData.displayName;
       var userEmail = facebookLoginData.email;
       var userProfilePicUrl = facebookLoginData.profileImageURL;
       let user = new User(userName, userEmail, userProfilePicUrl);
       console.log(user);
+      renderElements();
     }
   }, {
     remember: "sessionOnly",
