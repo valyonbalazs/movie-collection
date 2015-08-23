@@ -64,7 +64,7 @@
     position: fixed;
     padding: 0;
     margin: 0;
-    top: -50px;
+    top: 0;
     left: 0; }
     #loginContainer #loginInnerDiv {
       padding-top: 2em;
@@ -139,6 +139,21 @@
         font-size: 1.5em;
         color: white; } }
 
+
+
+.example-enter {
+  opacity: 0.01; }
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: opacity 1s ease-in; }
+
+.example-leave {
+  opacity: 1; }
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transition: opacity 1s ease-in; }
 
 
 .detailsContainer {

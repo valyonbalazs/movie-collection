@@ -1,3 +1,5 @@
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
 var starterMovieTitles = [
   {title: "blade runner"},
   {title: "avengers"},
@@ -202,7 +204,9 @@ var MoviesContainer = React.createClass({
 
       return (
         <div className="col-lg-12 col-md-12 col-xs-12 moviesContainer" >
-          {moviesArray}
+          <ReactCSSTransitionGroup transitionName="example">
+            {moviesArray}
+          </ReactCSSTransitionGroup>
         </div>
       );
   }

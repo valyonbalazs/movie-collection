@@ -144,6 +144,8 @@ var movies = {
 };
 "use strict";
 
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
 var starterMovieTitles = [{ title: "blade runner" }, { title: "avengers" }, { title: "batman" }, { title: "star wars episode iv" }, { title: "star wars episode iii" }, { title: "schindler's list" }, { title: "gladiator" }, { title: "men in black" }, { title: "django" }, { title: "alien" }, { title: "predator" }, { title: "jurassic park" }];
 /*var starterMovieTitles = [
   {title: "blade runner"}
@@ -279,7 +281,7 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
       return React.createElement(Movie, { movie: movie });
     });
 
-    return React.createElement("div", { className: "col-lg-12 col-md-12 col-xs-12 moviesContainer" }, moviesArray);
+    return React.createElement("div", { className: "col-lg-12 col-md-12 col-xs-12 moviesContainer" }, React.createElement(ReactCSSTransitionGroup, { transitionName: "example" }, moviesArray));
   }
 });
 
