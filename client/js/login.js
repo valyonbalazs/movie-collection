@@ -30,6 +30,9 @@ function loginBtnClick() {
       renderNavbar();
       renderElements();
       React.unmountComponentAtNode(document.getElementById('loginContainer'));
+      var logContainer = document.getElementById('loginContainer');
+      var body = document.body;
+      body.removeChild(logContainer);
     }
   }, {
     remember: "sessionOnly",
