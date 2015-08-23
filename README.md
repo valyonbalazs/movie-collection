@@ -5,6 +5,7 @@ This is a tech-demo project with studying purpose for myself, which consist of
 * Gulp-based build system
 * Frontend test-system based on Karma and mocha
 * Frontend client structure based on ReactJs
+* Data-model and authentication based on Firebase
 
 ### Install and run
 
@@ -14,7 +15,7 @@ This is a tech-demo project with studying purpose for myself, which consist of
 * You should check, that gulp is properly installed with the `gulp -v` command. If it is not, navigate to the project library in the command prompt/terminal if you are not at there, and then `npm install -g gulp`, and after the installation, check again.
 * Start development with gulp by the `gulp` or `gulp watch` command.
 * If you didn't install gulp before, you might get a 'gulp is not internal command' or something like this error, than you have to install the gulp manully as global, with this command: `npm i gulp -g --save`
-* After the first run of the Gulp-based deployment system, a 'Build' directory will be created, which stores all the tested, compiled and concatenated files that needed for the client side. 
+* After the first run of the Gulp-based deployment system, a 'Build' directory will be created, which stores all the tested, compiled and concatenated files that needed for the client side.
 
 ### Build system
 
