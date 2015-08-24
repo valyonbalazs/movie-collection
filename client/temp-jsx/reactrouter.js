@@ -9,7 +9,8 @@ var App = React.createClass({displayName: "App",
     router: React.PropTypes.func
   },
   handleClick: function () {
-      loginBtnClick();
+      //loginBtnClick();
+      loginBtnClickWithoutAuth();
   },
   render: function () {
     var name = this.context.router.getCurrentPath();

@@ -14,6 +14,16 @@ class User {
   }
 }
 
+function loginBtnClickWithoutAuth() {
+  let user = new User("Balázs Valyon", "valyon.balazs@gmail.com", "https://scontent.xx.fbcdn.net/hprofile-xft1/v/l/t1.0-1/p100x100/11173325_10152717398411695_4362251830365448502_n.jpg?oh=c6b8396ae4fec1124209688db19739c2&oe=5638FA7F");
+  renderNavbar();
+  renderElements();
+  React.unmountComponentAtNode(document.getElementById('loginContainer'));
+  var logContainer = document.getElementById('loginContainer');
+  var body = document.body;
+  body.removeChild(logContainer);
+}
+
 var ref = new Firebase("https://brilliant-inferno-2926.firebaseio.com");
 function loginBtnClick() {
   ref.authWithOAuthPopup("facebook", function(error, authData) {

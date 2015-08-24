@@ -55,8 +55,19 @@ $mobileNavBarDivOpenedTransition: visibility 100ms ease-out;
       -webkit-transition: $mobileNavBarDivOpenedTransition;
       -moz-transition: $mobileNavBarDivOpenedTransition;
 
-      ul {
-        padding-left: 0.8em;
+      #navbarOpenProfileImage {
+
+        text-align: center;
+        img {
+          border-radius: 2em;
+        }
+      }
+
+      #navbarOpenLinks {
+
+        ul {
+          padding-left: 0.8em;
+        }
       }
     }
   }
@@ -89,12 +100,28 @@ $mobileNavBarDivOpenedTransition: visibility 100ms ease-out;
       background: $navbarBackground;
       box-shadow: $navbarBoxShadow;
 
+      color: white;
+
+      ul {
+        padding-left: 9em;
+      }
+
       li {
         display: inline;
         padding: 0 1em 0 1em;
         font-size: 1.5em;
         color: white;
       }
+
+      #navbarProfile {
+
+        float: right;
+        img {
+          border-radius: 15px;
+          max-width: 2em;
+        }
+      }
+
     }
   }
 

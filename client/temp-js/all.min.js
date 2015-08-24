@@ -18,6 +18,16 @@ var User = function User(username, email, profilPicUrl) {
   return userInstance;
 };
 
+function loginBtnClickWithoutAuth() {
+  var user = new User("Balázs Valyon", "valyon.balazs@gmail.com", "https://scontent.xx.fbcdn.net/hprofile-xft1/v/l/t1.0-1/p100x100/11173325_10152717398411695_4362251830365448502_n.jpg?oh=c6b8396ae4fec1124209688db19739c2&oe=5638FA7F");
+  renderNavbar();
+  renderElements();
+  React.unmountComponentAtNode(document.getElementById('loginContainer'));
+  var logContainer = document.getElementById('loginContainer');
+  var body = document.body;
+  body.removeChild(logContainer);
+}
+
 var ref = new Firebase("https://brilliant-inferno-2926.firebaseio.com");
 function loginBtnClick() {
   ref.authWithOAuthPopup("facebook", function (error, authData) {
@@ -293,7 +303,7 @@ function renderElements() {
 };
 'use strict';
 
-var menuItems = [{ 'item': 'fa fa-home' }, { 'item': 'fa fa-home' }, { 'item': 'fa fa-home' }];
+var menuItems = [{ 'item': 'fa fa-home,LINK1' }, { 'item': 'fa fa-home,LINK2' }, { 'item': 'fa fa-home,LINK3' }];
 
 //MEDIUM AND HIGH RESOLUTION NAVBAR
 var MenuItem = React.createClass({ displayName: "MenuItem",
@@ -301,7 +311,7 @@ var MenuItem = React.createClass({ displayName: "MenuItem",
     loginBtnClick();
   },
   render: function render() {
-    return React.createElement("li", null, React.createElement("button", { onClick: this.handleClick }, React.createElement("i", { className: this.props.menuItem })));
+    return React.createElement("li", null, React.createElement("i", { className: this.props.menuItemIcon, onClick: this.handleClick }), this.props.menuItemText);
   }
 });
 
@@ -310,13 +320,21 @@ var Navbar = React.createClass({ displayName: "Navbar",
     return { data: menuItems };
   },
   render: function render() {
+    var userProfilPic = userInstance.ProfilePicUrl;
+    var userName = userInstance.UserName;
+    var userEmail = userInstance.Email;
     var menuItemArray = this.state.data.map(function (item) {
       var itemValue = item.item;
-      var uppercaseItem = itemValue.toString().toLowerCase();
-      return React.createElement(MenuItem, { menuItem: uppercaseItem });
+      var splitted = [];
+      splitted = itemValue.split(",");
+      var icon = splitted[0];
+      var text = splitted[1];
+      var lowercaseItemIcon = icon.toLowerCase();
+      var uppercaseItemText = text.toUpperCase();
+      return React.createElement(MenuItem, { menuItemIcon: lowercaseItemIcon, menuItemText: uppercaseItemText });
     });
 
-    return React.createElement("ul", { className: "nav" }, menuItemArray);
+    return React.createElement("div", { className: "nav col-lg-12 col-md-12" }, React.createElement("ul", { className: "col-md-10" }, menuItemArray), React.createElement("div", { id: "navbarProfile", className: "col-md-2" }, userName, " ", React.createElement("img", { src: userProfilPic })));
   }
 });
 
@@ -326,13 +344,23 @@ var NavbarMobileOpen = React.createClass({ displayName: "NavbarMobileOpen",
     return { data: menuItems };
   },
   render: function render() {
+    var userProfilPic = userInstance.ProfilePicUrl;
+    var userName = userInstance.UserName;
+    var userEmail = userInstance.Email;
+    console.log(userProfilPic);
+
     var menuItemArray = this.state.data.map(function (item) {
       var itemValue = item.item;
-      var uppercaseItem = itemValue.toString().toLowerCase();
-      return React.createElement(MenuItem, { menuItem: uppercaseItem });
+      var splitted = [];
+      splitted = itemValue.split(",");
+      var icon = splitted[0];
+      var text = splitted[1];
+      var lowercaseItemIcon = icon.toLowerCase();
+      var uppercaseItemText = text.toUpperCase();
+      return React.createElement(MenuItem, { menuItemIcon: lowercaseItemIcon, menuItemText: uppercaseItemText });
     });
 
-    return React.createElement("div", { id: "navbarDivOpenedDiv", className: "navbarDivOpened col-xs-12" }, React.createElement("ul", { className: "nav" }, menuItemArray));
+    return React.createElement("div", { id: "navbarDivOpenedDiv", className: "navbarDivOpened col-xs-12" }, React.createElement("div", { id: "navbarOpenProfileImage" }, React.createElement("img", { src: userProfilPic }), React.createElement("h4", null, userName), React.createElement("h5", null, userEmail)), React.createElement("div", { id: "navbarOpenLinks" }, React.createElement("ul", { className: "nav" }, menuItemArray)));
   }
 });
 
@@ -372,7 +400,8 @@ var App = React.createClass({ displayName: "App",
     router: React.PropTypes.func
   },
   handleClick: function handleClick() {
-    loginBtnClick();
+    //loginBtnClick();
+    loginBtnClickWithoutAuth();
   },
   render: function render() {
     var name = this.context.router.getCurrentPath();

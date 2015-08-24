@@ -1,7 +1,7 @@
 var menuItems = [
-  {'item': 'fa fa-home'},
-  {'item': 'fa fa-home'},
-  {'item': 'fa fa-home'}
+  {'item': 'fa fa-home,LINK1'},
+  {'item': 'fa fa-home,LINK2'},
+  {'item': 'fa fa-home,LINK3'}
 ];
 
 //MEDIUM AND HIGH RESOLUTION NAVBAR
@@ -12,7 +12,7 @@ var MenuItem = React.createClass({displayName: "MenuItem",
   render: function () {
     return(
       React.createElement("li", null, 
-        React.createElement("button", {onClick: this.handleClick}, React.createElement("i", {className: this.props.menuItem}))
+        React.createElement("i", {className: this.props.menuItemIcon, onClick: this.handleClick}), this.props.menuItemText
       )
     );
   }
@@ -23,17 +23,30 @@ var Navbar = React.createClass({displayName: "Navbar",
     return {data: menuItems};
   },
   render: function () {
+    var userProfilPic = userInstance.ProfilePicUrl;
+    var userName = userInstance.UserName;
+    var userEmail = userInstance.Email;
     var menuItemArray = this.state.data.map(function (item) {
       var itemValue = item.item;
-      var uppercaseItem = itemValue.toString().toLowerCase();
+      var splitted = [];
+      splitted = itemValue.split(",");
+      var icon = splitted[0];
+      var text = splitted[1];
+      var lowercaseItemIcon = icon.toLowerCase();
+      var uppercaseItemText = text.toUpperCase();
       return(
-          React.createElement(MenuItem, {menuItem: uppercaseItem})
+          React.createElement(MenuItem, {menuItemIcon: lowercaseItemIcon, menuItemText: uppercaseItemText})
       );
     });
 
     return(
-      React.createElement("ul", {className: "nav"}, 
-        menuItemArray
+      React.createElement("div", {className: "nav col-lg-12 col-md-12"}, 
+        React.createElement("ul", {className: "col-md-10"}, 
+          menuItemArray
+        ), 
+        React.createElement("div", {id: "navbarProfile", className: "col-md-2"}, 
+        userName, " ", React.createElement("img", {src: userProfilPic})
+        )
       )
     );
   }
@@ -45,19 +58,36 @@ var NavbarMobileOpen =  React.createClass({displayName: "NavbarMobileOpen",
     return {data: menuItems};
   },
   render: function () {
+    var userProfilPic = userInstance.ProfilePicUrl;
+    var userName = userInstance.UserName;
+    var userEmail = userInstance.Email;
+    console.log(userProfilPic);
+
     var menuItemArray = this.state.data.map(function (item) {
       var itemValue = item.item;
-      var uppercaseItem = itemValue.toString().toLowerCase();
+      var splitted = [];
+      splitted = itemValue.split(",");
+      var icon = splitted[0];
+      var text = splitted[1];
+      var lowercaseItemIcon = icon.toLowerCase();
+      var uppercaseItemText = text.toUpperCase();
       return(
-          React.createElement(MenuItem, {menuItem: uppercaseItem})
+          React.createElement(MenuItem, {menuItemIcon: lowercaseItemIcon, menuItemText: uppercaseItemText})
       );
     });
 
     return(
       React.createElement("div", {id: "navbarDivOpenedDiv", className: "navbarDivOpened col-xs-12"}, 
-        React.createElement("ul", {className: "nav"}, 
-          menuItemArray
-        )
+        React.createElement("div", {id: "navbarOpenProfileImage"}, 
+          React.createElement("img", {src: userProfilPic}), 
+          React.createElement("h4", null, userName), 
+          React.createElement("h5", null, userEmail)
+        ), 
+        React.createElement("div", {id: "navbarOpenLinks"}, 
+          React.createElement("ul", {className: "nav"}, 
+            menuItemArray
+          )
+      )
     )
     );
   }

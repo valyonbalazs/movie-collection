@@ -1,7 +1,7 @@
 var menuItems = [
-  {'item': 'fa fa-home'},
-  {'item': 'fa fa-home'},
-  {'item': 'fa fa-home'}
+  {'item': 'fa fa-home,LINK1'},
+  {'item': 'fa fa-home,LINK2'},
+  {'item': 'fa fa-home,LINK3'}
 ];
 
 //MEDIUM AND HIGH RESOLUTION NAVBAR
@@ -12,7 +12,7 @@ var MenuItem = React.createClass({
   render: function () {
     return(
       <li>
-        <button onClick={this.handleClick}><i className={this.props.menuItem}></i></button>
+        <i className={this.props.menuItemIcon} onClick={this.handleClick}></i>{this.props.menuItemText}
       </li>
     );
   }
@@ -23,18 +23,31 @@ var Navbar = React.createClass({
     return {data: menuItems};
   },
   render: function () {
+    var userProfilPic = userInstance.ProfilePicUrl;
+    var userName = userInstance.UserName;
+    var userEmail = userInstance.Email;
     var menuItemArray = this.state.data.map(function (item) {
       var itemValue = item.item;
-      var uppercaseItem = itemValue.toString().toLowerCase();
+      var splitted = [];
+      splitted = itemValue.split(",");
+      var icon = splitted[0];
+      var text = splitted[1];
+      var lowercaseItemIcon = icon.toLowerCase();
+      var uppercaseItemText = text.toUpperCase();
       return(
-          <MenuItem menuItem={uppercaseItem} />
+          <MenuItem menuItemIcon={lowercaseItemIcon} menuItemText={uppercaseItemText}/>
       );
     });
 
     return(
-      <ul className="nav">
-        {menuItemArray}
-      </ul>
+      <div className="nav col-lg-12 col-md-12">
+        <ul className="col-md-10">
+          {menuItemArray}
+        </ul>
+        <div id="navbarProfile" className="col-md-2">
+        {userName} <img src={userProfilPic} />
+        </div>
+      </div>
     );
   }
 });
@@ -45,19 +58,36 @@ var NavbarMobileOpen =  React.createClass({
     return {data: menuItems};
   },
   render: function () {
+    var userProfilPic = userInstance.ProfilePicUrl;
+    var userName = userInstance.UserName;
+    var userEmail = userInstance.Email;
+    console.log(userProfilPic);
+
     var menuItemArray = this.state.data.map(function (item) {
       var itemValue = item.item;
-      var uppercaseItem = itemValue.toString().toLowerCase();
+      var splitted = [];
+      splitted = itemValue.split(",");
+      var icon = splitted[0];
+      var text = splitted[1];
+      var lowercaseItemIcon = icon.toLowerCase();
+      var uppercaseItemText = text.toUpperCase();
       return(
-          <MenuItem menuItem={uppercaseItem} />
+          <MenuItem menuItemIcon={lowercaseItemIcon} menuItemText={uppercaseItemText}/>
       );
     });
 
     return(
       <div id="navbarDivOpenedDiv" className="navbarDivOpened col-xs-12">
-        <ul className="nav">
-          {menuItemArray}
-        </ul>
+        <div id="navbarOpenProfileImage" >
+          <img src={userProfilPic} />
+          <h4>{userName}</h4>
+          <h5>{userEmail}</h5>
+        </div>
+        <div id="navbarOpenLinks">
+          <ul className="nav">
+            {menuItemArray}
+          </ul>
+      </div>
     </div>
     );
   }
