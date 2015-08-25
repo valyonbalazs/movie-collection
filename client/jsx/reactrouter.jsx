@@ -9,8 +9,8 @@ var App = React.createClass({
     router: React.PropTypes.func
   },
   handleClick: function () {
-      //loginBtnClick();
-      loginBtnClickWithoutAuth();
+      loginBtnClick();
+      //loginBtnClickWithoutAuth();
   },
   render: function () {
     var name = this.context.router.getCurrentPath();

@@ -34,13 +34,17 @@ function loginBtnClick() {
     if (error) {
       console.log("Login Failed!", error);
     } else {
-      console.log("Authenticated successfully with payload:", authData);
       var facebookLoginData = authData.facebook;
       var userName = facebookLoginData.displayName;
       var userEmail = facebookLoginData.email;
       var userProfilePicUrl = facebookLoginData.profileImageURL;
       var user = new User(userName, userEmail, userProfilePicUrl);
-      console.log(user);
+
+      ref.child("users").child(authData.uid).set({
+        provider: authData.provider,
+        name: getName(authData)
+      });
+
       renderNavbar();
       renderElements();
       React.unmountComponentAtNode(document.getElementById('loginContainer'));
@@ -52,6 +56,17 @@ function loginBtnClick() {
     remember: "sessionOnly",
     scope: "email,user_likes"
   });
+}
+
+function getName(authData) {
+  switch (authData.provider) {
+    case 'password':
+      return authData.password.email.replace(/@.*/, '');
+    case 'twitter':
+      return authData.twitter.displayName;
+    case 'facebook':
+      return authData.facebook.displayName;
+  }
 }
 /*jshint esnext: true */
 
@@ -400,8 +415,8 @@ var App = React.createClass({ displayName: "App",
     router: React.PropTypes.func
   },
   handleClick: function handleClick() {
-    //loginBtnClick();
-    loginBtnClickWithoutAuth();
+    loginBtnClick();
+    //loginBtnClickWithoutAuth();
   },
   render: function render() {
     var name = this.context.router.getCurrentPath();
