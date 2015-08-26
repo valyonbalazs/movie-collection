@@ -1,4 +1,4 @@
-/*jshint esnext: true */
+/* jshint esnext: true */
 (function pageLoad () {
 
   if (localStorage.uid) {
@@ -8,7 +8,7 @@
         renderPage.removeLoginContainer();
     });
   } else {
-    document.addEventListener("DOMContentLoaded", function(event) {
+      document.addEventListener("DOMContentLoaded", function(event) {
       renderPage.renderLoginPage();
     });
   }

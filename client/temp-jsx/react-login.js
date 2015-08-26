@@ -6,7 +6,7 @@ let Login = React.createClass({displayName: "Login",
   render: function () {
     return (
       React.createElement("div", {id: "loginInnerDiv", className: "col-lg-3 col-md-3 col-xs-8 center"}, 
-        React.createElement("h3", null, "Log in"), 
+        React.createElement("h3", null, "Log in with"), 
         React.createElement("button", {className: "btn btn-primary", onClick: this.handleClick}, "Facebook")
       )
     );

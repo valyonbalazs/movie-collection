@@ -1,9 +1,9 @@
-/*jshint esnext: true */
+/* jshint esnext: true */
 
-//Making the User a Singleton object
-"use strict";
+// Making the User a Singleton object
+'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var userInstance = null;
 
@@ -20,24 +20,20 @@ var User = function User(username, email, profilPicUrl) {
   return userInstance;
 };
 
-var ref = new Firebase("https://brilliant-inferno-2926.firebaseio.com");
+var ref = new Firebase('https://brilliant-inferno-2926.firebaseio.com');
 var login = {
   saveUserTokenToLocalStorage: function saveUserTokenToLocalStorage() {
-    localStorage.setItem("uid", uid);
+    localStorage.setItem('uid', uid);
   },
   saveUserDataToLocalStorage: function saveUserDataToLocalStorage() {
     localStorage.userName = name;
     localStorage.userEmail = email;
     localStorage.imageUrl = imageUrl;
   },
-  loginBtnClickWithoutAuth: function loginBtnClickWithoutAuth() {
-    var user = new User("Balázs Valyon", "valyon.balazs@gmail.com", "https://scontent.xx.fbcdn.net/hprofile-xft1/v/l/t1.0-1/p100x100/11173325_10152717398411695_4362251830365448502_n.jpg?oh=c6b8396ae4fec1124209688db19739c2&oe=5638FA7F");
-    renderPage.removeLoginpage();
-  },
   loginBtnClick: function loginBtnClick() {
-    ref.authWithOAuthPopup("facebook", function (error, authData) {
+    ref.authWithOAuthPopup('facebook', function (error, authData) {
       if (error) {
-        console.log("Login Failed!", error);
+        console.log('Login Failed!', error);
       } else {
         var facebookLoginData = authData.facebook;
         var userName = facebookLoginData.displayName;
@@ -45,7 +41,7 @@ var login = {
         var userProfilePicUrl = facebookLoginData.profileImageURL;
         var user = new User(userName, userEmail, userProfilePicUrl);
 
-        ref.child("users").child(authData.uid).set({
+        ref.child('users').child(authData.uid).set({
           provider: authData.provider,
           name: login.getName(authData)
         });
@@ -54,33 +50,39 @@ var login = {
         renderPage.removeLoginpage();
       }
     }, {
-      remember: "sessionOnly",
-      scope: "email,user_likes"
+      remember: 'sessionOnly',
+      scope: 'email,user_likes'
     });
   },
   getName: function getName() {
     switch (authData.provider) {
       case 'password':
-        return authData.password.email.replace(/@.*/, '');
+        {
+          return authData.password.email.replace(/@.*/, '');
+        }
       case 'twitter':
-        return authData.twitter.displayName;
+        {
+          return authData.twitter.displayName;
+        }
       case 'facebook':
-        return authData.facebook.displayName;
+        {
+          return authData.facebook.displayName;
+        }
     }
   }
 };
-/*jshint esnext: true */
+/* jshint esnext: true */
 
-"use strict";
+'use strict';
 
-var starterMovieTitles = [{ title: "blade runner" }, { title: "avengers" }, { title: "batman" }, { title: "star wars episode iv" }, { title: "star wars episode iii" }, { title: "schindler's list" }, { title: "gladiator" }, { title: "men in black" }, { title: "django" }, { title: "alien" }, { title: "predator" }, { title: "jurassic park" }];
+var starterMovieTitles = [{ title: 'blade runner' }, { title: 'avengers' }, { title: 'batman' }, { title: 'star wars episode iv' }, { title: 'star wars episode iii' }, { title: 'schindler\'s list' }, { title: 'gladiator' }, { title: 'men in black' }, { title: 'djangov' }, { title: 'alien' }, { title: 'predator' }, { title: 'jurassic park' }];
 
 var movieListData = [];
-/*jshint esnext: true */
+/* jshint esnext: true */
 
-"use strict";
+'use strict';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var MovieElement = function MovieElement(title, overview, rating, publishDate, backdropPath, posterPath) {
   _classCallCheck(this, MovieElement);
@@ -100,8 +102,8 @@ var movies = {
     var voteCount = 0;
     for (var key in result) {
       var item = result[key];
-      if (item !== null && item.hasOwnProperty("vote_count")) {
-        if (parseInt(item.vote_count) > voteCount) {
+      if (item !== null && item.hasOwnProperty('vote_count')) {
+        if (parseInt(item.vote_count, 10) > voteCount) {
           voteCount = item.vote_count;
           maxVoted = item;
         }
@@ -110,12 +112,12 @@ var movies = {
     return maxVoted;
   },
   createImageUrl: function createImageUrl(endOfTheUrl) {
-    var url = "http://image.tmdb.org/t/p/w500" + endOfTheUrl;
+    var url = 'http://image.tmdb.org/t/p/w500' + endOfTheUrl;
     return url;
   },
   createMovieUrl: function createMovieUrl(movieTitle) {
-    var api_key = "&api_key=4a8dce0b18b88827ffbc32dee5b66838";
-    var urlFirstPart = "https://api.themoviedb.org/3/search/movie?query=";
+    var api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
+    var urlFirstPart = 'https://api.themoviedb.org/3/search/movie?query=';
     var url = urlFirstPart + movieTitle + api_key;
     return url;
   },
@@ -123,7 +125,7 @@ var movies = {
     var originalOverview = overview;
     var newOverview = undefined;
     if (originalOverview.length > 150) {
-      newOverview = originalOverview.substr(0, 130) + "...";
+      newOverview = originalOverview.substr(0, 130) + '...';
       return newOverview;
     } else {
       return originalOverview;
@@ -140,7 +142,7 @@ var movies = {
     return newTitle;
   }
 };
-/*jshint esnext: true */
+/* jshint esnext: true */
 "use strict";
 
 (function pageLoad() {
@@ -157,7 +159,7 @@ var movies = {
     });
   }
 })();
-/*jshint esnext: true */
+/* jshint esnext: true */
 'use strict';
 
 var renderPage = {
@@ -198,7 +200,7 @@ var Login = React.createClass({ displayName: "Login",
     login.loginBtnClick();
   },
   render: function render() {
-    return React.createElement("div", { id: "loginInnerDiv", className: "col-lg-3 col-md-3 col-xs-8 center" }, React.createElement("h3", null, "Log in"), React.createElement("button", { className: "btn btn-primary", onClick: this.handleClick }, "Facebook"));
+    return React.createElement("div", { id: "loginInnerDiv", className: "col-lg-3 col-md-3 col-xs-8 center" }, React.createElement("h3", null, "Log in with"), React.createElement("button", { className: "btn btn-primary", onClick: this.handleClick }, "Facebook"));
   }
 });
 

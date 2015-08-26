@@ -6,7 +6,7 @@ let Login = React.createClass({
   render: function () {
     return (
       <div id="loginInnerDiv" className="col-lg-3 col-md-3 col-xs-8 center">
-        <h3>Log in</h3>
+        <h3>Log in with</h3> 
         <button className="btn btn-primary" onClick={this.handleClick}>Facebook</button>
       </div>
     );
