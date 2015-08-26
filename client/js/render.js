@@ -1,5 +1,5 @@
 /*jshint esnext: true */
-var renderPage = {
+let renderPage = {
   renderMoviePage: function () {
     renderAllNavbar();
     renderElements();
@@ -8,8 +8,8 @@ var renderPage = {
     renderPage.renderAllNavbar();
     renderPage.renderElements();
     React.unmountComponentAtNode(document.getElementById('loginContainer'));
-    var logContainer = document.getElementById('loginContainer');
-    var body = document.body;
+    let logContainer = document.getElementById('loginContainer');
+    let body = document.body;
     body.removeChild(logContainer);
   }
 };

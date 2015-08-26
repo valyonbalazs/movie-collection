@@ -1,11 +1,13 @@
-var menuItems = [
+/*jshint esnext: true */
+
+let menuItems = [
   {'item': 'fa fa-home,LINK1'},
   {'item': 'fa fa-home,LINK2'},
   {'item': 'fa fa-home,LINK3'}
 ];
 
 //MEDIUM AND HIGH RESOLUTION NAVBAR
-var MenuItem = React.createClass({
+let MenuItem = React.createClass({
   handleClick: function () {
     loginBtnClick();
   },
@@ -18,22 +20,22 @@ var MenuItem = React.createClass({
   }
 });
 
-var Navbar = React.createClass({
+let Navbar = React.createClass({
   getInitialState: function () {
     return {data: menuItems};
   },
   render: function () {
-    var userProfilPic = userInstance.ProfilePicUrl;
-    var userName = userInstance.UserName;
-    var userEmail = userInstance.Email;
-    var menuItemArray = this.state.data.map(function (item) {
-      var itemValue = item.item;
-      var splitted = [];
+    let userProfilPic = userInstance.ProfilePicUrl;
+    let userName = userInstance.UserName;
+    let userEmail = userInstance.Email;
+    let menuItemArray = this.state.data.map(function (item) {
+      let itemValue = item.item;
+      let splitted = [];
       splitted = itemValue.split(",");
-      var icon = splitted[0];
-      var text = splitted[1];
-      var lowercaseItemIcon = icon.toLowerCase();
-      var uppercaseItemText = text.toUpperCase();
+      let icon = splitted[0];
+      let text = splitted[1];
+      let lowercaseItemIcon = icon.toLowerCase();
+      let uppercaseItemText = text.toUpperCase();
       return(
           <MenuItem menuItemIcon={lowercaseItemIcon} menuItemText={uppercaseItemText}/>
       );
@@ -53,24 +55,24 @@ var Navbar = React.createClass({
 });
 
 //SMALL OR MOBILE RESOLUTION NAVBAR
-var NavbarMobileOpen =  React.createClass({
+let NavbarMobileOpen =  React.createClass({
   getInitialState: function () {
     return {data: menuItems};
   },
   render: function () {
-    var userProfilPic = userInstance.ProfilePicUrl;
-    var userName = userInstance.UserName;
-    var userEmail = userInstance.Email;
+    let userProfilPic = userInstance.ProfilePicUrl;
+    let userName = userInstance.UserName;
+    let userEmail = userInstance.Email;
     console.log(userProfilPic);
 
-    var menuItemArray = this.state.data.map(function (item) {
-      var itemValue = item.item;
-      var splitted = [];
+    let menuItemArray = this.state.data.map(function (item) {
+      let itemValue = item.item;
+      let splitted = [];
       splitted = itemValue.split(",");
-      var icon = splitted[0];
-      var text = splitted[1];
-      var lowercaseItemIcon = icon.toLowerCase();
-      var uppercaseItemText = text.toUpperCase();
+      let icon = splitted[0];
+      let text = splitted[1];
+      let lowercaseItemIcon = icon.toLowerCase();
+      let uppercaseItemText = text.toUpperCase();
       return(
           <MenuItem menuItemIcon={lowercaseItemIcon} menuItemText={uppercaseItemText}/>
       );
@@ -93,8 +95,8 @@ var NavbarMobileOpen =  React.createClass({
   }
 });
 
-var opened = false;
-var NavbarMobileClosed = React.createClass({
+let opened = false;
+let NavbarMobileClosed = React.createClass({
   handleClick: function (event) {
     if(opened == false) {
       opened = true;

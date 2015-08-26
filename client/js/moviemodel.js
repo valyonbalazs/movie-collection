@@ -9,39 +9,15 @@ class MovieElement {
     this.backdrop = backdropPath;
     this.poster = posterPath;
   }
-
-  getTitle() {
-    return this.title;
-  }
-
-  getOverview() {
-    return this.overview;
-  }
-
-  getRating() {
-    return this.rating;
-  }
-
-  getPublishDate() {
-    return this.publishDate;
-  }
-
-  getBackdropPath() {
-    return this.backdropPath;
-  }
-
-  getPosterPath() {
-    return this.posterPath;
-  }
 }
 
-var movies = {
+let movies = {
   getMaxVotedElement: function(moviesResult) {
-    var result = moviesResult.results;
-    var maxVoted;
-    var voteCount = 0;
+    let result = moviesResult.results;
+    let maxVoted;
+    let voteCount = 0;
     for (var key in result) {
-      var item = result[key];
+      let item = result[key];
       if ((item !== null) && (item.hasOwnProperty("vote_count"))) {
         if (parseInt(item.vote_count) > voteCount) {
           voteCount = item.vote_count;
@@ -52,18 +28,18 @@ var movies = {
     return maxVoted;
   },
   createImageUrl: function(endOfTheUrl) {
-    var url = "http://image.tmdb.org/t/p/w500" + endOfTheUrl;
+    let url = "http://image.tmdb.org/t/p/w500" + endOfTheUrl;
     return url;
   },
   createMovieUrl: function(movieTitle) {
-    var api_key = "&api_key=4a8dce0b18b88827ffbc32dee5b66838";
-    var urlFirstPart = "https://api.themoviedb.org/3/search/movie?query=";
-    var url = urlFirstPart + movieTitle + api_key;
+    let api_key = "&api_key=4a8dce0b18b88827ffbc32dee5b66838";
+    let urlFirstPart = "https://api.themoviedb.org/3/search/movie?query=";
+    let url = urlFirstPart + movieTitle + api_key;
     return url;
   },
   modifyOverview: function(overview) {
-    var originalOverview = overview;
-    var newOverview;
+    let originalOverview = overview;
+    let newOverview;
     if(originalOverview.length > 150) {
       newOverview = originalOverview.substr(0,130) + "...";
       return newOverview;
@@ -73,13 +49,13 @@ var movies = {
     }
   },
   modifyReleaseDate: function(releaseDate) {
-    var originalReleaseDate = releaseDate;
-    var newReleaseDate = originalReleaseDate.substr(0,4);
+    let originalReleaseDate = releaseDate;
+    let newReleaseDate = originalReleaseDate.substr(0,4);
     return newReleaseDate;
   },
   modifyTitle: function (title) {
-    var originalTitle = title;
-    var newTitle = originalTitle.substr(0,22);
+    let originalTitle = title;
+    let newTitle = originalTitle.substr(0,22);
     return newTitle;
   }
 };

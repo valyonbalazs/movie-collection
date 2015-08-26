@@ -1,4 +1,6 @@
 /*jshint esnext: true */
+
+//Making the User a Singleton object
 "use strict";
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -71,61 +73,23 @@ var login = {
 
 "use strict";
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var MovieElement = (function () {
-  function MovieElement(title, overview, rating, publishDate, backdropPath, posterPath) {
-    _classCallCheck(this, MovieElement);
+var MovieElement = function MovieElement(title, overview, rating, publishDate, backdropPath, posterPath) {
+  _classCallCheck(this, MovieElement);
 
-    this.title = title;
-    this.description = overview;
-    this.rating = rating;
-    this.year = publishDate;
-    this.backdrop = backdropPath;
-    this.poster = posterPath;
-  }
-
-  _createClass(MovieElement, [{
-    key: "getTitle",
-    value: function getTitle() {
-      return this.title;
-    }
-  }, {
-    key: "getOverview",
-    value: function getOverview() {
-      return this.overview;
-    }
-  }, {
-    key: "getRating",
-    value: function getRating() {
-      return this.rating;
-    }
-  }, {
-    key: "getPublishDate",
-    value: function getPublishDate() {
-      return this.publishDate;
-    }
-  }, {
-    key: "getBackdropPath",
-    value: function getBackdropPath() {
-      return this.backdropPath;
-    }
-  }, {
-    key: "getPosterPath",
-    value: function getPosterPath() {
-      return this.posterPath;
-    }
-  }]);
-
-  return MovieElement;
-})();
+  this.title = title;
+  this.description = overview;
+  this.rating = rating;
+  this.year = publishDate;
+  this.backdrop = backdropPath;
+  this.poster = posterPath;
+};
 
 var movies = {
   getMaxVotedElement: function getMaxVotedElement(moviesResult) {
     var result = moviesResult.results;
-    var maxVoted;
+    var maxVoted = undefined;
     var voteCount = 0;
     for (var key in result) {
       var item = result[key];
@@ -150,7 +114,7 @@ var movies = {
   },
   modifyOverview: function modifyOverview(overview) {
     var originalOverview = overview;
-    var newOverview;
+    var newOverview = undefined;
     if (originalOverview.length > 150) {
       newOverview = originalOverview.substr(0, 130) + "...";
       return newOverview;
@@ -173,6 +137,7 @@ var movies = {
 "use strict";
 
 (function pageLoad() {
+
   if (localStorage.uid) {
     var user = new User(localStorage.userName, localStorage.userEmail, localStorage.imageUrl);
     document.addEventListener("DOMContentLoaded", function (event) {
@@ -201,6 +166,7 @@ var renderPage = {
     body.removeChild(logContainer);
   }
 };
+/*jshint esnext: true */
 "use strict";
 
 var Login = React.createClass({ displayName: "Login",
@@ -215,6 +181,7 @@ var Login = React.createClass({ displayName: "Login",
 function renderLoginPage() {
   React.render(React.createElement(Login, null), document.getElementById('loginContainer'));
 }
+/*jshint esnext: true */
 "use strict";
 
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
@@ -337,7 +304,7 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
     };
   },
   success: function success(data) {
-    var movieData;
+    var movieData = undefined;
     movieData = JSON.parse(data);
     var bestVoted = movies.getMaxVotedElement(movieData);
     var title = movies.modifyTitle(bestVoted.title);
@@ -361,6 +328,8 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
 function renderElements() {
   React.render(React.createElement(MoviesContainer, null), document.getElementById("innerContainer"));
 };
+/*jshint esnext: true */
+
 'use strict';
 
 var menuItems = [{ 'item': 'fa fa-home,LINK1' }, { 'item': 'fa fa-home,LINK2' }, { 'item': 'fa fa-home,LINK3' }];

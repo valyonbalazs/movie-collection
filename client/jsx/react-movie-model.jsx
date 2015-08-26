@@ -1,6 +1,7 @@
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+/*jshint esnext: true */
+let ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
-var starterMovieTitles = [
+let starterMovieTitles = [
   {title: "blade runner"},
   {title: "avengers"},
   {title: "batman"},
@@ -18,11 +19,11 @@ var starterMovieTitles = [
   {title: "blade runner"}
 ];*/
 
-var movieListData = [];
+let movieListData = [];
 
-var Poster = React.createClass({
+let Poster = React.createClass({
   render: function() {
-    var posterPath = this.props.path;
+    let posterPath = this.props.path;
     return (
       <div className="col-lg-2 col-md-2 col-xs-3 poster">
         <img src={posterPath} />
@@ -31,7 +32,7 @@ var Poster = React.createClass({
   }
 });
 
-var Title = React.createClass({
+let Title = React.createClass({
   render: function() {
     return(
       <h3 className="title">{this.props.title}</h3>
@@ -39,7 +40,7 @@ var Title = React.createClass({
   }
 });
 
-var Description = React.createClass({
+let Description = React.createClass({
   render: function() {
     return(
       <h5 className="description">{this.props.description}</h5>
@@ -47,10 +48,10 @@ var Description = React.createClass({
   }
 });
 
-var TextContainer = React.createClass({
+let TextContainer = React.createClass({
   render: function() {
-    var title = this.props.data.title;
-    var description = this.props.data.description;
+    let title = this.props.data.title;
+    let description = this.props.data.description;
     return(
       <div className="col-lg-8 col-md-8 col-xs-9 textContainer">
         <Title title={title} />
@@ -60,7 +61,7 @@ var TextContainer = React.createClass({
   }
 });
 
-var Rating = React.createClass({
+let Rating = React.createClass({
   render: function() {
     return(
       <h3 className="rating">
@@ -71,7 +72,7 @@ var Rating = React.createClass({
   }
 });
 
-var PublishYear = React.createClass({
+let PublishYear = React.createClass({
   render: function() {
     return(
       <h3 className="publishYear">
@@ -82,7 +83,7 @@ var PublishYear = React.createClass({
   }
 });
 
-var RatingYearContainer = React.createClass({
+let RatingYearContainer = React.createClass({
   render: function(){
     return(
       <div className="col-lg-2 col-md-2 col-xs-3 ratingYearContainer">
@@ -93,9 +94,9 @@ var RatingYearContainer = React.createClass({
   }
 });
 
-var DetailsContainer = React.createClass({
+let DetailsContainer = React.createClass({
   render: function() {
-    var movieData = this.props.data;
+    let movieData = this.props.data;
     return(
       <div className="col-lg-12 col-md-12 col-xs-12 detailsContainer">
         <Poster path={movieData.poster} />
@@ -106,9 +107,9 @@ var DetailsContainer = React.createClass({
   }
 });
 
-var Backdrop = React.createClass({
+let Backdrop = React.createClass({
   render: function() {
-    var backdropPath = this.props.backdrop;
+    let backdropPath = this.props.backdrop;
     return(
       <div className="col-lg-12 col-md-12 col-xs-12 backdrop">
         <img src={backdropPath} />
@@ -117,7 +118,7 @@ var Backdrop = React.createClass({
   }
 });
 
-var Movie = React.createClass({
+let Movie = React.createClass({
   render: function() {
     return(
       <div className="col-lg-4 col-md-6 col-xs-12 movie">
@@ -128,7 +129,7 @@ var Movie = React.createClass({
   }
 });
 
-var MoviesContainer = React.createClass({
+let MoviesContainer = React.createClass({
   getInitialState: function() {
     return {data: []};
   },
@@ -138,18 +139,18 @@ var MoviesContainer = React.createClass({
   loadMovies: function() {
     movieListData = [];
     for (var key in starterMovieTitles) {
-      var title = starterMovieTitles[key].title;
+      let title = starterMovieTitles[key].title;
       this.ajax(movies.createMovieUrl(title))
         .get()
         .then(this.success);
     }
   },
   ajax: function(url) {
-    var core = {
+    let core = {
       ajax: function(method, url, args) {
-        var promise = new Promise(function(resolve, reject) {
-          var client = new XMLHttpRequest();
-          var uri = url;
+        let promise = new Promise(function(resolve, reject) {
+          let client = new XMLHttpRequest();
+          let uri = url;
           if (method === "GET") {
             client.open(method, uri);
             client.send();
@@ -176,15 +177,15 @@ var MoviesContainer = React.createClass({
     };
   },
   success: function(data) {
-    var movieData;
+    let movieData;
     movieData = JSON.parse(data);
-    var bestVoted = movies.getMaxVotedElement(movieData);
-    var title = movies.modifyTitle(bestVoted.title);
-    var backdropPath = movies.createImageUrl(bestVoted.backdrop_path);
-    var posterPath = movies.createImageUrl(bestVoted.poster_path);
-    var overview = movies.modifyOverview(bestVoted.overview);
-    var releaseDate = movies.modifyReleaseDate(bestVoted.release_date);
-    var movie = new MovieElement(
+    let bestVoted = movies.getMaxVotedElement(movieData);
+    let title = movies.modifyTitle(bestVoted.title);
+    let backdropPath = movies.createImageUrl(bestVoted.backdrop_path);
+    let posterPath = movies.createImageUrl(bestVoted.poster_path);
+    let overview = movies.modifyOverview(bestVoted.overview);
+    let releaseDate = movies.modifyReleaseDate(bestVoted.release_date);
+    let movie = new MovieElement(
       title,
       overview,
       bestVoted.vote_average,
@@ -196,7 +197,7 @@ var MoviesContainer = React.createClass({
     this.setState({data: movieListData});
   },
   render: function () {
-      var moviesArray = this.state.data.map(function (movie) {
+      let moviesArray = this.state.data.map(function (movie) {
         return (
           <Movie movie={movie} />
         );

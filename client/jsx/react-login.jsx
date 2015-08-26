@@ -1,4 +1,5 @@
-var Login = React.createClass({
+/*jshint esnext: true */
+let Login = React.createClass({
   handleClick: function () {
     login.loginBtnClick();
   },

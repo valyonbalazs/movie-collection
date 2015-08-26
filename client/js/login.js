@@ -1,4 +1,6 @@
 /*jshint esnext: true */
+
+//Making the User a Singleton object
 let userInstance = null;
 class User {
   constructor(username, email, profilPicUrl) {
@@ -14,8 +16,8 @@ class User {
   }
 }
 
-var ref = new Firebase("https://brilliant-inferno-2926.firebaseio.com");
-var login = {
+let ref = new Firebase("https://brilliant-inferno-2926.firebaseio.com");
+let login = {
   saveUserTokenToLocalStorage: function () {
       localStorage.setItem("uid", uid);
   },
@@ -33,10 +35,10 @@ var login = {
       if (error) {
         console.log("Login Failed!", error);
       } else {
-        var facebookLoginData = authData.facebook;
-        var userName = facebookLoginData.displayName;
-        var userEmail = facebookLoginData.email;
-        var userProfilePicUrl = facebookLoginData.profileImageURL;
+        let facebookLoginData = authData.facebook;
+        let userName = facebookLoginData.displayName;
+        let userEmail = facebookLoginData.email;
+        let userProfilePicUrl = facebookLoginData.profileImageURL;
         let user = new User(userName, userEmail, userProfilePicUrl);
 
         ref.child("users").child(authData.uid).set({
