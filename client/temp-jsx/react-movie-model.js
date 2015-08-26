@@ -1,26 +1,6 @@
 /*jshint esnext: true */
 let ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
-let starterMovieTitles = [
-  {title: "blade runner"},
-  {title: "avengers"},
-  {title: "batman"},
-  {title: "star wars episode iv"},
-  {title: "star wars episode iii"},
-  {title: "schindler's list"},
-  {title: "gladiator"},
-  {title: "men in black"},
-  {title: "django"},
-  {title: "alien"},
-  {title: "predator"},
-  {title: "jurassic park"}
-];
-/*var starterMovieTitles = [
-  {title: "blade runner"}
-];*/
-
-let movieListData = [];
-
 let Poster = React.createClass({displayName: "Poster",
   render: function() {
     let posterPath = this.props.path;

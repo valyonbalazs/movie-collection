@@ -73,6 +73,13 @@ var login = {
 
 "use strict";
 
+var starterMovieTitles = [{ title: "blade runner" }, { title: "avengers" }, { title: "batman" }, { title: "star wars episode iv" }, { title: "star wars episode iii" }, { title: "schindler's list" }, { title: "gladiator" }, { title: "men in black" }, { title: "django" }, { title: "alien" }, { title: "predator" }, { title: "jurassic park" }];
+
+var movieListData = [];
+/*jshint esnext: true */
+
+"use strict";
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var MovieElement = function MovieElement(title, overview, rating, publishDate, backdropPath, posterPath) {
@@ -185,13 +192,6 @@ function renderLoginPage() {
 "use strict";
 
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-
-var starterMovieTitles = [{ title: "blade runner" }, { title: "avengers" }, { title: "batman" }, { title: "star wars episode iv" }, { title: "star wars episode iii" }, { title: "schindler's list" }, { title: "gladiator" }, { title: "men in black" }, { title: "django" }, { title: "alien" }, { title: "predator" }, { title: "jurassic park" }];
-/*var starterMovieTitles = [
-  {title: "blade runner"}
-];*/
-
-var movieListData = [];
 
 var Poster = React.createClass({ displayName: "Poster",
   render: function render() {
