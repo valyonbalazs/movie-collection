@@ -149,6 +149,7 @@ var movies = {
     var user = new User(localStorage.userName, localStorage.userEmail, localStorage.imageUrl);
     document.addEventListener("DOMContentLoaded", function (event) {
       renderPage.renderMoviePage();
+      renderPage.removeLoginContainer();
     });
   } else {
     document.addEventListener("DOMContentLoaded", function (event) {
@@ -164,10 +165,26 @@ var renderPage = {
     renderAllNavbar();
     renderElements();
   },
+  renderLoginPage: (function (_renderLoginPage) {
+    function renderLoginPage() {
+      return _renderLoginPage.apply(this, arguments);
+    }
+
+    renderLoginPage.toString = function () {
+      return _renderLoginPage.toString();
+    };
+
+    return renderLoginPage;
+  })(function () {
+    renderLoginPage();
+  }),
   removeLoginpage: function removeLoginpage() {
+    React.unmountComponentAtNode(document.getElementById('loginContainer'));
+    renderPage.removeLoginContainer();
     renderPage.renderAllNavbar();
     renderPage.renderElements();
-    React.unmountComponentAtNode(document.getElementById('loginContainer'));
+  },
+  removeLoginContainer: function removeLoginContainer() {
     var logContainer = document.getElementById('loginContainer');
     var body = document.body;
     body.removeChild(logContainer);
