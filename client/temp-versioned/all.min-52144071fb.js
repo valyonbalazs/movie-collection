@@ -143,18 +143,18 @@ var movies = {
   }
 };
 /* jshint esnext: true */
-"use strict";
+'use strict';
 
 (function pageLoad() {
 
   if (localStorage.uid) {
     var user = new User(localStorage.userName, localStorage.userEmail, localStorage.imageUrl);
-    document.addEventListener("DOMContentLoaded", function (event) {
+    document.addEventListener('DOMContentLoaded', function (event) {
       renderPage.renderMoviePage();
       renderPage.removeLoginContainer();
     });
   } else {
-    document.addEventListener("DOMContentLoaded", function (event) {
+    document.addEventListener('DOMContentLoaded', function (event) {
       renderPage.renderLoginPage();
     });
   }

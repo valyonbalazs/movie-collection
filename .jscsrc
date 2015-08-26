@@ -28,5 +28,6 @@
     "disallowTrailingWhitespace": true,
     "disallowMultipleSpaces": true,
     "disallowSpaceBeforePostfixUnaryOperators": ["++", "--"],
-    "disallowTrailingComma": true
+    "disallowTrailingComma": true,
+    "esnext": true
 }

@@ -268,7 +268,7 @@ gulp.task('versioning', ['build:scss'] ,  function () {
 gulp.task('build', function (cb) {
   runSequence(
     'clean',
-    ['lint'],
+    ['lint', 'jscs'],
     'build:jsx',
     ['build:scss', 'build:js'],
     'versioning',
