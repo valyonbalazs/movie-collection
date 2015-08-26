@@ -1,4 +1,4 @@
-var Route = ReactRouter.Route;
+/*var Route = ReactRouter.Route;
 var routes = ReactRouter.Routes;
 var RouteHandler = ReactRouter.RouteHandler;
 var Link = ReactRouter.Link;
@@ -38,4 +38,4 @@ var routes = (
 
 ReactRouter.run(routes, function (Handler) {
   React.render(<Handler/>, document.getElementById('loginContainer'));
-});
+});*/

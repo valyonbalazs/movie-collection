@@ -18,14 +18,46 @@ var User = function User(username, email, profilPicUrl) {
   return userInstance;
 };
 
-function loginBtnClickWithoutAuth() {
-  var user = new User("Balázs Valyon", "valyon.balazs@gmail.com", "https://scontent.xx.fbcdn.net/hprofile-xft1/v/l/t1.0-1/p100x100/11173325_10152717398411695_4362251830365448502_n.jpg?oh=c6b8396ae4fec1124209688db19739c2&oe=5638FA7F");
-  renderNavbar();
+(function pageLoad() {
+  if (localStorage.uid) {
+    var user = new User(localStorage.userName, localStorage.userEmail, localStorage.imageUrl);
+    document.addEventListener("DOMContentLoaded", function (event) {
+      renderMoviePage();
+    });
+  } else {
+    document.addEventListener("DOMContentLoaded", function (event) {
+      renderLoginPage();
+    });
+  }
+})();
+
+function saveUserTokenToLocalStorage(uid) {
+  localStorage.setItem("uid", uid);
+}
+
+function saveUserDataToLocalStorage(name, email, imageUrl) {
+  localStorage.userName = name;
+  localStorage.userEmail = email;
+  localStorage.imageUrl = imageUrl;
+}
+
+function renderMoviePage() {
+  renderAllNavbar();
+  renderElements();
+}
+
+function removeLoginpage() {
+  renderAllNavbar();
   renderElements();
   React.unmountComponentAtNode(document.getElementById('loginContainer'));
   var logContainer = document.getElementById('loginContainer');
   var body = document.body;
   body.removeChild(logContainer);
+}
+
+function loginBtnClickWithoutAuth() {
+  var user = new User("Balázs Valyon", "valyon.balazs@gmail.com", "https://scontent.xx.fbcdn.net/hprofile-xft1/v/l/t1.0-1/p100x100/11173325_10152717398411695_4362251830365448502_n.jpg?oh=c6b8396ae4fec1124209688db19739c2&oe=5638FA7F");
+  removeLoginpage();
 }
 
 var ref = new Firebase("https://brilliant-inferno-2926.firebaseio.com");
@@ -44,13 +76,9 @@ function loginBtnClick() {
         provider: authData.provider,
         name: getName(authData)
       });
-
-      renderNavbar();
-      renderElements();
-      React.unmountComponentAtNode(document.getElementById('loginContainer'));
-      var logContainer = document.getElementById('loginContainer');
-      var body = document.body;
-      body.removeChild(logContainer);
+      saveUserTokenToLocalStorage(authData.uid);
+      saveUserDataToLocalStorage(userName, userEmail, userProfilePicUrl);
+      removeLoginpage();
     }
   }, {
     remember: "sessionOnly",
@@ -170,6 +198,20 @@ var movies = {
     return newTitle;
   }
 };
+"use strict";
+
+var Login = React.createClass({ displayName: "Login",
+  handleClick: function handleClick() {
+    loginBtnClick();
+  },
+  render: function render() {
+    return React.createElement("div", { id: "loginInnerDiv", className: "col-lg-3 col-md-3 col-xs-8 center" }, React.createElement("h3", null, "Log in"), React.createElement("button", { className: "btn btn-primary", onClick: this.handleClick }, "Facebook"));
+  }
+});
+
+function renderLoginPage() {
+  React.render(React.createElement(Login, null), document.getElementById('loginContainer'));
+}
 "use strict";
 
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
@@ -397,41 +439,63 @@ var NavbarMobileClosed = React.createClass({ displayName: "NavbarMobileClosed",
   }
 });
 
+function renderAllNavbar() {
+  renderNavbar();
+  renderNavbarMobileClosed();
+  renderNavbarMobileOpen();
+};
+
 function renderNavbar() {
   React.render(React.createElement(Navbar, null), document.getElementById("navBar"));
+}
+
+function renderNavbarMobileClosed() {
   React.render(React.createElement(NavbarMobileClosed, null), document.getElementById('mobileNavBar'));
+}
+
+function renderNavbarMobileOpen() {
   React.render(React.createElement(NavbarMobileOpen, null), document.getElementById('mobileNavBarLinks'));
-};
+}
 "use strict";
 
-var Route = ReactRouter.Route;
+/*var Route = ReactRouter.Route;
 var routes = ReactRouter.Routes;
 var RouteHandler = ReactRouter.RouteHandler;
 var Link = ReactRouter.Link;
 
-var App = React.createClass({ displayName: "App",
+var App = React.createClass({
 
   contextTypes: {
     router: React.PropTypes.func
   },
-  handleClick: function handleClick() {
-    loginBtnClick();
-    //loginBtnClickWithoutAuth();
+  handleClick: function () {
+      loginBtnClick();
+      //loginBtnClickWithoutAuth();
   },
-  render: function render() {
+  render: function () {
     var name = this.context.router.getCurrentPath();
-    return React.createElement("div", { id: "loginInnerDiv", className: "col-lg-3 col-md-3 col-xs-8 center" }, React.createElement("h3", null, "LOGIN"), React.createElement(Link, { className: "btn btn-primary", to: "movies", onClick: this.handleClick }, "Facebook"), React.createElement(RouteHandler, null));
+    return (
+      <div id="loginInnerDiv" className="col-lg-3 col-md-3 col-xs-8 center">
+          <h3>LOGIN</h3>
+          <Link className="btn btn-primary" to="movies" onClick={this.handleClick}>Facebook</Link>
+        <RouteHandler />
+      </div>
+    );
   }
 });
 
-var MoviesPage = React.createClass({ displayName: "MoviesPage",
-  render: function render() {
-    return React.createElement("div", null);
+var MoviesPage = React.createClass({
+  render: function () {
+    return (<div/>);
   }
 });
 
-var routes = React.createElement(Route, { handler: App }, React.createElement(Route, { name: "movies", handler: MoviesPage }));
+var routes = (
+  <Route handler={App}>
+    <Route name="movies" handler={MoviesPage} />
+  </Route>
+);
 
 ReactRouter.run(routes, function (Handler) {
-  React.render(React.createElement(Handler, null), document.getElementById('loginContainer'));
-});
+  React.render(<Handler/>, document.getElementById('loginContainer'));
+});*/

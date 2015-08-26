@@ -14,14 +14,46 @@ class User {
   }
 }
 
-function loginBtnClickWithoutAuth() {
-  let user = new User("Balázs Valyon", "valyon.balazs@gmail.com", "https://scontent.xx.fbcdn.net/hprofile-xft1/v/l/t1.0-1/p100x100/11173325_10152717398411695_4362251830365448502_n.jpg?oh=c6b8396ae4fec1124209688db19739c2&oe=5638FA7F");
-  renderNavbar();
+(function pageLoad () {
+  if(localStorage.uid) {
+    let user = new User(localStorage.userName, localStorage.userEmail, localStorage.imageUrl);
+    document.addEventListener("DOMContentLoaded", function(event) {
+        renderMoviePage();
+    });
+  } else {
+    document.addEventListener("DOMContentLoaded", function(event) {
+      renderLoginPage();
+    });
+  }
+})();
+
+function saveUserTokenToLocalStorage (uid) {
+  localStorage.setItem("uid", uid);
+}
+
+function saveUserDataToLocalStorage (name, email, imageUrl) {
+  localStorage.userName = name;
+  localStorage.userEmail = email;
+  localStorage.imageUrl = imageUrl;
+}
+
+function renderMoviePage () {
+  renderAllNavbar();
+  renderElements();
+}
+
+function removeLoginpage () {
+  renderAllNavbar();
   renderElements();
   React.unmountComponentAtNode(document.getElementById('loginContainer'));
   var logContainer = document.getElementById('loginContainer');
   var body = document.body;
   body.removeChild(logContainer);
+}
+
+function loginBtnClickWithoutAuth() {
+  let user = new User("Balázs Valyon", "valyon.balazs@gmail.com", "https://scontent.xx.fbcdn.net/hprofile-xft1/v/l/t1.0-1/p100x100/11173325_10152717398411695_4362251830365448502_n.jpg?oh=c6b8396ae4fec1124209688db19739c2&oe=5638FA7F");
+  removeLoginpage();
 }
 
 var ref = new Firebase("https://brilliant-inferno-2926.firebaseio.com");
@@ -40,13 +72,9 @@ function loginBtnClick() {
         provider: authData.provider,
         name: getName(authData)
       });
-
-      renderNavbar();
-      renderElements();
-      React.unmountComponentAtNode(document.getElementById('loginContainer'));
-      var logContainer = document.getElementById('loginContainer');
-      var body = document.body;
-      body.removeChild(logContainer);
+      saveUserTokenToLocalStorage(authData.uid);
+      saveUserDataToLocalStorage(userName, userEmail, userProfilePicUrl);
+      removeLoginpage();
     }
   }, {
     remember: "sessionOnly",

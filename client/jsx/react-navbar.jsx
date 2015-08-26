@@ -115,8 +115,20 @@ var NavbarMobileClosed = React.createClass({
   }
 });
 
-function renderNavbar() {
-  React.render(<Navbar />, document.getElementById("navBar"));
-  React.render(<NavbarMobileClosed />, document.getElementById('mobileNavBar'));
-  React.render(<NavbarMobileOpen />, document.getElementById('mobileNavBarLinks'));
+function renderAllNavbar() {
+  renderNavbar();
+  renderNavbarMobileClosed();
+  renderNavbarMobileOpen();
 };
+
+function renderNavbar () {
+    React.render(<Navbar />, document.getElementById("navBar"));
+}
+
+function renderNavbarMobileClosed () {
+    React.render(<NavbarMobileClosed />, document.getElementById('mobileNavBar'));
+}
+
+function renderNavbarMobileOpen () {
+    React.render(<NavbarMobileOpen />, document.getElementById('mobileNavBarLinks'));
+}
