@@ -1,6 +1,6 @@
 var Login = React.createClass({
   handleClick: function () {
-    loginBtnClick();
+    login.loginBtnClick();
   },
   render: function () {
     return (

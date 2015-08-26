@@ -14,81 +14,52 @@ class User {
   }
 }
 
-(function pageLoad () {
-  if(localStorage.uid) {
-    let user = new User(localStorage.userName, localStorage.userEmail, localStorage.imageUrl);
-    document.addEventListener("DOMContentLoaded", function(event) {
-        renderMoviePage();
-    });
-  } else {
-    document.addEventListener("DOMContentLoaded", function(event) {
-      renderLoginPage();
-    });
-  }
-})();
-
-function saveUserTokenToLocalStorage (uid) {
-  localStorage.setItem("uid", uid);
-}
-
-function saveUserDataToLocalStorage (name, email, imageUrl) {
-  localStorage.userName = name;
-  localStorage.userEmail = email;
-  localStorage.imageUrl = imageUrl;
-}
-
-function renderMoviePage () {
-  renderAllNavbar();
-  renderElements();
-}
-
-function removeLoginpage () {
-  renderAllNavbar();
-  renderElements();
-  React.unmountComponentAtNode(document.getElementById('loginContainer'));
-  var logContainer = document.getElementById('loginContainer');
-  var body = document.body;
-  body.removeChild(logContainer);
-}
-
-function loginBtnClickWithoutAuth() {
-  let user = new User("Balázs Valyon", "valyon.balazs@gmail.com", "https://scontent.xx.fbcdn.net/hprofile-xft1/v/l/t1.0-1/p100x100/11173325_10152717398411695_4362251830365448502_n.jpg?oh=c6b8396ae4fec1124209688db19739c2&oe=5638FA7F");
-  removeLoginpage();
-}
-
 var ref = new Firebase("https://brilliant-inferno-2926.firebaseio.com");
-function loginBtnClick() {
-  ref.authWithOAuthPopup("facebook", function(error, authData) {
-    if (error) {
-      console.log("Login Failed!", error);
-    } else {
-      var facebookLoginData = authData.facebook;
-      var userName = facebookLoginData.displayName;
-      var userEmail = facebookLoginData.email;
-      var userProfilePicUrl = facebookLoginData.profileImageURL;
-      let user = new User(userName, userEmail, userProfilePicUrl);
+var login = {
+  saveUserTokenToLocalStorage: function () {
+      localStorage.setItem("uid", uid);
+  },
+  saveUserDataToLocalStorage: function () {
+    localStorage.userName = name;
+    localStorage.userEmail = email;
+    localStorage.imageUrl = imageUrl;
+  },
+  loginBtnClickWithoutAuth: function () {
+    let user = new User("Balázs Valyon", "valyon.balazs@gmail.com", "https://scontent.xx.fbcdn.net/hprofile-xft1/v/l/t1.0-1/p100x100/11173325_10152717398411695_4362251830365448502_n.jpg?oh=c6b8396ae4fec1124209688db19739c2&oe=5638FA7F");
+    renderPage.removeLoginpage();
+  },
+  loginBtnClick: function () {
+    ref.authWithOAuthPopup("facebook", function(error, authData) {
+      if (error) {
+        console.log("Login Failed!", error);
+      } else {
+        var facebookLoginData = authData.facebook;
+        var userName = facebookLoginData.displayName;
+        var userEmail = facebookLoginData.email;
+        var userProfilePicUrl = facebookLoginData.profileImageURL;
+        let user = new User(userName, userEmail, userProfilePicUrl);
 
-      ref.child("users").child(authData.uid).set({
-        provider: authData.provider,
-        name: getName(authData)
-      });
-      saveUserTokenToLocalStorage(authData.uid);
-      saveUserDataToLocalStorage(userName, userEmail, userProfilePicUrl);
-      removeLoginpage();
+        ref.child("users").child(authData.uid).set({
+          provider: authData.provider,
+          name: login.getName(authData)
+        });
+        login.saveUserTokenToLocalStorage(authData.uid);
+        login.saveUserDataToLocalStorage(userName, userEmail, userProfilePicUrl);
+        renderPage.removeLoginpage();
+      }
+    }, {
+      remember: "sessionOnly",
+      scope: "email,user_likes"
+    });
+  },
+  getName: function () {
+    switch(authData.provider) {
+       case 'password':
+         return authData.password.email.replace(/@.*/, '');
+       case 'twitter':
+         return authData.twitter.displayName;
+       case 'facebook':
+         return authData.facebook.displayName;
     }
-  }, {
-    remember: "sessionOnly",
-    scope: "email,user_likes"
-  });
-}
-
-function getName(authData) {
-  switch(authData.provider) {
-     case 'password':
-       return authData.password.email.replace(/@.*/, '');
-     case 'twitter':
-       return authData.twitter.displayName;
-     case 'facebook':
-       return authData.facebook.displayName;
   }
-}
+};

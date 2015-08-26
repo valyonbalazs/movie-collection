@@ -18,84 +18,55 @@ var User = function User(username, email, profilPicUrl) {
   return userInstance;
 };
 
-(function pageLoad() {
-  if (localStorage.uid) {
-    var user = new User(localStorage.userName, localStorage.userEmail, localStorage.imageUrl);
-    document.addEventListener("DOMContentLoaded", function (event) {
-      renderMoviePage();
-    });
-  } else {
-    document.addEventListener("DOMContentLoaded", function (event) {
-      renderLoginPage();
-    });
-  }
-})();
-
-function saveUserTokenToLocalStorage(uid) {
-  localStorage.setItem("uid", uid);
-}
-
-function saveUserDataToLocalStorage(name, email, imageUrl) {
-  localStorage.userName = name;
-  localStorage.userEmail = email;
-  localStorage.imageUrl = imageUrl;
-}
-
-function renderMoviePage() {
-  renderAllNavbar();
-  renderElements();
-}
-
-function removeLoginpage() {
-  renderAllNavbar();
-  renderElements();
-  React.unmountComponentAtNode(document.getElementById('loginContainer'));
-  var logContainer = document.getElementById('loginContainer');
-  var body = document.body;
-  body.removeChild(logContainer);
-}
-
-function loginBtnClickWithoutAuth() {
-  var user = new User("Balázs Valyon", "valyon.balazs@gmail.com", "https://scontent.xx.fbcdn.net/hprofile-xft1/v/l/t1.0-1/p100x100/11173325_10152717398411695_4362251830365448502_n.jpg?oh=c6b8396ae4fec1124209688db19739c2&oe=5638FA7F");
-  removeLoginpage();
-}
-
 var ref = new Firebase("https://brilliant-inferno-2926.firebaseio.com");
-function loginBtnClick() {
-  ref.authWithOAuthPopup("facebook", function (error, authData) {
-    if (error) {
-      console.log("Login Failed!", error);
-    } else {
-      var facebookLoginData = authData.facebook;
-      var userName = facebookLoginData.displayName;
-      var userEmail = facebookLoginData.email;
-      var userProfilePicUrl = facebookLoginData.profileImageURL;
-      var user = new User(userName, userEmail, userProfilePicUrl);
+var login = {
+  saveUserTokenToLocalStorage: function saveUserTokenToLocalStorage() {
+    localStorage.setItem("uid", uid);
+  },
+  saveUserDataToLocalStorage: function saveUserDataToLocalStorage() {
+    localStorage.userName = name;
+    localStorage.userEmail = email;
+    localStorage.imageUrl = imageUrl;
+  },
+  loginBtnClickWithoutAuth: function loginBtnClickWithoutAuth() {
+    var user = new User("Balázs Valyon", "valyon.balazs@gmail.com", "https://scontent.xx.fbcdn.net/hprofile-xft1/v/l/t1.0-1/p100x100/11173325_10152717398411695_4362251830365448502_n.jpg?oh=c6b8396ae4fec1124209688db19739c2&oe=5638FA7F");
+    renderPage.removeLoginpage();
+  },
+  loginBtnClick: function loginBtnClick() {
+    ref.authWithOAuthPopup("facebook", function (error, authData) {
+      if (error) {
+        console.log("Login Failed!", error);
+      } else {
+        var facebookLoginData = authData.facebook;
+        var userName = facebookLoginData.displayName;
+        var userEmail = facebookLoginData.email;
+        var userProfilePicUrl = facebookLoginData.profileImageURL;
+        var user = new User(userName, userEmail, userProfilePicUrl);
 
-      ref.child("users").child(authData.uid).set({
-        provider: authData.provider,
-        name: getName(authData)
-      });
-      saveUserTokenToLocalStorage(authData.uid);
-      saveUserDataToLocalStorage(userName, userEmail, userProfilePicUrl);
-      removeLoginpage();
+        ref.child("users").child(authData.uid).set({
+          provider: authData.provider,
+          name: login.getName(authData)
+        });
+        login.saveUserTokenToLocalStorage(authData.uid);
+        login.saveUserDataToLocalStorage(userName, userEmail, userProfilePicUrl);
+        renderPage.removeLoginpage();
+      }
+    }, {
+      remember: "sessionOnly",
+      scope: "email,user_likes"
+    });
+  },
+  getName: function getName() {
+    switch (authData.provider) {
+      case 'password':
+        return authData.password.email.replace(/@.*/, '');
+      case 'twitter':
+        return authData.twitter.displayName;
+      case 'facebook':
+        return authData.facebook.displayName;
     }
-  }, {
-    remember: "sessionOnly",
-    scope: "email,user_likes"
-  });
-}
-
-function getName(authData) {
-  switch (authData.provider) {
-    case 'password':
-      return authData.password.email.replace(/@.*/, '');
-    case 'twitter':
-      return authData.twitter.displayName;
-    case 'facebook':
-      return authData.facebook.displayName;
   }
-}
+};
 /*jshint esnext: true */
 
 "use strict";
@@ -198,11 +169,43 @@ var movies = {
     return newTitle;
   }
 };
+/*jshint esnext: true */
+"use strict";
+
+(function pageLoad() {
+  if (localStorage.uid) {
+    var user = new User(localStorage.userName, localStorage.userEmail, localStorage.imageUrl);
+    document.addEventListener("DOMContentLoaded", function (event) {
+      renderPage.renderMoviePage();
+    });
+  } else {
+    document.addEventListener("DOMContentLoaded", function (event) {
+      renderPage.renderLoginPage();
+    });
+  }
+})();
+/*jshint esnext: true */
+'use strict';
+
+var renderPage = {
+  renderMoviePage: function renderMoviePage() {
+    renderAllNavbar();
+    renderElements();
+  },
+  removeLoginpage: function removeLoginpage() {
+    renderPage.renderAllNavbar();
+    renderPage.renderElements();
+    React.unmountComponentAtNode(document.getElementById('loginContainer'));
+    var logContainer = document.getElementById('loginContainer');
+    var body = document.body;
+    body.removeChild(logContainer);
+  }
+};
 "use strict";
 
 var Login = React.createClass({ displayName: "Login",
   handleClick: function handleClick() {
-    loginBtnClick();
+    login.loginBtnClick();
   },
   render: function render() {
     return React.createElement("div", { id: "loginInnerDiv", className: "col-lg-3 col-md-3 col-xs-8 center" }, React.createElement("h3", null, "Log in"), React.createElement("button", { className: "btn btn-primary", onClick: this.handleClick }, "Facebook"));
