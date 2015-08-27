@@ -1,6 +1,6 @@
 /* jshint esnext: true */
 
-let starterMovieTitles = [
+/*let starterMovieTitles = [
   {title: 'blade runner'},
   {title: 'avengers'},
   {title: 'batman'},
@@ -13,6 +13,24 @@ let starterMovieTitles = [
   {title: 'alien'},
   {title: 'predator'},
   {title: 'jurassic park'}
-];
+];*/
+
+let starterMovieTitles = [];
 
 let movieListData = [];
+
+function addUserMovies () {
+  let uid = localStorage.getItem('uid');
+  ref.child('movielist').child(uid).set({
+    movies: starterMovieTitles
+  });
+}
+
+function getUserMovies () {
+  let uid = localStorage.getItem('uid');
+  ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
+    for (let i of snapshot.val()) {
+      starterMovieTitles.push(i);
+    }
+  });
+}

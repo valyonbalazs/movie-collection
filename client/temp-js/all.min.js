@@ -73,11 +73,63 @@ var login = {
 };
 /* jshint esnext: true */
 
+/*let starterMovieTitles = [
+  {title: 'blade runner'},
+  {title: 'avengers'},
+  {title: 'batman'},
+  {title: 'star wars episode iv'},
+  {title: 'star wars episode iii'},
+  {title: 'schindler\'s list'},
+  {title: 'gladiator'},
+  {title: 'men in black'},
+  {title: 'djangov'},
+  {title: 'alien'},
+  {title: 'predator'},
+  {title: 'jurassic park'}
+];*/
+
 'use strict';
 
-var starterMovieTitles = [{ title: 'blade runner' }, { title: 'avengers' }, { title: 'batman' }, { title: 'star wars episode iv' }, { title: 'star wars episode iii' }, { title: 'schindler\'s list' }, { title: 'gladiator' }, { title: 'men in black' }, { title: 'djangov' }, { title: 'alien' }, { title: 'predator' }, { title: 'jurassic park' }];
+var starterMovieTitles = [];
 
 var movieListData = [];
+
+function addUserMovies() {
+  var uid = localStorage.getItem('uid');
+  ref.child('movielist').child(uid).set({
+    movies: starterMovieTitles
+  });
+}
+
+function getUserMovies() {
+  var uid = localStorage.getItem('uid');
+  ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = snapshot.val()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var i = _step.value;
+
+        starterMovieTitles.push(i);
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator['return']) {
+          _iterator['return']();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+  });
+}
 /* jshint esnext: true */
 
 'use strict';
@@ -286,10 +338,52 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
   },
   loadMovies: function loadMovies() {
     movieListData = [];
-    for (var key in starterMovieTitles) {
-      var title = starterMovieTitles[key].title;
-      this.ajax(movies.createMovieUrl(title)).get().then(this.success);
-    }
+
+    var promise = function promise() {
+      return new Promise(function (resolve, reject) {
+        console.log('belepett');
+        var uid = localStorage.getItem('uid');
+        var completed = false;
+        ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
+          var _iteratorNormalCompletion = true;
+          var _didIteratorError = false;
+          var _iteratorError = undefined;
+
+          try {
+            for (var _iterator = snapshot.val()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+              var i = _step.value;
+
+              starterMovieTitles.push(i);
+              console.log('elem: ' + i.title);
+            }
+          } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion && _iterator["return"]) {
+                _iterator["return"]();
+              }
+            } finally {
+              if (_didIteratorError) {
+                throw _iteratorError;
+              }
+            }
+          }
+
+          resolve(function () {});
+        });
+      });
+    };
+
+    var context = this;
+    promise().then((function () {
+      console.log('then-ben');
+      for (var key in starterMovieTitles) {
+        var title = starterMovieTitles[key].title;
+        this.ajax(movies.createMovieUrl(title)).get().then(this.success);
+      }
+    }).bind(context));
   },
   ajax: function ajax(url) {
     var core = {
@@ -297,7 +391,7 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
         var promise = new Promise(function (resolve, reject) {
           var client = new XMLHttpRequest();
           var uri = url;
-          if (method === "GET") {
+          if (method === 'GET') {
             client.open(method, uri);
             client.send();
             client.onload = function () {
@@ -344,6 +438,14 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
     return React.createElement("div", { className: "col-lg-12 col-md-12 col-xs-12 moviesContainer" }, React.createElement(ReactCSSTransitionGroup, { transitionName: "example" }, moviesArray));
   }
 });
+
+function processMovieData(context) {
+  console.log('then-ben');
+  for (var key in starterMovieTitles) {
+    var title = starterMovieTitles[key].title;
+    context.call(ajax, movies.createMovieUrl(title)).get().then(this.success);
+  }
+}
 
 function renderElements() {
   React.render(React.createElement(MoviesContainer, null), document.getElementById("innerContainer"));
