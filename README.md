@@ -4,8 +4,9 @@
 This is a tech-demo project with studying purpose for myself, which consist of
 * Gulp-based build system
 * Frontend test-system based on Karma and mocha
-* Frontend client structure based on ReactJs
+* Frontend client UI based on Reactjs
 * Data-model and authentication based on Firebase
+* Javascript ES6 used with Babel for compatibility
 
 ### Install and run
 
