@@ -2,7 +2,7 @@
 
 let menuItems = [
   {'item': 'fa fa-home,LINK1'},
-  {'item': 'fa fa-home,LINK2'},
+  {'item': 'fa fa-home,link2'},
   {'item': 'fa fa-home,LINK3'}
 ];
 
@@ -14,7 +14,7 @@ let MenuItem = React.createClass({
   render: function () {
     return(
       <li>
-        <i className={this.props.menuItemIcon} onClick={this.handleClick}></i>{this.props.menuItemText}
+        <i className={this.props.menuItemIcon} onClick={this.handleClick}></i> {this.props.menuItemText}
       </li>
     );
   }

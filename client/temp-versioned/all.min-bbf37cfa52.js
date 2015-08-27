@@ -351,7 +351,7 @@ function renderElements() {
 
 'use strict';
 
-var menuItems = [{ 'item': 'fa fa-home,LINK1' }, { 'item': 'fa fa-home,LINK2' }, { 'item': 'fa fa-home,LINK3' }];
+var menuItems = [{ 'item': 'fa fa-home,LINK1' }, { 'item': 'fa fa-home,link2' }, { 'item': 'fa fa-home,LINK3' }];
 
 //MEDIUM AND HIGH RESOLUTION NAVBAR
 var MenuItem = React.createClass({ displayName: "MenuItem",
@@ -359,7 +359,7 @@ var MenuItem = React.createClass({ displayName: "MenuItem",
     loginBtnClick();
   },
   render: function render() {
-    return React.createElement("li", null, React.createElement("i", { className: this.props.menuItemIcon, onClick: this.handleClick }), this.props.menuItemText);
+    return React.createElement("li", null, React.createElement("i", { className: this.props.menuItemIcon, onClick: this.handleClick }), " ", this.props.menuItemText);
   }
 });
 

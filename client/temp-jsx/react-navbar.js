@@ -2,7 +2,7 @@
 
 let menuItems = [
   {'item': 'fa fa-home,LINK1'},
-  {'item': 'fa fa-home,LINK2'},
+  {'item': 'fa fa-home,link2'},
   {'item': 'fa fa-home,LINK3'}
 ];
 
@@ -14,7 +14,7 @@ let MenuItem = React.createClass({displayName: "MenuItem",
   render: function () {
     return(
       React.createElement("li", null, 
-        React.createElement("i", {className: this.props.menuItemIcon, onClick: this.handleClick}), this.props.menuItemText
+        React.createElement("i", {className: this.props.menuItemIcon, onClick: this.handleClick}), " ", this.props.menuItemText
       )
     );
   }

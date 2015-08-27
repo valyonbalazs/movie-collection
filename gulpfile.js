@@ -125,6 +125,31 @@ gulp.task('clean', function (cb) {
   ], cb);
 });
 
+gulp.task('clean:jsx', function (cb) {
+  return del([
+    directory.client.revmanifest,
+    directory.dest.jsx,
+    directory.dest.tempjs,
+    directory.dest.versioned + '*.js'
+  ], cb);
+});
+
+gulp.task('clean:js', function (cb) {
+  return del([
+    directory.client.revmanifest,
+    directory.dest.tempjs,
+    directory.dest.versioned + '*.js'
+  ], cb);
+});
+
+gulp.task('clean:css', function (cb) {
+  return del([
+    directory.client.revmanifest,
+    directory.dest.tempcss,
+    directory.dest.versioned + '*.css'
+  ], cb);
+});
+
 gulp.task('jscs', function () {
   return gulp.src([files.js])
     .pipe(jscs());
@@ -211,7 +236,7 @@ var handlebarOpts = {
     }
   }
 };
-gulp.task('compile-hbs-into-html',['copy:cssversioned'] , function () {
+gulp.task('compile-hbs-into-html', function () {
   var manifest = JSON.parse(fs.readFileSync(files.revmanifest, 'utf8'));
   return gulp.src([files.hbs])
     .pipe(handlebars(manifest, handlebarOpts))
@@ -229,8 +254,7 @@ gulp.task('build:scss', function () {
     .pipe(gulp.dest(directory.dest.tempcss))
     .pipe(size({
       'title': 'Compiled SCSS to CSS file size is '
-    }))
-    .pipe(connect.reload());
+    }));
 });
 
 gulp.task('build:js', function () {
@@ -242,8 +266,7 @@ gulp.task('build:js', function () {
     .pipe(gulp.dest(directory.dest.tempjs))
     .pipe(size({
       'title': 'Concatenated JAVASCRIPT file size is '
-    }))
-    .pipe(connect.reload());
+    }));
 });
 
 gulp.task('build:jsx', function () {
@@ -253,11 +276,10 @@ gulp.task('build:jsx', function () {
     .pipe(gulp.dest(directory.dest.jsx))
     .pipe(size({
       'title': 'Converted JSX file to JS file size is '
-    }))
-    .pipe(connect.reload());
+    }));
 });
 
-gulp.task('versioning', ['build:scss'] ,  function () {
+gulp.task('versioning',  function () {
   return gulp.src([files.tempjs, files.tempcss])
     .pipe(rev())
     .pipe(gulp.dest(directory.dest.versioned))
@@ -287,12 +309,49 @@ gulp.task('connect', function () {
   });
 });
 
+gulp.task('watch:scss', function (cb) {
+  runSequence(
+    'clean:css',
+    'build:scss',
+    'versioning',
+    'copy:cssversioned',
+    'compile-hbs-into-html',
+    'copy:html',
+    cb
+  );
+});
+
+gulp.task('watch:js', function (cb) {
+  runSequence(
+    'clean:js',
+    'build:js',
+    'versioning',
+    'copy:jsversioned',
+    'compile-hbs-into-html',
+    'copy:html',
+    cb
+  );
+});
+
+gulp.task('watch:jsx', function (cb) {
+  runSequence(
+    'clean:jsx',
+    'build:jsx',
+    'build:js',
+    'versioning',
+    'copy:jsversioned',
+    'compile-hbs-into-html',
+    'copy:html',
+    cb
+  );
+});
+
 gulp.task('watch', ['build', 'connect'], function () {
   util.log(util.colors.yellow('Watching html, scss, js, jsx files'));
   gulp.watch(files.html, ['copy:html']);
-  gulp.watch(files.scss, ['build:scss', 'versioning', 'copy:cssversioned', 'compile-hbs-into-html']);
-  gulp.watch(files.js, ['build:js', 'versioning', 'copy:jsversioned']);
-  gulp.watch(files.jsx, ['build:jsx', 'build:js', 'versioning', 'copy:jsversioned']);
+  gulp.watch(files.scss, ['watch:scss']);
+  gulp.watch(files.js, ['watch:js']);
+  gulp.watch(files.jsx, ['watch:jsx']);
 });
 
 gulp.task('test:api', function () {
