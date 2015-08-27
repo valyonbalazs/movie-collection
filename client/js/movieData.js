@@ -25,12 +25,3 @@ function addUserMovies () {
     movies: starterMovieTitles
   });
 }
-
-function getUserMovies () {
-  let uid = localStorage.getItem('uid');
-  ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
-    for (let i of snapshot.val()) {
-      starterMovieTitles.push(i);
-    }
-  });
-}

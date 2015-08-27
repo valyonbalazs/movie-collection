@@ -1,4 +1,4 @@
-/*jshint esnext: true */
+/* jshint esnext: true */
 let ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 let Poster = React.createClass({displayName: "Poster",
@@ -121,13 +121,10 @@ let MoviesContainer = React.createClass({displayName: "MoviesContainer",
 
     let promise = function () {
       return new Promise(function (resolve, reject) {
-        console.log('belepett');
         let uid = localStorage.getItem('uid');
-        let completed = false;
         ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
           for (let i of snapshot.val()) {
             starterMovieTitles.push(i);
-            console.log('elem: '+ i.title);
           }
           resolve(function () { });
         });
@@ -136,66 +133,13 @@ let MoviesContainer = React.createClass({displayName: "MoviesContainer",
 
     let context = this;
     promise().then(function () {
-      console.log('then-ben');
       for (var key in starterMovieTitles) {
         let title = starterMovieTitles[key].title;
-        this.ajax(movies.createMovieUrl(title))
+        http.ajax(movies.createMovieUrl(title))
           .get()
-          .then(this.success);
+          .then(http.success.bind(context));
       }
-    }.bind(context));
-  },
-  ajax: function(url) {
-    let core = {
-      ajax: function(method, url, args) {
-        let promise = new Promise(function(resolve, reject) {
-          let client = new XMLHttpRequest();
-          let uri = url;
-          if (method === 'GET') {
-            client.open(method, uri);
-            client.send();
-            client.onload = function() {
-              if (this.status == 200) {
-                resolve(this.response);
-              } else {
-                reject(this.statusText);
-              }
-            };
-            client.onerror = function() {
-              reject(this.statusText);
-            };
-          }
-        });
-        return promise;
-      }
-    };
-
-    return {
-      'get': function(args) {
-        return core.ajax('GET', url, args);
-      }
-    };
-  },
-  success: function(data) {
-    let movieData;
-    movieData = JSON.parse(data);
-    let bestVoted = movies.getMaxVotedElement(movieData);
-    let title = movies.modifyTitle(bestVoted.title);
-    let backdropPath = movies.createImageUrl(bestVoted.backdrop_path);
-    let posterPath = movies.createImageUrl(bestVoted.poster_path);
-    let overview = movies.modifyOverview(bestVoted.overview);
-    let releaseDate = movies.modifyReleaseDate(bestVoted.release_date);
-    let average = bestVoted.vote_average + ' ';
-    let movie = new MovieElement(
-      title,
-      overview,
-      average,
-      releaseDate,
-      backdropPath,
-      posterPath
-    );
-    movieListData.push(movie);
-    this.setState({data: movieListData});
+    });
   },
   render: function () {
       let moviesArray = this.state.data.map(function (movie) {
@@ -213,17 +157,6 @@ let MoviesContainer = React.createClass({displayName: "MoviesContainer",
       );
   }
 });
-
-function processMovieData (context) {
-  console.log('then-ben');
-  for (var key in starterMovieTitles) {
-    let title = starterMovieTitles[key].title;
-    context.call(ajax , movies.createMovieUrl(title))
-      .get()
-      .then(this.success);
-  }
-}
-
 
 function renderElements() {
   React.render(React.createElement(MoviesContainer, null), document.getElementById("innerContainer"));

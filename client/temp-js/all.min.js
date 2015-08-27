@@ -1,5 +1,56 @@
 /* jshint esnext: true */
 
+'use strict';
+
+var http = {
+  ajax: function ajax(url) {
+    var core = {
+      ajax: function ajax(method, url, args) {
+        var promise = new Promise(function (resolve, reject) {
+          var client = new XMLHttpRequest();
+          var uri = url;
+          if (method === 'GET') {
+            client.open(method, uri);
+            client.send();
+            client.onload = function () {
+              if (this.status == 200) {
+                resolve(this.response);
+              } else {
+                reject(this.statusText);
+              }
+            };
+            client.onerror = function () {
+              reject(this.statusText);
+            };
+          }
+        });
+        return promise;
+      }
+    };
+
+    return {
+      'get': function get(args) {
+        return core.ajax('GET', url, args);
+      }
+    };
+  },
+  success: function success(data) {
+    var movieData = undefined;
+    movieData = JSON.parse(data);
+    var bestVoted = movies.getMaxVotedElement(movieData);
+    var title = movies.modifyTitle(bestVoted.title);
+    var backdropPath = movies.createImageUrl(bestVoted.backdrop_path);
+    var posterPath = movies.createImageUrl(bestVoted.poster_path);
+    var overview = movies.modifyOverview(bestVoted.overview);
+    var releaseDate = movies.modifyReleaseDate(bestVoted.release_date);
+    var average = bestVoted.vote_average + ' ';
+    var movie = new MovieElement(title, overview, average, releaseDate, backdropPath, posterPath);
+    movieListData.push(movie);
+    this.setState({ data: movieListData });
+  }
+};
+/* jshint esnext: true */
+
 // Making the User a Singleton object
 'use strict';
 
@@ -98,36 +149,6 @@ function addUserMovies() {
   var uid = localStorage.getItem('uid');
   ref.child('movielist').child(uid).set({
     movies: starterMovieTitles
-  });
-}
-
-function getUserMovies() {
-  var uid = localStorage.getItem('uid');
-  ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
-
-    try {
-      for (var _iterator = snapshot.val()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        var i = _step.value;
-
-        starterMovieTitles.push(i);
-      }
-    } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion && _iterator['return']) {
-          _iterator['return']();
-        }
-      } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
-        }
-      }
-    }
   });
 }
 /* jshint esnext: true */
@@ -259,7 +280,7 @@ var Login = React.createClass({ displayName: "Login",
 function renderLoginPage() {
   React.render(React.createElement(Login, null), document.getElementById('loginContainer'));
 }
-/*jshint esnext: true */
+/* jshint esnext: true */
 "use strict";
 
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
@@ -341,9 +362,7 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
 
     var promise = function promise() {
       return new Promise(function (resolve, reject) {
-        console.log('belepett');
         var uid = localStorage.getItem('uid');
-        var completed = false;
         ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
           var _iteratorNormalCompletion = true;
           var _didIteratorError = false;
@@ -354,7 +373,6 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
               var i = _step.value;
 
               starterMovieTitles.push(i);
-              console.log('elem: ' + i.title);
             }
           } catch (err) {
             _didIteratorError = true;
@@ -377,58 +395,12 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
     };
 
     var context = this;
-    promise().then((function () {
-      console.log('then-ben');
+    promise().then(function () {
       for (var key in starterMovieTitles) {
         var title = starterMovieTitles[key].title;
-        this.ajax(movies.createMovieUrl(title)).get().then(this.success);
+        http.ajax(movies.createMovieUrl(title)).get().then(http.success.bind(context));
       }
-    }).bind(context));
-  },
-  ajax: function ajax(url) {
-    var core = {
-      ajax: function ajax(method, url, args) {
-        var promise = new Promise(function (resolve, reject) {
-          var client = new XMLHttpRequest();
-          var uri = url;
-          if (method === 'GET') {
-            client.open(method, uri);
-            client.send();
-            client.onload = function () {
-              if (this.status == 200) {
-                resolve(this.response);
-              } else {
-                reject(this.statusText);
-              }
-            };
-            client.onerror = function () {
-              reject(this.statusText);
-            };
-          }
-        });
-        return promise;
-      }
-    };
-
-    return {
-      'get': function get(args) {
-        return core.ajax('GET', url, args);
-      }
-    };
-  },
-  success: function success(data) {
-    var movieData = undefined;
-    movieData = JSON.parse(data);
-    var bestVoted = movies.getMaxVotedElement(movieData);
-    var title = movies.modifyTitle(bestVoted.title);
-    var backdropPath = movies.createImageUrl(bestVoted.backdrop_path);
-    var posterPath = movies.createImageUrl(bestVoted.poster_path);
-    var overview = movies.modifyOverview(bestVoted.overview);
-    var releaseDate = movies.modifyReleaseDate(bestVoted.release_date);
-    var average = bestVoted.vote_average + ' ';
-    var movie = new MovieElement(title, overview, average, releaseDate, backdropPath, posterPath);
-    movieListData.push(movie);
-    this.setState({ data: movieListData });
+    });
   },
   render: function render() {
     var moviesArray = this.state.data.map(function (movie) {
@@ -438,14 +410,6 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
     return React.createElement("div", { className: "col-lg-12 col-md-12 col-xs-12 moviesContainer" }, React.createElement(ReactCSSTransitionGroup, { transitionName: "example" }, moviesArray));
   }
 });
-
-function processMovieData(context) {
-  console.log('then-ben');
-  for (var key in starterMovieTitles) {
-    var title = starterMovieTitles[key].title;
-    context.call(ajax, movies.createMovieUrl(title)).get().then(this.success);
-  }
-}
 
 function renderElements() {
   React.render(React.createElement(MoviesContainer, null), document.getElementById("innerContainer"));
