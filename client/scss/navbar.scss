@@ -31,6 +31,13 @@ $mobileNavBarDivOpenedTransition: visibility 100ms ease-out;
 
     font-size: 1.4em;
     color: white;
+
+    p {
+      text-align: center;
+      display: inline-flex;
+      justify-content: center;
+      width: 90%;
+    }
   }
 
   #mobileNavBarLinks {
@@ -39,6 +46,12 @@ $mobileNavBarDivOpenedTransition: visibility 100ms ease-out;
     position: fixed;
     z-index: 4;
     width: 0;
+
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+
     -webkit-transition: $mobileNavBarLinksTransition;
     -moz-transition: $mobileNavBarLinksTransition;
 
@@ -52,12 +65,19 @@ $mobileNavBarDivOpenedTransition: visibility 100ms ease-out;
       opacity: 1;
       font-size: 2em;
       color: white;
+
+      -webkit-transform: translate3d(0, 0, 0);
+      -moz-transform: translate3d(0, 0, 0);
+      -ms-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+
       -webkit-transition: $mobileNavBarDivOpenedTransition;
       -moz-transition: $mobileNavBarDivOpenedTransition;
 
       #navbarOpenProfileImage {
 
         text-align: center;
+        padding-bottom: 1em;
         img {
           border-radius: 2em;
         }
@@ -65,8 +85,9 @@ $mobileNavBarDivOpenedTransition: visibility 100ms ease-out;
 
       #navbarOpenLinks {
 
+        text-align: center;
         ul {
-          padding-left: 0.8em;
+
         }
       }
     }

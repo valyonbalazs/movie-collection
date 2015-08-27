@@ -89,7 +89,7 @@ let NavbarMobileOpen =  React.createClass({displayName: "NavbarMobileOpen",
           React.createElement("ul", {className: "nav"}, 
             menuItemArray
           )
-      )
+        )
     )
     );
   }
@@ -111,7 +111,8 @@ let NavbarMobileClosed = React.createClass({displayName: "NavbarMobileClosed",
   render: function () {
     return(
       React.createElement("div", {className: "navbarMobileClosed col-xs-12"}, 
-        React.createElement("i", {className: "fa fa-bars", onClick: this.handleClick})
+        React.createElement("i", {className: "fa fa-bars", onClick: this.handleClick}), 
+        React.createElement("p", null, "Movie-Collection")
       )
     );
   }

@@ -426,7 +426,7 @@ var NavbarMobileClosed = React.createClass({ displayName: "NavbarMobileClosed",
     }
   },
   render: function render() {
-    return React.createElement("div", { className: "navbarMobileClosed col-xs-12" }, React.createElement("i", { className: "fa fa-bars", onClick: this.handleClick }));
+    return React.createElement("div", { className: "navbarMobileClosed col-xs-12" }, React.createElement("i", { className: "fa fa-bars", onClick: this.handleClick }), React.createElement("p", null, "Movie-Collection"));
   }
 });
 

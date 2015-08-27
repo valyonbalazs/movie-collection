@@ -89,7 +89,7 @@ let NavbarMobileOpen =  React.createClass({
           <ul className="nav">
             {menuItemArray}
           </ul>
-      </div>
+        </div>
     </div>
     );
   }
@@ -112,6 +112,7 @@ let NavbarMobileClosed = React.createClass({
     return(
       <div className="navbarMobileClosed col-xs-12">
         <i className="fa fa-bars" onClick={this.handleClick} ></i>
+        <p>Movie-Collection</p>
       </div>
     );
   }
