@@ -133,7 +133,7 @@ var movies = {
   },
   modifyReleaseDate: function modifyReleaseDate(releaseDate) {
     var originalReleaseDate = releaseDate;
-    var newReleaseDate = originalReleaseDate.substr(0, 4);
+    var newReleaseDate = originalReleaseDate.substr(0, 4) + ' ';
     return newReleaseDate;
   },
   modifyTitle: function modifyTitle(title) {
@@ -331,7 +331,8 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
     var posterPath = movies.createImageUrl(bestVoted.poster_path);
     var overview = movies.modifyOverview(bestVoted.overview);
     var releaseDate = movies.modifyReleaseDate(bestVoted.release_date);
-    var movie = new MovieElement(title, overview, bestVoted.vote_average, releaseDate, backdropPath, posterPath);
+    var average = bestVoted.vote_average + ' ';
+    var movie = new MovieElement(title, overview, average, releaseDate, backdropPath, posterPath);
     movieListData.push(movie);
     this.setState({ data: movieListData });
   },
@@ -382,7 +383,7 @@ var Navbar = React.createClass({ displayName: "Navbar",
       return React.createElement(MenuItem, { menuItemIcon: lowercaseItemIcon, menuItemText: uppercaseItemText });
     });
 
-    return React.createElement("div", { className: "nav col-lg-12 col-md-12" }, React.createElement("ul", { className: "col-md-10" }, menuItemArray), React.createElement("div", { id: "navbarProfile", className: "col-md-2" }, userName, " ", React.createElement("img", { src: userProfilPic })));
+    return React.createElement("div", { className: "nav col-lg-12 col-md-12" }, React.createElement("h3", null, "Movie-Collection"), React.createElement("ul", null, menuItemArray), React.createElement("div", null, userName, " ", React.createElement("img", { src: userProfilPic })));
   }
 });
 

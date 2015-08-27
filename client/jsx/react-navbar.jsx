@@ -43,11 +43,12 @@ let Navbar = React.createClass({
 
     return(
       <div className="nav col-lg-12 col-md-12">
-        <ul className="col-md-10">
+          <h3>Movie-Collection</h3>
+        <ul>
           {menuItemArray}
         </ul>
-        <div id="navbarProfile" className="col-md-2">
-        {userName} <img src={userProfilPic} />
+        <div>
+          {userName} <img src={userProfilPic} />
         </div>
       </div>
     );

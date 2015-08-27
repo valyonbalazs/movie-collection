@@ -49,7 +49,7 @@ let movies = {
   },
   modifyReleaseDate: function (releaseDate) {
     let originalReleaseDate = releaseDate;
-    let newReleaseDate = originalReleaseDate.substr(0, 4);
+    let newReleaseDate = originalReleaseDate.substr(0, 4) + ' ';
     return newReleaseDate;
   },
   modifyTitle: function (title) {

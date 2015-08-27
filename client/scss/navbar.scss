@@ -111,6 +111,7 @@ $mobileNavBarDivOpenedTransition: visibility 100ms ease-out;
     position: fixed;
     width: 100%;
     z-index: 2;
+    flex-grow: 1;
 
     .nav {
       width: 100%;
@@ -123,24 +124,26 @@ $mobileNavBarDivOpenedTransition: visibility 100ms ease-out;
 
       color: white;
 
+      display: inline-flex;
+      justify-content: space-around;
+
       ul {
-        padding-left: 9em;
-      }
 
-      li {
-        display: inline;
-        padding: 0 1em 0 1em;
-        font-size: 1.5em;
-        color: white;
-      }
 
-      #navbarProfile {
-
-        float: right;
-        img {
-          border-radius: 15px;
-          max-width: 2em;
+        li {
+          display: inline;
+          padding: 0 1em 0 1em;
+          font-size: 1.5em;
+          color: white;
         }
+      }
+      h3 {
+        margin-top: 0;
+      }
+
+      img {
+        border-radius: 15px;
+        max-width: 2em;
       }
 
     }

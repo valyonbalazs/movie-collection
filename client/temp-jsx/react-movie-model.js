@@ -165,10 +165,11 @@ let MoviesContainer = React.createClass({displayName: "MoviesContainer",
     let posterPath = movies.createImageUrl(bestVoted.poster_path);
     let overview = movies.modifyOverview(bestVoted.overview);
     let releaseDate = movies.modifyReleaseDate(bestVoted.release_date);
+    let average = bestVoted.vote_average + ' ';
     let movie = new MovieElement(
       title,
       overview,
-      bestVoted.vote_average,
+      average,
       releaseDate,
       backdropPath,
       posterPath
