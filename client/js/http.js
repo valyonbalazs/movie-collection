@@ -27,7 +27,7 @@ let http = {
     };
 
     return {
-      'get': function(args) {
+      get: function(args) {
         return core.ajax('GET', url, args);
       }
     };
@@ -55,4 +55,4 @@ let http = {
     // React container update
     this.setState({data: movieListData});
   }
-}
+};

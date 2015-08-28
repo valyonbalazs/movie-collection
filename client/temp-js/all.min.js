@@ -29,7 +29,7 @@ var http = {
     };
 
     return {
-      'get': function get(args) {
+      get: function get(args) {
         return core.ajax('GET', url, args);
       }
     };
@@ -46,6 +46,8 @@ var http = {
     var average = bestVoted.vote_average + ' ';
     var movie = new MovieElement(title, overview, average, releaseDate, backdropPath, posterPath);
     movieListData.push(movie);
+
+    // React container update
     this.setState({ data: movieListData });
   }
 };
