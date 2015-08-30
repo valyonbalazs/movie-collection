@@ -57,7 +57,7 @@ let login = {
        case 'twitter': {
          return authData.twitter.displayName;
        }
-       case "facebook": {
+       case 'facebook': {
          return authData.facebook.displayName;
        }
     }

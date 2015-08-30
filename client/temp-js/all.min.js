@@ -116,7 +116,7 @@ var login = {
         {
           return authData.twitter.displayName;
         }
-      case "facebook":
+      case 'facebook':
         {
           return authData.facebook.displayName;
         }
@@ -267,6 +267,15 @@ var renderPage = {
   }
 };
 /* jshint esnext: true */
+
+"use strict";
+
+var App = React.createClass({ displayName: "App",
+  render: function render() {
+    return React.createElement("div", { id: "loginInnerDiv" }, React.createElement(RouteHandler, null));
+  }
+});
+/* jshint esnext: true */
 "use strict";
 
 var Login = React.createClass({ displayName: "Login",
@@ -281,6 +290,15 @@ var Login = React.createClass({ displayName: "Login",
 function renderLoginPage() {
   React.render(React.createElement(Login, null), document.getElementById('loginContainer'));
 }
+/* jshint esnext: true */
+
+"use strict";
+
+var ManagePage = React.createClass({ displayName: "ManagePage",
+  render: function render() {
+    return React.createElement("div", null, React.createElement("h3", null, "MANAGE PAGE"));
+  }
+});
 /* jshint esnext: true */
 "use strict";
 
@@ -415,7 +433,7 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
 function renderElements() {
   React.render(React.createElement(MoviesContainer, null), document.getElementById("innerContainer"));
 };
-/*jshint esnext: true */
+/* jshint esnext: true */
 
 'use strict';
 
@@ -515,70 +533,3 @@ function renderNavbarMobileClosed() {
 function renderNavbarMobileOpen() {
   React.render(React.createElement(NavbarMobileOpen, null), document.getElementById('mobileNavBarLinks'));
 }
-/*var Route = ReactRouter.Route;
-var routes = ReactRouter.Routes;
-var RouteHandler = ReactRouter.RouteHandler;
-var Link = ReactRouter.Link;
-
-var App = React.createClass({
-
-  contextTypes: {
-    router: React.PropTypes.func
-  },
-  handleClick: function () {
-      loginBtnClick();
-      //loginBtnClickWithoutAuth();
-  },
-  render: function () {
-    var name = this.context.router.getCurrentPath();
-    return (
-      <div id="loginInnerDiv" className="col-lg-3 col-md-3 col-xs-8 center">
-          <h3>LOGIN</h3>
-          <Link className="btn btn-primary" to="movies" onClick={this.handleClick}>Facebook</Link>
-        <RouteHandler />
-      </div>
-    );
-  }
-});
-
-var MoviesPage = React.createClass({
-  render: function () {
-    return (<div/>);
-  }
-});
-
-var routes = (
-  <Route handler={App}>
-    <Route name="movies" handler={MoviesPage} />
-  </Route>
-);
-
-ReactRouter.run(routes, function (Handler) {
-  React.render(<Handler/>, document.getElementById('loginContainer'));
-});*/
-
-"use strict";
-
-var Router = ReactRouter;
-var Route = ReactRouter.Route;
-var routes = ReactRouter.Routes;
-var RouteHandler = ReactRouter.RouteHandler;
-var Link = ReactRouter.Link;
-
-var routes = React.createElement(Route, { path: "/", handler: App }, React.createElement(Route, { name: "home", path: "/Home", handler: App }), React.createElement(Route, { name: "movies", path: "/Movies", handler: MoviesContainer }), React.createElement(Route, { name: "manage", path: "/Manage", handler: ManagePage }));
-
-var App = React.createClass({ displayName: "App",
-  render: function render() {
-    return React.createElement("div", { id: "loginInnerDiv" }, React.createElement("h3", null, "Home"), React.createElement(RouteHandler, null));
-  }
-});
-
-var ManagePage = React.createClass({ displayName: "ManagePage",
-  render: function render() {
-    return React.createElement("div", null, React.createElement("h3", null, "MANAGE PAGE"));
-  }
-});
-
-ReactRouter.run(routes, function (Handler) {
-  React.render(React.createElement(Handler, null), document.getElementById('innerContainer'));
-});
