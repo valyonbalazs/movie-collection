@@ -75,10 +75,10 @@ var User = function User(username, email, profilPicUrl) {
 
 var ref = new Firebase('https://brilliant-inferno-2926.firebaseio.com');
 var login = {
-  saveUserTokenToLocalStorage: function saveUserTokenToLocalStorage() {
-    localStorage.setItem('uid', uid);
+  saveUserTokenToLocalStorage: function saveUserTokenToLocalStorage(uid) {
+    localStorage.uid = uid;
   },
-  saveUserDataToLocalStorage: function saveUserDataToLocalStorage() {
+  saveUserDataToLocalStorage: function saveUserDataToLocalStorage(name, email, imageUrl) {
     localStorage.userName = name;
     localStorage.userEmail = email;
     localStorage.imageUrl = imageUrl;
@@ -93,10 +93,9 @@ var login = {
         var userEmail = facebookLoginData.email;
         var userProfilePicUrl = facebookLoginData.profileImageURL;
         var user = new User(userName, userEmail, userProfilePicUrl);
-
         ref.child('users').child(authData.uid).set({
           provider: authData.provider,
-          name: login.getName(authData)
+          name: authData.facebook.displayName
         });
         login.saveUserTokenToLocalStorage(authData.uid);
         login.saveUserDataToLocalStorage(userName, userEmail, userProfilePicUrl);
@@ -117,7 +116,7 @@ var login = {
         {
           return authData.twitter.displayName;
         }
-      case 'facebook':
+      case "facebook":
         {
           return authData.facebook.displayName;
         }
@@ -225,8 +224,8 @@ var movies = {
   if (localStorage.uid) {
     var user = new User(localStorage.userName, localStorage.userEmail, localStorage.imageUrl);
     document.addEventListener('DOMContentLoaded', function (event) {
-      renderPage.renderMoviePage();
       renderPage.removeLoginContainer();
+      renderPage.renderMoviePage();
     });
   } else {
     document.addEventListener('DOMContentLoaded', function (event) {
@@ -240,7 +239,7 @@ var movies = {
 var renderPage = {
   renderMoviePage: function renderMoviePage() {
     renderAllNavbar();
-    renderElements();
+    //renderElements();
   },
   renderLoginPage: (function (_renderLoginPage) {
     function renderLoginPage() {
@@ -258,8 +257,8 @@ var renderPage = {
   removeLoginpage: function removeLoginpage() {
     React.unmountComponentAtNode(document.getElementById('loginContainer'));
     renderPage.removeLoginContainer();
-    renderPage.renderAllNavbar();
-    renderPage.renderElements();
+    renderAllNavbar();
+    //renderElements();
   },
   removeLoginContainer: function removeLoginContainer() {
     var logContainer = document.getElementById('loginContainer');
@@ -267,7 +266,7 @@ var renderPage = {
     body.removeChild(logContainer);
   }
 };
-/*jshint esnext: true */
+/* jshint esnext: true */
 "use strict";
 
 var Login = React.createClass({ displayName: "Login",
@@ -420,15 +419,13 @@ function renderElements() {
 
 'use strict';
 
-var menuItems = [{ 'item': 'fa fa-home,LINK1' }, { 'item': 'fa fa-home,link2' }, { 'item': 'fa fa-home,LINK3' }];
+var menuItems = [{ 'item': 'fa fa-home,Home' }, { 'item': 'fa fa-film,Movies' }, { 'item': 'fa fa-wrench,Manage' }];
 
 //MEDIUM AND HIGH RESOLUTION NAVBAR
 var MenuItem = React.createClass({ displayName: "MenuItem",
-  handleClick: function handleClick() {
-    loginBtnClick();
-  },
   render: function render() {
-    return React.createElement("li", null, React.createElement("i", { className: this.props.menuItemIcon, onClick: this.handleClick }), " ", this.props.menuItemText);
+    var path = '#/' + this.props.link;
+    return React.createElement("li", null, React.createElement("a", { href: path }, React.createElement("i", { className: this.props.menuItemIcon }), this.props.menuItemText));
   }
 });
 
@@ -448,7 +445,8 @@ var Navbar = React.createClass({ displayName: "Navbar",
       var text = splitted[1];
       var lowercaseItemIcon = icon.toLowerCase();
       var uppercaseItemText = text.toUpperCase();
-      return React.createElement(MenuItem, { menuItemIcon: lowercaseItemIcon, menuItemText: uppercaseItemText });
+      var linkPath = text;
+      return React.createElement(MenuItem, { menuItemIcon: lowercaseItemIcon, menuItemText: uppercaseItemText, link: linkPath });
     });
 
     return React.createElement("div", { className: "nav col-lg-12 col-md-12" }, React.createElement("h3", null, "Movie-Collection"), React.createElement("ul", null, menuItemArray), React.createElement("div", null, userName, " ", React.createElement("img", { src: userProfilPic })));
@@ -516,8 +514,6 @@ function renderNavbarMobileClosed() {
 function renderNavbarMobileOpen() {
   React.render(React.createElement(NavbarMobileOpen, null), document.getElementById('mobileNavBarLinks'));
 }
-"use strict";
-
 /*var Route = ReactRouter.Route;
 var routes = ReactRouter.Routes;
 var RouteHandler = ReactRouter.RouteHandler;
@@ -559,3 +555,29 @@ var routes = (
 ReactRouter.run(routes, function (Handler) {
   React.render(<Handler/>, document.getElementById('loginContainer'));
 });*/
+
+"use strict";
+
+var Router = ReactRouter;
+var Route = ReactRouter.Route;
+var routes = ReactRouter.Routes;
+var RouteHandler = ReactRouter.RouteHandler;
+var Link = ReactRouter.Link;
+
+var routes = React.createElement(Route, { path: "/", handler: App }, React.createElement(Route, { name: "home", path: "/Home", handler: App }), React.createElement(Route, { name: "movies", path: "/Movies", handler: MoviesContainer }), React.createElement(Route, { name: "manage", path: "/Manage", handler: ManagePage }));
+
+var App = React.createClass({ displayName: "App",
+  render: function render() {
+    return React.createElement("div", { id: "loginInnerDiv" }, React.createElement("h3", null, "Home"), React.createElement(RouteHandler, null));
+  }
+});
+
+var ManagePage = React.createClass({ displayName: "ManagePage",
+  render: function render() {
+    return React.createElement("div", null, React.createElement("h3", null, "MANAGE PAGE"));
+  }
+});
+
+ReactRouter.run(routes, function (Handler) {
+  React.render(React.createElement(Handler, null), document.getElementById('innerContainer'));
+});

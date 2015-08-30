@@ -1,20 +1,18 @@
 /*jshint esnext: true */
 
 let menuItems = [
-  {'item': 'fa fa-home,LINK1'},
-  {'item': 'fa fa-home,link2'},
-  {'item': 'fa fa-home,LINK3'}
+  {'item': 'fa fa-home,Home'},
+  {'item': 'fa fa-film,Movies'},
+  {'item': 'fa fa-wrench,Manage'}
 ];
 
 //MEDIUM AND HIGH RESOLUTION NAVBAR
 let MenuItem = React.createClass({displayName: "MenuItem",
-  handleClick: function () {
-    loginBtnClick();
-  },
   render: function () {
+    let path = '#/' + this.props.link;
     return(
       React.createElement("li", null, 
-        React.createElement("i", {className: this.props.menuItemIcon, onClick: this.handleClick}), " ", this.props.menuItemText
+        React.createElement("a", {href: path}, React.createElement("i", {className: this.props.menuItemIcon}), this.props.menuItemText)
       )
     );
   }
@@ -36,8 +34,9 @@ let Navbar = React.createClass({displayName: "Navbar",
       let text = splitted[1];
       let lowercaseItemIcon = icon.toLowerCase();
       let uppercaseItemText = text.toUpperCase();
+      let linkPath = text;
       return(
-          React.createElement(MenuItem, {menuItemIcon: lowercaseItemIcon, menuItemText: uppercaseItemText})
+          React.createElement(MenuItem, {menuItemIcon: lowercaseItemIcon, menuItemText: uppercaseItemText, link: linkPath})
       );
     });
 

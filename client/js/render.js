@@ -2,7 +2,7 @@
 let renderPage = {
   renderMoviePage: function () {
     renderAllNavbar();
-    renderElements();
+    //renderElements();
   },
   renderLoginPage: function () {
     renderLoginPage();
@@ -10,8 +10,8 @@ let renderPage = {
   removeLoginpage: function () {
     React.unmountComponentAtNode(document.getElementById('loginContainer'));
     renderPage.removeLoginContainer();
-    renderPage.renderAllNavbar();
-    renderPage.renderElements();
+    renderAllNavbar();
+    //renderElements();
   },
   removeLoginContainer: function () {
     let logContainer = document.getElementById('loginContainer');

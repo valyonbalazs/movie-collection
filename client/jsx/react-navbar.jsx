@@ -1,20 +1,18 @@
 /*jshint esnext: true */
 
 let menuItems = [
-  {'item': 'fa fa-home,LINK1'},
-  {'item': 'fa fa-home,link2'},
-  {'item': 'fa fa-home,LINK3'}
+  {'item': 'fa fa-home,Home'},
+  {'item': 'fa fa-film,Movies'},
+  {'item': 'fa fa-wrench,Manage'}
 ];
 
 //MEDIUM AND HIGH RESOLUTION NAVBAR
 let MenuItem = React.createClass({
-  handleClick: function () {
-    loginBtnClick();
-  },
   render: function () {
+    let path = '#/' + this.props.link;
     return(
       <li>
-        <i className={this.props.menuItemIcon} onClick={this.handleClick}></i> {this.props.menuItemText}
+        <a href={path}><i className={this.props.menuItemIcon}></i>{this.props.menuItemText}</a>
       </li>
     );
   }
@@ -36,8 +34,9 @@ let Navbar = React.createClass({
       let text = splitted[1];
       let lowercaseItemIcon = icon.toLowerCase();
       let uppercaseItemText = text.toUpperCase();
+      let linkPath = text;
       return(
-          <MenuItem menuItemIcon={lowercaseItemIcon} menuItemText={uppercaseItemText}/>
+          <MenuItem menuItemIcon={lowercaseItemIcon} menuItemText={uppercaseItemText} link={linkPath}/>
       );
     });
 

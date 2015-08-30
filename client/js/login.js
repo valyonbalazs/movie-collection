@@ -18,10 +18,10 @@ class User {
 
 let ref = new Firebase('https://brilliant-inferno-2926.firebaseio.com');
 let login = {
-  saveUserTokenToLocalStorage: function () {
-      localStorage.setItem('uid', uid);
+  saveUserTokenToLocalStorage: function (uid) {
+      localStorage.uid = uid;
   },
-  saveUserDataToLocalStorage: function () {
+  saveUserDataToLocalStorage: function (name, email, imageUrl) {
     localStorage.userName = name;
     localStorage.userEmail = email;
     localStorage.imageUrl = imageUrl;
@@ -36,10 +36,9 @@ let login = {
         let userEmail = facebookLoginData.email;
         let userProfilePicUrl = facebookLoginData.profileImageURL;
         let user = new User(userName, userEmail, userProfilePicUrl);
-
         ref.child('users').child(authData.uid).set({
           provider: authData.provider,
-          name: login.getName(authData)
+          name: authData.facebook.displayName
         });
         login.saveUserTokenToLocalStorage(authData.uid);
         login.saveUserDataToLocalStorage(userName, userEmail, userProfilePicUrl);
@@ -58,7 +57,7 @@ let login = {
        case 'twitter': {
          return authData.twitter.displayName;
        }
-       case 'facebook': {
+       case "facebook": {
          return authData.facebook.displayName;
        }
     }
