@@ -472,7 +472,8 @@ var NavbarMobileOpen = React.createClass({ displayName: "NavbarMobileOpen",
       var text = splitted[1];
       var lowercaseItemIcon = icon.toLowerCase();
       var uppercaseItemText = text.toUpperCase();
-      return React.createElement(MenuItem, { menuItemIcon: lowercaseItemIcon, menuItemText: uppercaseItemText });
+      var linkPath = text;
+      return React.createElement(MenuItem, { menuItemIcon: lowercaseItemIcon, menuItemText: uppercaseItemText, link: linkPath });
     });
 
     return React.createElement("div", { id: "navbarDivOpenedDiv", className: "navbarDivOpened col-xs-12" }, React.createElement("div", { id: "navbarOpenProfileImage" }, React.createElement("img", { src: userProfilPic }), React.createElement("h4", null, userName), React.createElement("h5", null, userEmail)), React.createElement("div", { id: "navbarOpenLinks" }, React.createElement("ul", { className: "nav" }, menuItemArray)));

@@ -73,8 +73,9 @@ let NavbarMobileOpen =  React.createClass({
       let text = splitted[1];
       let lowercaseItemIcon = icon.toLowerCase();
       let uppercaseItemText = text.toUpperCase();
+      let linkPath = text;
       return(
-          <MenuItem menuItemIcon={lowercaseItemIcon} menuItemText={uppercaseItemText}/>
+          <MenuItem menuItemIcon={lowercaseItemIcon} menuItemText={uppercaseItemText}  link={linkPath}/>
       );
     });
 
