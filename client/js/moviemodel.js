@@ -56,5 +56,11 @@ let movies = {
     let originalTitle = title;
     let newTitle = originalTitle.substr(0, 22);
     return newTitle;
+  },
+  createDiscoverUrl: function () {
+    let api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
+    let urlFirstPart = 'https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&sort_by=popularity.desc&';
+    let url = urlFirstPart + api_key;
+    return url;
   }
 };

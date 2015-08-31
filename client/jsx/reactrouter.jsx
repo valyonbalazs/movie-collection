@@ -9,7 +9,7 @@ let Redirect = ReactRouter.Redirect;
 let routes = (
   <Route name="default" path="/" handler={App}>
     <Redirect from="/" to="/home" />
-    <Route name="home" path="/Home" handler={Home} />
+    <Route name="home" path="/Home" handler={DiscoverMoviesContainer} />
     <Route name="movies" path="/Movies" handler={MoviesContainer} />
     <Route name="manage" path="/Manage" handler={ManagePage} />
   </Route>

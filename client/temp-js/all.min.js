@@ -49,6 +49,26 @@ var http = {
 
     // React container update
     this.setState({ data: movieListData });
+  },
+  successDiscover: function successDiscover(data) {
+    var movieData = undefined;
+    movieData = JSON.parse(data);
+    console.log(movieData);
+
+    for (var key in movieData.results) {
+      console.log(movieData.results[key]);
+
+      var title = movies.modifyTitle(movieData.results[key].title);
+      var backdropPath = movies.createImageUrl(movieData.results[key].backdrop_path);
+      var posterPath = movies.createImageUrl(movieData.results[key].poster_path);
+      var overview = movies.modifyOverview(movieData.results[key].overview);
+      var releaseDate = movies.modifyReleaseDate(movieData.results[key].release_date);
+      var average = movieData.results[key].vote_average + ' ';
+      var movie = new MovieElement(title, overview, average, releaseDate, backdropPath, posterPath);
+
+      discoverMovies.push(movie);
+      this.setState({ data: discoverMovies });
+    }
   }
 };
 /* jshint esnext: true */
@@ -152,6 +172,8 @@ function addUserMovies() {
     movies: starterMovieTitles
   });
 }
+
+var discoverMovies = [];
 /* jshint esnext: true */
 
 'use strict';
@@ -214,6 +236,12 @@ var movies = {
     var originalTitle = title;
     var newTitle = originalTitle.substr(0, 22);
     return newTitle;
+  },
+  createDiscoverUrl: function createDiscoverUrl() {
+    var api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
+    var urlFirstPart = 'https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&sort_by=popularity.desc&';
+    var url = urlFirstPart + api_key;
+    return url;
   }
 };
 /* jshint esnext: true */
@@ -265,6 +293,34 @@ var renderPage = {
     var body = document.body;
     body.removeChild(logContainer);
   }
+};
+/* jshint esnext: true */
+
+"use strict";
+
+var DiscoverMoviesContainer = React.createClass({ displayName: "DiscoverMoviesContainer",
+  getInitialState: function getInitialState() {
+    return { data: [] };
+  },
+  componentDidMount: function componentDidMount() {
+    this.loadMovies();
+  },
+  loadMovies: function loadMovies() {
+    var context = this;
+
+    http.ajax(movies.createDiscoverUrl()).get().then(http.successDiscover.bind(context));
+  },
+  render: function render() {
+    var moviesArray = this.state.data.map(function (movie) {
+      return React.createElement(Movie, { movie: movie });
+    });
+
+    return React.createElement("div", { className: "col-lg-12 col-md-12 col-xs-12 moviesContainer" }, React.createElement(ReactCSSTransitionGroup, { transitionName: "example" }, moviesArray));
+  }
+});
+
+function renderDiscoverMovies() {
+  React.render(React.createElement(DiscoverMoviesContainer, null), document.getElementById("innerContainer"));
 };
 /* jshint esnext: true */
 
@@ -543,7 +599,7 @@ var RouteHandler = ReactRouter.RouteHandler;
 var Link = ReactRouter.Link;
 var Redirect = ReactRouter.Redirect;
 
-var routes = React.createElement(Route, { name: "default", path: "/", handler: App }, React.createElement(Redirect, { from: "/", to: "/home" }), React.createElement(Route, { name: "home", path: "/Home", handler: Home }), React.createElement(Route, { name: "movies", path: "/Movies", handler: MoviesContainer }), React.createElement(Route, { name: "manage", path: "/Manage", handler: ManagePage }));
+var routes = React.createElement(Route, { name: "default", path: "/", handler: App }, React.createElement(Redirect, { from: "/", to: "/home" }), React.createElement(Route, { name: "home", path: "/Home", handler: DiscoverMoviesContainer }), React.createElement(Route, { name: "movies", path: "/Movies", handler: MoviesContainer }), React.createElement(Route, { name: "manage", path: "/Manage", handler: ManagePage }));
 
 ReactRouter.run(routes, function (Handler) {
   React.render(React.createElement(Handler, null), document.getElementById('innerContainer'));

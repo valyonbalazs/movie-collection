@@ -9,7 +9,7 @@ let Redirect = ReactRouter.Redirect;
 let routes = (
   React.createElement(Route, {name: "default", path: "/", handler: App}, 
     React.createElement(Redirect, {from: "/", to: "/home"}), 
-    React.createElement(Route, {name: "home", path: "/Home", handler: Home}), 
+    React.createElement(Route, {name: "home", path: "/Home", handler: DiscoverMoviesContainer}), 
     React.createElement(Route, {name: "movies", path: "/Movies", handler: MoviesContainer}), 
     React.createElement(Route, {name: "manage", path: "/Manage", handler: ManagePage})
   )

@@ -25,3 +25,5 @@ function addUserMovies () {
     movies: starterMovieTitles
   });
 }
+
+let discoverMovies = [];

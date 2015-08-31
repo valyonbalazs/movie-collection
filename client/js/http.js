@@ -27,12 +27,12 @@ let http = {
     };
 
     return {
-      get: function(args) {
+      get: function (args) {
         return core.ajax('GET', url, args);
       }
     };
   },
-  success: function(data) {
+  success: function (data) {
     let movieData;
     movieData = JSON.parse(data);
     let bestVoted = movies.getMaxVotedElement(movieData);
@@ -54,5 +54,32 @@ let http = {
 
     // React container update
     this.setState({data: movieListData});
+  },
+  successDiscover: function (data) {
+    let movieData;
+    movieData = JSON.parse(data);
+    console.log(movieData);
+
+    for (let key in movieData.results) {
+      console.log(movieData.results[key]);
+
+      let title = movies.modifyTitle(movieData.results[key].title);
+      let backdropPath = movies.createImageUrl(movieData.results[key].backdrop_path);
+      let posterPath = movies.createImageUrl(movieData.results[key].poster_path);
+      let overview = movies.modifyOverview(movieData.results[key].overview);
+      let releaseDate = movies.modifyReleaseDate(movieData.results[key].release_date);
+      let average = movieData.results[key].vote_average + ' ';
+      let movie = new MovieElement(
+        title,
+        overview,
+        average,
+        releaseDate,
+        backdropPath,
+        posterPath
+      );
+
+      discoverMovies.push(movie);
+      this.setState({data: discoverMovies});
+    }
   }
 };
