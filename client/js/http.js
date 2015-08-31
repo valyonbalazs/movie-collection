@@ -61,8 +61,6 @@ let http = {
     console.log(movieData);
 
     for (let key in movieData.results) {
-      console.log(movieData.results[key]);
-
       let title = movies.modifyTitle(movieData.results[key].title);
       let backdropPath = movies.createImageUrl(movieData.results[key].backdrop_path);
       let posterPath = movies.createImageUrl(movieData.results[key].poster_path);

@@ -210,8 +210,16 @@
       padding-right: 0px; }
       .container #innerContainer .moviesContainer {
         padding-bottom: 15px; }
+        .container #innerContainer .moviesContainer #discoveryChooserContainer {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 1.4em; }
+          .container #innerContainer .moviesContainer #discoveryChooserContainer div {
+            text-align: center;
+            font-size: 1.5em; }
         .container #innerContainer .moviesContainer .movie {
-          margin-top: 1.6em;
+          margin-top: 1em;
           padding: 0 0 0 0;
           box-shadow: 3px 3px 5px #888888; }
           .container #innerContainer .moviesContainer .movie .backdrop {

@@ -68,5 +68,33 @@ let movies = {
                         insertableDate + '&sort_by=popularity.desc&';
     let url = urlFirstPart + api_key;
     return url;
+  },
+  create1MonthDiscoverUrl: function () {
+    let date = new Date();
+
+    let year = date.getFullYear();
+    let month = date.getMonth();
+    let day = '01';
+    let insertableDate = year + '-' + month + '-' + day;
+    let api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
+    let urlFirstPart = 'https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&release_date.gte=' +
+                        insertableDate + '&sort_by=popularity.desc&';
+    let url = urlFirstPart + api_key;
+    console.log(url);
+    return url;
+  },
+  create3MonthDiscoverUrl: function () {
+    let date = new Date();
+
+    let year = date.getFullYear();
+    let month = date.getMonth()-2;
+    let day = '01';
+    let insertableDate = year + '-' + month + '-' + day;
+    let api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
+    let urlFirstPart = 'https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&release_date.gte=' +
+                        insertableDate + '&sort_by=vote_count.desc&';
+    let url = urlFirstPart + api_key;
+    console.log(url);
+    return url;
   }
 };

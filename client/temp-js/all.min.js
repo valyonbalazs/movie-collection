@@ -56,8 +56,6 @@ var http = {
     console.log(movieData);
 
     for (var key in movieData.results) {
-      console.log(movieData.results[key]);
-
       var title = movies.modifyTitle(movieData.results[key].title);
       var backdropPath = movies.createImageUrl(movieData.results[key].backdrop_path);
       var posterPath = movies.createImageUrl(movieData.results[key].poster_path);
@@ -247,6 +245,32 @@ var movies = {
     var urlFirstPart = 'https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&release_date.gte=' + insertableDate + '&sort_by=popularity.desc&';
     var url = urlFirstPart + api_key;
     return url;
+  },
+  create1MonthDiscoverUrl: function create1MonthDiscoverUrl() {
+    var date = new Date();
+
+    var year = date.getFullYear();
+    var month = date.getMonth();
+    var day = '01';
+    var insertableDate = year + '-' + month + '-' + day;
+    var api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
+    var urlFirstPart = 'https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&release_date.gte=' + insertableDate + '&sort_by=popularity.desc&';
+    var url = urlFirstPart + api_key;
+    console.log(url);
+    return url;
+  },
+  create3MonthDiscoverUrl: function create3MonthDiscoverUrl() {
+    var date = new Date();
+
+    var year = date.getFullYear();
+    var month = date.getMonth() - 2;
+    var day = '01';
+    var insertableDate = year + '-' + month + '-' + day;
+    var api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
+    var urlFirstPart = 'https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&release_date.gte=' + insertableDate + '&sort_by=vote_count.desc&';
+    var url = urlFirstPart + api_key;
+    console.log(url);
+    return url;
   }
 };
 /* jshint esnext: true */
@@ -314,19 +338,27 @@ var DiscoverMoviesContainer = React.createClass({ displayName: "DiscoverMoviesCo
     return { data: [] };
   },
   componentDidMount: function componentDidMount() {
-    this.loadMovies();
+    //this.loadMovies();
   },
   loadMovies: function loadMovies() {
     var context = this;
 
     http.ajax(movies.createDiscoverUrl()).get().then(http.successDiscover.bind(context));
   },
+  handleClick1: function handleClick1() {
+    var context = this;
+    http.ajax(movies.create1MonthDiscoverUrl()).get().then(http.successDiscover.bind(context));
+  },
+  handleClick3: function handleClick3() {
+    var context = this;
+    http.ajax(movies.create3MonthDiscoverUrl()).get().then(http.successDiscover.bind(context));
+  },
   render: function render() {
     var moviesArray = this.state.data.map(function (movie) {
       return React.createElement(Movie, { movie: movie });
     });
 
-    return React.createElement("div", { className: "col-lg-12 col-md-12 col-xs-12 moviesContainer" }, React.createElement("div", { id: "discoveryChooserContainer", className: "col-lg-12 col-md-12 col-xs-12" }, React.createElement("div", { className: "col-lg-2 col-md-2 col-xs-6" }, React.createElement("a", { href: "#" }, "1 MONTH")), React.createElement("div", { className: "col-lg-2 col-md-2 col-xs-6" }, React.createElement("a", { href: "#" }, "3 MONTH "))), React.createElement(ReactCSSTransitionGroup, { transitionName: "example" }, moviesArray));
+    return React.createElement("div", { className: "col-lg-12 col-md-12 col-xs-12 moviesContainer" }, React.createElement("div", { id: "discoveryChooserContainer", className: "col-lg-12 col-md-12 col-xs-12" }, React.createElement("div", { className: "col-lg-2 col-md-2 col-xs-6" }, React.createElement("button", { className: "btn btn-primary", onClick: this.handleClick1 }, "LAST 1 MONTH")), React.createElement("div", { className: "col-lg-2 col-md-2 col-xs-6" }, React.createElement("button", { className: "btn btn-primary", onClick: this.handleClick3 }, "LAST 3 MONTH "))), React.createElement(ReactCSSTransitionGroup, { transitionName: "example" }, moviesArray));
   }
 });
 

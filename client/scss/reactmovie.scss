@@ -37,8 +37,22 @@ $detailsContainerWidth: auto;
 
       .moviesContainer {
         padding-bottom: 15px;
+
+        #discoveryChooserContainer {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          margin-top: 1.4em;
+
+          div {
+            text-align: center;
+            font-size: 1.5em;
+          }
+        }
+
         .movie {
-          margin-top: 1.6em;
+          margin-top: 1em;
           padding: 0 0 0 0;
           box-shadow: $movieBoxShadow;
 
