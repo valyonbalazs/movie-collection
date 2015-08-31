@@ -253,11 +253,18 @@
       padding-right: 0px; }
       .container #innerContainer .moviesContainer {
         padding: 0; }
+        .container #innerContainer .moviesContainer #discoveryChooserContainer {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 0.5em; }
+          .container #innerContainer .moviesContainer #discoveryChooserContainer div {
+            text-align: center; }
         .container #innerContainer .moviesContainer .movie {
           display: block;
           padding: 0 0 0 0;
           margin-right: 0em;
-          margin-top: 1em;
+          margin-top: 0.5em;
           box-shadow: 3px 3px 5px #888888; }
           .container #innerContainer .moviesContainer .movie .backdrop {
             z-index: 0;
@@ -300,11 +307,18 @@
       padding-right: 0px; }
       .container #innerContainer .moviesContainer {
         padding: 0; }
+        .container #innerContainer .moviesContainer #discoveryChooserContainer {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 0.5em; }
+          .container #innerContainer .moviesContainer #discoveryChooserContainer div {
+            text-align: center; }
         .container #innerContainer .moviesContainer .movie {
           display: block;
           padding: 0 0 0 0;
           margin-right: 0em;
-          margin-top: 1em;
+          margin-top: 0.5em;
           box-shadow: 3px 3px 5px #888888; }
           .container #innerContainer .moviesContainer .movie .backdrop {
             z-index: 0;

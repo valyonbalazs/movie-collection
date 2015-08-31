@@ -100,11 +100,24 @@ $detailsContainerWidth: auto;
 
       .moviesContainer {
         padding: 0;
+
+        #discoveryChooserContainer {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          margin-top: 0.5em;
+
+          div {
+            text-align: center;
+          }
+
+        }
         .movie {
           display: block;
           padding: 0 0 0 0;
           margin-right: 0em;
-          margin-top: 1em;
+          margin-top: 0.5em;
           box-shadow: $movieBoxShadow;
           .backdrop {
             z-index: 0;
@@ -172,11 +185,24 @@ $detailsContainerWidth: auto;
 
       .moviesContainer {
         padding: 0;
+
+        #discoveryChooserContainer {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          margin-top: 0.5em;
+
+          div {
+            text-align: center;
+          }
+        }
+
         .movie {
           display: block;
           padding: 0 0 0 0;
           margin-right: 0em;
-          margin-top: 1em;
+          margin-top: 0.5em;
           box-shadow: $movieBoxShadow;
           .backdrop {
             z-index: 0;

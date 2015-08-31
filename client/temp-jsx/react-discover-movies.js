@@ -1,5 +1,15 @@
 /* jshint esnext: true */
 
+let DiscoveryChooser = React.createClass({displayName: "DiscoveryChooser",
+  render: function () {
+    return (
+      React.createElement("div", {id: "discoveryChooserContainer", className: "col-lg-12 col-md-12 col-xs-12"}, 
+        React.createElement("h5", null, "A B C")
+      )
+    );
+  }
+});
+
 let DiscoverMoviesContainer = React.createClass({displayName: "DiscoverMoviesContainer",
   getInitialState: function() {
     return {data: []};
@@ -24,6 +34,14 @@ let DiscoverMoviesContainer = React.createClass({displayName: "DiscoverMoviesCon
 
       return (
         React.createElement("div", {className: "col-lg-12 col-md-12 col-xs-12 moviesContainer"}, 
+          React.createElement("div", {id: "discoveryChooserContainer", className: "col-lg-12 col-md-12 col-xs-12"}, 
+            React.createElement("div", {className: "col-lg-2 col-md-2 col-xs-6"}, 
+                React.createElement("a", {href: "#"}, "1 MONTH")
+            ), 
+            React.createElement("div", {className: "col-lg-2 col-md-2 col-xs-6"}, 
+                React.createElement("a", {href: "#"}, "3 MONTH ")
+            )
+          ), 
           React.createElement(ReactCSSTransitionGroup, {transitionName: "example"}, 
             moviesArray
           )

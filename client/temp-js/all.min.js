@@ -238,8 +238,13 @@ var movies = {
     return newTitle;
   },
   createDiscoverUrl: function createDiscoverUrl() {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth();
+    var day = '01';
+    var insertableDate = year + '-' + month + '-' + day;
     var api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
-    var urlFirstPart = 'https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&sort_by=popularity.desc&';
+    var urlFirstPart = 'https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&release_date.gte=' + insertableDate + '&sort_by=popularity.desc&';
     var url = urlFirstPart + api_key;
     return url;
   }
@@ -298,6 +303,12 @@ var renderPage = {
 
 "use strict";
 
+var DiscoveryChooser = React.createClass({ displayName: "DiscoveryChooser",
+  render: function render() {
+    return React.createElement("div", { id: "discoveryChooserContainer", className: "col-lg-12 col-md-12 col-xs-12" }, React.createElement("h5", null, "A B C"));
+  }
+});
+
 var DiscoverMoviesContainer = React.createClass({ displayName: "DiscoverMoviesContainer",
   getInitialState: function getInitialState() {
     return { data: [] };
@@ -315,7 +326,7 @@ var DiscoverMoviesContainer = React.createClass({ displayName: "DiscoverMoviesCo
       return React.createElement(Movie, { movie: movie });
     });
 
-    return React.createElement("div", { className: "col-lg-12 col-md-12 col-xs-12 moviesContainer" }, React.createElement(ReactCSSTransitionGroup, { transitionName: "example" }, moviesArray));
+    return React.createElement("div", { className: "col-lg-12 col-md-12 col-xs-12 moviesContainer" }, React.createElement("div", { id: "discoveryChooserContainer", className: "col-lg-12 col-md-12 col-xs-12" }, React.createElement("div", { className: "col-lg-2 col-md-2 col-xs-6" }, React.createElement("a", { href: "#" }, "1 MONTH")), React.createElement("div", { className: "col-lg-2 col-md-2 col-xs-6" }, React.createElement("a", { href: "#" }, "3 MONTH "))), React.createElement(ReactCSSTransitionGroup, { transitionName: "example" }, moviesArray));
   }
 });
 
