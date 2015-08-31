@@ -15,23 +15,27 @@ let DiscoverMoviesContainer = React.createClass({
     return {data: []};
   },
   componentDidMount: function() {
-     //this.loadMovies();
+
   },
-  loadMovies: function() {
-    let context = this;
-
-    http.ajax(movies.createDiscoverUrl())
-      .get()
-      .then(http.successDiscover.bind(context));
-
+  removeContainer: function () {
+    let innerContainerChildren = document.getElementById('innerDiscoverContainer').children;
+    let spanChildrenCount = innerContainerChildren[0].childNodes.length;
+    let spanElement = innerContainerChildren[0];
+    if(spanChildrenCount > 0) {
+      while (spanElement.firstChild) {
+        spanElement.removeChild(spanElement.firstChild);
+      }
+    }
   },
   handleClick1: function () {
+    this.removeContainer();
     let context = this;
     http.ajax(movies.create1MonthDiscoverUrl())
       .get()
       .then(http.successDiscover.bind(context));
   },
   handleClick3: function () {
+    this.removeContainer();
     let context = this;
     http.ajax(movies.create3MonthDiscoverUrl())
       .get()
@@ -45,7 +49,7 @@ let DiscoverMoviesContainer = React.createClass({
       });
 
       return (
-        <div className="col-lg-12 col-md-12 col-xs-12 moviesContainer" >
+        <div id="moviesContainer" className="col-lg-12 col-md-12 col-xs-12 moviesContainer" >
           <div id="discoveryChooserContainer" className="col-lg-12 col-md-12 col-xs-12">
             <div className="col-lg-2 col-md-2 col-xs-6">
                 <button className="btn btn-primary" onClick={this.handleClick1}>LAST 1 MONTH</button>
@@ -54,9 +58,11 @@ let DiscoverMoviesContainer = React.createClass({
                 <button className="btn btn-primary" onClick={this.handleClick3}>LAST 3 MONTH </button>
             </div>
           </div>
-          <ReactCSSTransitionGroup transitionName="example">
-            {moviesArray}
-          </ReactCSSTransitionGroup>
+          <div id="innerDiscoverContainer">
+            <ReactCSSTransitionGroup transitionName="example">
+              {moviesArray}
+            </ReactCSSTransitionGroup>
+          </div>
         </div>
       );
   }
