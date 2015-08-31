@@ -1,10 +1,10 @@
 /* jshint esnext: true */
 
-let App = React.createClass({
+let Home = React.createClass({
   render: function () {
     return (
       <div id="loginInnerDiv">
-        <RouteHandler />
+        <h3>Home</h3>
       </div>
     );
   }

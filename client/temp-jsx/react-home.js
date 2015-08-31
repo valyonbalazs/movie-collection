@@ -1,10 +1,10 @@
 /* jshint esnext: true */
 
-let App = React.createClass({displayName: "App",
+let Home = React.createClass({displayName: "Home",
   render: function () {
     return (
       React.createElement("div", {id: "loginInnerDiv"}, 
-        React.createElement(RouteHandler, null)
+        React.createElement("h3", null, "Home")
       )
     );
   }

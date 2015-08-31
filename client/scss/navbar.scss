@@ -88,6 +88,9 @@ $mobileNavBarDivOpenedTransition: visibility 100ms ease-out;
         text-align: center;
         ul {
 
+          a {
+            color: white;
+          }
         }
       }
     }
@@ -129,11 +132,16 @@ $mobileNavBarDivOpenedTransition: visibility 100ms ease-out;
 
       ul {
 
+        display: flex;
+        align-items: center;
+        a {
+          color: white;
+        }
 
         li {
           display: inline;
           padding: 0 1em 0 1em;
-          font-size: 1.5em;
+          font-size: 1em;
           color: white;
         }
       }

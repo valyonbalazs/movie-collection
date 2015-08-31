@@ -270,9 +270,9 @@ var renderPage = {
 
 "use strict";
 
-var App = React.createClass({ displayName: "App",
+var Home = React.createClass({ displayName: "Home",
   render: function render() {
-    return React.createElement("div", { id: "loginInnerDiv" }, React.createElement(RouteHandler, null));
+    return React.createElement("div", { id: "loginInnerDiv" }, React.createElement("h3", null, "Home"));
   }
 });
 /* jshint esnext: true */
@@ -443,7 +443,7 @@ var menuItems = [{ 'item': 'fa fa-home,Home' }, { 'item': 'fa fa-film,Movies' },
 var MenuItem = React.createClass({ displayName: "MenuItem",
   render: function render() {
     var path = '#/' + this.props.link;
-    return React.createElement("li", null, React.createElement("a", { href: path }, React.createElement("i", { className: this.props.menuItemIcon }), this.props.menuItemText));
+    return React.createElement("li", null, React.createElement("a", { href: path }, this.props.menuItemText));
   }
 });
 
@@ -533,3 +533,24 @@ function renderNavbarMobileClosed() {
 function renderNavbarMobileOpen() {
   React.render(React.createElement(NavbarMobileOpen, null), document.getElementById('mobileNavBarLinks'));
 }
+/* jshint esnext: true */
+
+"use strict";
+
+var Router = ReactRouter;
+var Route = ReactRouter.Route;
+var RouteHandler = ReactRouter.RouteHandler;
+var Link = ReactRouter.Link;
+var Redirect = ReactRouter.Redirect;
+
+var routes = React.createElement(Route, { name: "default", path: "/", handler: App }, React.createElement(Redirect, { from: "/", to: "/home" }), React.createElement(Route, { name: "home", path: "/Home", handler: Home }), React.createElement(Route, { name: "movies", path: "/Movies", handler: MoviesContainer }), React.createElement(Route, { name: "manage", path: "/Manage", handler: ManagePage }));
+
+ReactRouter.run(routes, function (Handler) {
+  React.render(React.createElement(Handler, null), document.getElementById('innerContainer'));
+});
+
+var App = React.createClass({ displayName: "App",
+  render: function render() {
+    return React.createElement("div", { id: "loginInnerDiv" }, React.createElement(RouteHandler, null));
+  }
+});
