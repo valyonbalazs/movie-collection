@@ -541,7 +541,7 @@ function renderElements() {
 
 'use strict';
 
-var menuItems = [{ 'item': 'fa fa-home,Home' }, { 'item': 'fa fa-film,Movies' }, { 'item': 'fa fa-wrench,Manage' }];
+var menuItems = [{ 'item': 'fa fa-home,Home,Top rated' }, { 'item': 'fa fa-film,Movies,My selection' }, { 'item': 'fa fa-wrench,Manage,Manage' }];
 
 //MEDIUM AND HIGH RESOLUTION NAVBAR
 var MenuItem = React.createClass({ displayName: "MenuItem",
@@ -560,15 +560,8 @@ var Navbar = React.createClass({ displayName: "Navbar",
     var userName = userInstance.UserName;
     var userEmail = userInstance.Email;
     var menuItemArray = this.state.data.map(function (item) {
-      var itemValue = item.item;
-      var splitted = [];
-      splitted = itemValue.split(",");
-      var icon = splitted[0];
-      var text = splitted[1];
-      var lowercaseItemIcon = icon.toLowerCase();
-      var uppercaseItemText = text.toUpperCase();
-      var linkPath = text;
-      return React.createElement(MenuItem, { menuItemIcon: lowercaseItemIcon, menuItemText: uppercaseItemText, link: linkPath });
+      var params = createMenuItemParams(item);
+      return React.createElement(MenuItem, { menuItemIcon: params.get('icon'), menuItemText: params.get('menuText'), link: params.get('path') });
     });
 
     return React.createElement("div", { className: "nav col-lg-12 col-md-12" }, React.createElement("h3", null, "Movie-Collection"), React.createElement("ul", null, menuItemArray), React.createElement("div", null, userName, " ", React.createElement("img", { src: userProfilPic })));
@@ -587,15 +580,8 @@ var NavbarMobileOpen = React.createClass({ displayName: "NavbarMobileOpen",
     console.log(userProfilPic);
 
     var menuItemArray = this.state.data.map(function (item) {
-      var itemValue = item.item;
-      var splitted = [];
-      splitted = itemValue.split(",");
-      var icon = splitted[0];
-      var text = splitted[1];
-      var lowercaseItemIcon = icon.toLowerCase();
-      var uppercaseItemText = text.toUpperCase();
-      var linkPath = text;
-      return React.createElement(MenuItem, { menuItemIcon: lowercaseItemIcon, menuItemText: uppercaseItemText, link: linkPath });
+      var params = createMenuItemParams(item);
+      return React.createElement(MenuItem, { menuItemIcon: params.get('icon'), menuItemText: params.get('menuText'), link: params.get('path') });
     });
 
     return React.createElement("div", { id: "navbarDivOpenedDiv", className: "navbarDivOpened col-xs-12" }, React.createElement("div", { id: "navbarOpenProfileImage" }, React.createElement("img", { src: userProfilPic }), React.createElement("h4", null, userName), React.createElement("h5", null, userEmail)), React.createElement("div", { id: "navbarOpenLinks" }, React.createElement("ul", { className: "nav" }, menuItemArray)));
@@ -619,6 +605,24 @@ var NavbarMobileClosed = React.createClass({ displayName: "NavbarMobileClosed",
     return React.createElement("div", { className: "navbarMobileClosed col-xs-12" }, React.createElement("i", { className: "fa fa-bars", onClick: this.handleClick }), React.createElement("p", null, "Movie-Collection"));
   }
 });
+
+function createMenuItemParams(item) {
+  var itemValue = item.item;
+  var splitted = [];
+  splitted = itemValue.split(",");
+  var icon = splitted[0];
+  var linkPath = splitted[1];
+  var menuText = splitted[2];
+  var lowercaseItemIcon = icon.toLowerCase();
+  var uppercaseItemText = menuText.toUpperCase();
+
+  var result = new Map();
+  result.set('icon', lowercaseItemIcon);
+  result.set('path', linkPath);
+  result.set('menuText', uppercaseItemText);
+
+  return result;
+}
 
 function renderAllNavbar() {
   renderNavbar();

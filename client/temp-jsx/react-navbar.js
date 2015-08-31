@@ -1,9 +1,9 @@
 /* jshint esnext: true */
 
 let menuItems = [
-  {'item': 'fa fa-home,Home'},
-  {'item': 'fa fa-film,Movies'},
-  {'item': 'fa fa-wrench,Manage'}
+  {'item': 'fa fa-home,Home,Top rated'},
+  {'item': 'fa fa-film,Movies,My selection'},
+  {'item': 'fa fa-wrench,Manage,Manage'}
 ];
 
 //MEDIUM AND HIGH RESOLUTION NAVBAR
@@ -27,16 +27,9 @@ let Navbar = React.createClass({displayName: "Navbar",
     let userName = userInstance.UserName;
     let userEmail = userInstance.Email;
     let menuItemArray = this.state.data.map(function (item) {
-      let itemValue = item.item;
-      let splitted = [];
-      splitted = itemValue.split(",");
-      let icon = splitted[0];
-      let text = splitted[1];
-      let lowercaseItemIcon = icon.toLowerCase();
-      let uppercaseItemText = text.toUpperCase();
-      let linkPath = text;
+      let params = createMenuItemParams(item);
       return(
-          React.createElement(MenuItem, {menuItemIcon: lowercaseItemIcon, menuItemText: uppercaseItemText, link: linkPath})
+          React.createElement(MenuItem, {menuItemIcon: params.get('icon'), menuItemText: params.get('menuText'), link: params.get('path')})
       );
     });
 
@@ -66,16 +59,9 @@ let NavbarMobileOpen =  React.createClass({displayName: "NavbarMobileOpen",
     console.log(userProfilPic);
 
     let menuItemArray = this.state.data.map(function (item) {
-      let itemValue = item.item;
-      let splitted = [];
-      splitted = itemValue.split(",");
-      let icon = splitted[0];
-      let text = splitted[1];
-      let lowercaseItemIcon = icon.toLowerCase();
-      let uppercaseItemText = text.toUpperCase();
-      let linkPath = text;
+      let params = createMenuItemParams(item);
       return(
-          React.createElement(MenuItem, {menuItemIcon: lowercaseItemIcon, menuItemText: uppercaseItemText, link: linkPath})
+          React.createElement(MenuItem, {menuItemIcon: params.get('icon'), menuItemText: params.get('menuText'), link: params.get('path')})
       );
     });
 
@@ -118,6 +104,24 @@ let NavbarMobileClosed = React.createClass({displayName: "NavbarMobileClosed",
     );
   }
 });
+
+function createMenuItemParams(item) {
+  let itemValue = item.item;
+  let splitted = [];
+  splitted = itemValue.split(",");
+  let icon = splitted[0];
+  let linkPath = splitted[1];
+  let menuText = splitted[2];
+  let lowercaseItemIcon = icon.toLowerCase();
+  let uppercaseItemText = menuText.toUpperCase();
+
+  let result = new Map();
+  result.set('icon', lowercaseItemIcon);
+  result.set('path', linkPath);
+  result.set('menuText', uppercaseItemText);
+
+  return result;
+}
 
 function renderAllNavbar() {
   renderNavbar();
