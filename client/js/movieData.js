@@ -19,11 +19,6 @@ let starterMovieTitles = [];
 
 let movieListData = [];
 
-function addUserMovies () {
-  let uid = localStorage.getItem('uid');
-  ref.child('movielist').child(uid).set({
-    movies: starterMovieTitles
-  });
-}
-
 let discoverMovies = [];
+
+let ownMovieTitleList = [];

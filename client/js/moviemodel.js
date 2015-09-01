@@ -87,7 +87,7 @@ let movies = {
     let date = new Date();
 
     let year = date.getFullYear();
-    let month = date.getMonth()-2;
+    let month = date.getMonth() - 2;
     let day = '01';
     let insertableDate = year + '-' + month + '-' + day;
     let api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';

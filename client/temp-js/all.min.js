@@ -158,20 +158,15 @@ var login = {
   {title: 'jurassic park'}
 ];*/
 
-'use strict';
+"use strict";
 
 var starterMovieTitles = [];
 
 var movieListData = [];
 
-function addUserMovies() {
-  var uid = localStorage.getItem('uid');
-  ref.child('movielist').child(uid).set({
-    movies: starterMovieTitles
-  });
-}
-
 var discoverMovies = [];
+
+var ownMovieTitleList = [];
 /* jshint esnext: true */
 
 'use strict';
@@ -398,9 +393,76 @@ function renderLoginPage() {
 
 "use strict";
 
+var AddMovie = React.createClass({ displayName: "AddMovie",
+  render: function render() {
+    return React.createElement("div", { id: "addMovieContainer", className: "col-lg-4 col-md-4 col-xs-12" }, React.createElement("input", { type: "text", className: "form-control", placeholder: "Title" }), React.createElement("button", { className: "btn btn-warning" }, "Add"));
+  }
+});
+
+var ListMoviesFromDb = React.createClass({ displayName: "ListMoviesFromDb",
+  getInitialState: function getInitialState() {
+    return { data: [] };
+  },
+  componentDidMount: function componentDidMount() {
+    this.loadMovieTitles();
+  },
+  loadMovieTitles: function loadMovieTitles() {
+    var promise = function promise() {
+      return new Promise(function (resolve, reject) {
+        var uid = localStorage.getItem('uid');
+        ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
+          var _iteratorNormalCompletion = true;
+          var _didIteratorError = false;
+          var _iteratorError = undefined;
+
+          try {
+            for (var _iterator = snapshot.val()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+              var i = _step.value;
+
+              ownMovieTitleList.push(i);
+            }
+          } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion && _iterator["return"]) {
+                _iterator["return"]();
+              }
+            } finally {
+              if (_didIteratorError) {
+                throw _iteratorError;
+              }
+            }
+          }
+
+          resolve(function () {});
+        });
+      });
+    };
+
+    var context = this;
+    promise().then((function () {
+      this.setState({ data: ownMovieTitleList });
+    }).bind(context));
+  },
+  render: function render() {
+    var movieTitleArray = this.state.data.map(function (title) {
+      return React.createElement(MovieElementFromDb, { title: title });
+    });
+    return React.createElement("div", { id: "listMoviesFromDbContainer", className: "col-lg-4 col-md-4 col-xs-12" }, React.createElement("table", null, React.createElement("thead", null, React.createElement("tr", null, React.createElement("td", null, "Title"), React.createElement("td", null, "Action"))), React.createElement("tbody", null, movieTitleArray)));
+  }
+});
+
+var MovieElementFromDb = React.createClass({ displayName: "MovieElementFromDb",
+  render: function render() {
+    return React.createElement("tr", null, React.createElement("td", null, this.props.title), React.createElement("td", null, "REMOVE"));
+  }
+});
+
 var ManagePage = React.createClass({ displayName: "ManagePage",
   render: function render() {
-    return React.createElement("div", null, React.createElement("h3", null, "MANAGE PAGE"));
+    return React.createElement("div", null, React.createElement(AddMovie, null), React.createElement(ListMoviesFromDb, null));
   }
 });
 /* jshint esnext: true */
