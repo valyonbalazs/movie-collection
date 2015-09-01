@@ -412,32 +412,36 @@ var ListMoviesFromDb = React.createClass({ displayName: "ListMoviesFromDb",
       return new Promise(function (resolve, reject) {
         var uid = localStorage.getItem('uid');
         ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
-          var _iteratorNormalCompletion = true;
-          var _didIteratorError = false;
-          var _iteratorError = undefined;
+          if (snapshot.val() === null) {} else {
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
 
-          try {
-            for (var _iterator = snapshot.val()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-              var i = _step.value;
-
-              ownMovieTitleList.push(i);
-            }
-          } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
-          } finally {
             try {
-              if (!_iteratorNormalCompletion && _iterator["return"]) {
-                _iterator["return"]();
+              for (var _iterator = snapshot.val()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var i = _step.value;
+
+                if (i === undefined) {} else {
+                  ownMovieTitleList.push(i);
+                }
               }
+            } catch (err) {
+              _didIteratorError = true;
+              _iteratorError = err;
             } finally {
-              if (_didIteratorError) {
-                throw _iteratorError;
+              try {
+                if (!_iteratorNormalCompletion && _iterator["return"]) {
+                  _iterator["return"]();
+                }
+              } finally {
+                if (_didIteratorError) {
+                  throw _iteratorError;
+                }
               }
             }
-          }
 
-          resolve(function () {});
+            resolve(function () {});
+          }
         });
       });
     };
@@ -459,10 +463,13 @@ var MovieElementFromDb = React.createClass({ displayName: "MovieElementFromDb",
   handleClick: function handleClick() {
     var uid = localStorage.getItem('uid');
     var title = this.props.title.title;
-    var counter = 0;
-    var elementNumber = 0;
-    console.log(title);
     ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
+      var keyTitleMap = new Map();
+      for (var i in snapshot.val()) {
+        var values = snapshot.val();
+        keyTitleMap.set(i, values[i].title);
+      }
+
       var _iteratorNormalCompletion2 = true;
       var _didIteratorError2 = false;
       var _iteratorError2 = undefined;
@@ -471,12 +478,34 @@ var MovieElementFromDb = React.createClass({ displayName: "MovieElementFromDb",
         for (var _iterator2 = snapshot.val()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
           var i = _step2.value;
 
-          if (counter > 0) {
-            if (i.title == title) {
-              elementNumber = counter;
+          if (i === undefined) {} else {
+            var _iteratorNormalCompletion3 = true;
+            var _didIteratorError3 = false;
+            var _iteratorError3 = undefined;
+
+            try {
+              for (var _iterator3 = keyTitleMap[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                var j = _step3.value;
+
+                if (title === j[1]) {
+                  ref.child('movielist').child(uid).child('movies').child(j[0]).remove();
+                }
+              }
+            } catch (err) {
+              _didIteratorError3 = true;
+              _iteratorError3 = err;
+            } finally {
+              try {
+                if (!_iteratorNormalCompletion3 && _iterator3["return"]) {
+                  _iterator3["return"]();
+                }
+              } finally {
+                if (_didIteratorError3) {
+                  throw _iteratorError3;
+                }
+              }
             }
           }
-          counter++;
         }
       } catch (err) {
         _didIteratorError2 = true;
@@ -493,8 +522,6 @@ var MovieElementFromDb = React.createClass({ displayName: "MovieElementFromDb",
         }
       }
     });
-
-    ref.child('movielist').child(uid).child('movies').child(elementNumber).remove();
   },
   render: function render() {
     return React.createElement("tr", null, React.createElement("td", null, this.props.title), React.createElement("td", null, React.createElement("button", { className: "btn btn-danger", onClick: this.handleClick }, React.createElement("i", { className: "fa fa-trash-o" }), " Remove")));

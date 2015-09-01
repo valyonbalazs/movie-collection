@@ -26,10 +26,18 @@ let ListMoviesFromDb = React.createClass({displayName: "ListMoviesFromDb",
       return new Promise(function (resolve, reject) {
         let uid = localStorage.getItem('uid');
         ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
-          for (let i of snapshot.val()) {
-            ownMovieTitleList.push(i);
+          if(snapshot.val() === null) {
+
+          } else {
+            for (let i of snapshot.val()) {
+              if(i === undefined) {
+
+              } else {
+                  ownMovieTitleList.push(i);
+              }
+            }
+            resolve(function () { });
           }
-          resolve(function () { });
         });
       });
     };
@@ -66,21 +74,26 @@ let MovieElementFromDb = React.createClass({displayName: "MovieElementFromDb",
   handleClick: function () {
     let uid = localStorage.getItem('uid');
     let title = this.props.title.title;
-    let counter = 0;
-    let elementNumber = 0;
-    console.log(title);
     ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
+      let keyTitleMap = new Map();
+      for (let i in snapshot.val()) {
+        let values = snapshot.val();
+        keyTitleMap.set(i, values[i].title);
+
+      }
+
       for (let i of snapshot.val()) {
-        if(counter > 0) {
-            if(i.title == title) {
-              elementNumber = counter;
+        if (i === undefined) {
+
+        } else {
+          for(let j of keyTitleMap) {
+            if(title === j[1]) {
+              ref.child('movielist').child(uid).child('movies').child(j[0]).remove();
             }
+          }
         }
-        counter++;
       }
     });
-
-    ref.child('movielist').child(uid).child('movies').child(elementNumber).remove();
 
   },
   render: function () {
