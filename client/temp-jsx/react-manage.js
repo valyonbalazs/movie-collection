@@ -5,7 +5,7 @@ let AddMovie = React.createClass({displayName: "AddMovie",
     return (
       React.createElement("div", {id: "addMovieContainer", className: "col-lg-4 col-md-4 col-xs-12"}, 
         React.createElement("input", {type: "text", className: "form-control", placeholder: "Title"}), 
-        React.createElement("button", {className: "btn btn-warning"}, "Add")
+        React.createElement("button", {className: "btn btn-warning"}, React.createElement("i", {className: "fa fa-plus-square"}), " Add")
       )
     );
   }
@@ -44,11 +44,10 @@ let ListMoviesFromDb = React.createClass({displayName: "ListMoviesFromDb",
     });
     return (
       React.createElement("div", {id: "listMoviesFromDbContainer", className: "col-lg-4 col-md-4 col-xs-12"}, 
-        React.createElement("table", null, 
+        React.createElement("table", {className: "table table-striped"}, 
           React.createElement("thead", null, 
             React.createElement("tr", null, 
-              React.createElement("td", null, "Title"), 
-              React.createElement("td", null, "Action")
+              React.createElement("th", {colSpan: "2"}, "My movies")
             )
           ), 
           React.createElement("tbody", null, 
@@ -65,7 +64,7 @@ let MovieElementFromDb = React.createClass({displayName: "MovieElementFromDb",
     return (
       React.createElement("tr", null, 
         React.createElement("td", null, this.props.title), 
-        React.createElement("td", null, "REMOVE")
+        React.createElement("td", null, React.createElement("button", {className: "btn btn-danger"}, React.createElement("i", {className: "fa fa-trash-o"}), " Remove"))
       )
     );
   }

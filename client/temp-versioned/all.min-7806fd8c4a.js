@@ -395,7 +395,7 @@ function renderLoginPage() {
 
 var AddMovie = React.createClass({ displayName: "AddMovie",
   render: function render() {
-    return React.createElement("div", { id: "addMovieContainer", className: "col-lg-4 col-md-4 col-xs-12" }, React.createElement("input", { type: "text", className: "form-control", placeholder: "Title" }), React.createElement("button", { className: "btn btn-warning" }, "Add"));
+    return React.createElement("div", { id: "addMovieContainer", className: "col-lg-4 col-md-4 col-xs-12" }, React.createElement("input", { type: "text", className: "form-control", placeholder: "Title" }), React.createElement("button", { className: "btn btn-warning" }, React.createElement("i", { className: "fa fa-plus-square" }), " Add"));
   }
 });
 
@@ -450,13 +450,13 @@ var ListMoviesFromDb = React.createClass({ displayName: "ListMoviesFromDb",
     var movieTitleArray = this.state.data.map(function (title) {
       return React.createElement(MovieElementFromDb, { title: title });
     });
-    return React.createElement("div", { id: "listMoviesFromDbContainer", className: "col-lg-4 col-md-4 col-xs-12" }, React.createElement("table", null, React.createElement("thead", null, React.createElement("tr", null, React.createElement("td", null, "Title"), React.createElement("td", null, "Action"))), React.createElement("tbody", null, movieTitleArray)));
+    return React.createElement("div", { id: "listMoviesFromDbContainer", className: "col-lg-4 col-md-4 col-xs-12" }, React.createElement("table", { className: "table table-striped" }, React.createElement("thead", null, React.createElement("tr", null, React.createElement("th", { colSpan: "2" }, "My movies"))), React.createElement("tbody", null, movieTitleArray)));
   }
 });
 
 var MovieElementFromDb = React.createClass({ displayName: "MovieElementFromDb",
   render: function render() {
-    return React.createElement("tr", null, React.createElement("td", null, this.props.title), React.createElement("td", null, "REMOVE"));
+    return React.createElement("tr", null, React.createElement("td", null, this.props.title), React.createElement("td", null, React.createElement("button", { className: "btn btn-danger" }, React.createElement("i", { className: "fa fa-trash-o" }), " Remove")));
   }
 });
 

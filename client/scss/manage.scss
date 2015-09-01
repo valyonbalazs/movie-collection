@@ -1,0 +1,47 @@
+$screen-small-max: 767px;
+$screen-medium-min: 768px;
+$screen-high-min: 992px;
+$screen-ultrahigh-min: 1200px;
+
+//SMALLEST RESOLUTION
+@media(max-width: $screen-small-max) {
+
+  #addMovieContainer {
+    margin-top: 1em;
+
+    display: flex;
+    justify-content: center;
+  }
+
+  .btn-danger {
+    font-size: 0.8em;
+  }
+
+  table {
+
+    thead {
+      text-align: center;
+
+      th {
+        text-align: center;
+      }
+    }
+
+    tbody {
+      text-align: center;
+      font-size: 1.2em;
+
+      }
+    }
+
+}
+
+//MEDIUM RESOLUTION
+@media(min-width: $screen-medium-min) {
+
+
+}
+
+@media(min-width: $screen-ultrahigh-min) {
+
+}

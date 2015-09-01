@@ -5,7 +5,7 @@ let AddMovie = React.createClass({
     return (
       <div id="addMovieContainer" className="col-lg-4 col-md-4 col-xs-12" >
         <input type="text" className="form-control" placeholder="Title" />
-        <button className="btn btn-warning">Add</button>
+        <button className="btn btn-warning"><i className="fa fa-plus-square"></i> Add</button>
       </div>
     );
   }
@@ -44,11 +44,10 @@ let ListMoviesFromDb = React.createClass({
     });
     return (
       <div id="listMoviesFromDbContainer" className="col-lg-4 col-md-4 col-xs-12" >
-        <table>
+        <table className="table table-striped">
           <thead>
             <tr>
-              <td>Title</td>
-              <td>Action</td>
+              <th colSpan ="2">My movies</th>
             </tr>
           </thead>
           <tbody>
@@ -65,7 +64,7 @@ let MovieElementFromDb = React.createClass({
     return (
       <tr>
         <td>{this.props.title}</td>
-        <td>REMOVE</td>
+        <td><button className="btn btn-danger"><i className="fa fa-trash-o"></i> Remove</button></td>
       </tr>
     );
   }
