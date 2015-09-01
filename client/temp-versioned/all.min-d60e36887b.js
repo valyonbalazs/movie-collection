@@ -394,6 +394,7 @@ function renderLoginPage() {
 "use strict";
 
 var AddMovie = React.createClass({ displayName: "AddMovie",
+  handleClick: function handleClick() {},
   render: function render() {
     return React.createElement("div", { id: "addMovieContainer", className: "col-lg-4 col-md-4 col-xs-12" }, React.createElement("input", { type: "text", className: "form-control", placeholder: "Title" }), React.createElement("button", { className: "btn btn-warning" }, React.createElement("i", { className: "fa fa-plus-square" }), " Add"));
   }
@@ -455,8 +456,48 @@ var ListMoviesFromDb = React.createClass({ displayName: "ListMoviesFromDb",
 });
 
 var MovieElementFromDb = React.createClass({ displayName: "MovieElementFromDb",
+  handleClick: function handleClick() {
+    var uid = localStorage.getItem('uid');
+    var title = this.props.title.title;
+    var counter = 0;
+    var elementNumber = 0;
+    console.log(title);
+    ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = snapshot.val()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var i = _step2.value;
+
+          if (counter > 0) {
+            if (i.title == title) {
+              elementNumber = counter;
+            }
+          }
+          counter++;
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2["return"]) {
+            _iterator2["return"]();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
+    });
+
+    ref.child('movielist').child(uid).child('movies').child(elementNumber).remove();
+  },
   render: function render() {
-    return React.createElement("tr", null, React.createElement("td", null, this.props.title), React.createElement("td", null, React.createElement("button", { className: "btn btn-danger" }, React.createElement("i", { className: "fa fa-trash-o" }), " Remove")));
+    return React.createElement("tr", null, React.createElement("td", null, this.props.title), React.createElement("td", null, React.createElement("button", { className: "btn btn-danger", onClick: this.handleClick }, React.createElement("i", { className: "fa fa-trash-o" }), " Remove")));
   }
 });
 
