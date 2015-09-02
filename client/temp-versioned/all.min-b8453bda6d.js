@@ -432,7 +432,7 @@ var AddMovie = React.createClass({ displayName: "AddMovie",
     });
   },
   render: function render() {
-    return React.createElement("div", { id: "addMovieContainer", className: "col-lg-4 col-md-4 col-xs-12" }, React.createElement("input", { id: "addMovieTitleInputField", type: "text", className: "form-control col-xs-8", placeholder: "Title" }), React.createElement("button", { className: "btn btn-warning col-xs-4", onClick: this.handleClick }, React.createElement("i", { className: "fa fa-plus-square" }), " Add"));
+    return React.createElement("div", { id: "addMovieContainer", className: "col-lg-12 col-md-11 col-xs-12" }, React.createElement("input", { id: "addMovieTitleInputField", type: "text", className: "form-control col-md-4 col-md-offset-1 col-xs-8", placeholder: "Title" }), React.createElement("button", { className: "btn btn-warning col-md-2 col-md-offset-1  col-xs-4", onClick: this.handleClick }, React.createElement("i", { className: "fa fa-plus-square" }), " Add"));
   }
 });
 
@@ -479,7 +479,7 @@ var ListMoviesFromDb = React.createClass({ displayName: "ListMoviesFromDb",
     var movieTitleArray = this.state.data.map(function (title) {
       return React.createElement(MovieElementFromDb, { title: title });
     });
-    return React.createElement("div", { id: "listMoviesFromDbContainer", className: "col-lg-4 col-md-4 col-xs-12" }, React.createElement("table", { className: "table table-striped" }, React.createElement("thead", null, React.createElement("tr", null, React.createElement("th", { colSpan: "2" }, "My movies"))), React.createElement("tbody", null, movieTitleArray)));
+    return React.createElement("div", { id: "listMoviesFromDbContainer", className: "col-lg-10 col-md-10 col-md-offset-1 col-xs-12" }, React.createElement("table", { className: "table table-striped" }, React.createElement("thead", null, React.createElement("tr", null, React.createElement("th", { colSpan: "2" }, "My movies"))), React.createElement("tbody", null, movieTitleArray)));
   }
 });
 
@@ -631,6 +631,7 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
           }
           console.log("betolt2");
           if (wasItUsed === true) {
+            movieListData = [];
             for (var key in ownMovieTitleList) {
               var title = ownMovieTitleList[key];
               http.ajax(movies.createMovieUrl(title)).get().then(http.success.bind(context));

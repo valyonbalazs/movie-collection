@@ -19,9 +19,9 @@ let AddMovie = React.createClass({
   },
   render: function () {
     return (
-      <div id="addMovieContainer" className="col-lg-4 col-md-4 col-xs-12" >
-        <input id="addMovieTitleInputField" type="text" className="form-control col-xs-8" placeholder="Title" />
-        <button className="btn btn-warning col-xs-4" onClick={this.handleClick}><i className="fa fa-plus-square"></i> Add</button>
+      <div id="addMovieContainer" className="col-lg-12 col-md-11 col-xs-12" >
+        <input id="addMovieTitleInputField" type="text" className="form-control col-md-4 col-md-offset-1 col-xs-8" placeholder="Title" />
+        <button className="btn btn-warning col-md-2 col-md-offset-1  col-xs-4" onClick={this.handleClick}><i className="fa fa-plus-square"></i> Add</button>
       </div>
     );
   }
@@ -75,7 +75,7 @@ let ListMoviesFromDb = React.createClass({
       );
     });
     return (
-      <div id="listMoviesFromDbContainer" className="col-lg-4 col-md-4 col-xs-12" >
+      <div id="listMoviesFromDbContainer" className="col-lg-10 col-md-10 col-md-offset-1 col-xs-12" >
         <table className="table table-striped">
           <thead>
             <tr>

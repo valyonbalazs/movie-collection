@@ -38,6 +38,26 @@ $screen-ultrahigh-min: 1200px;
 //MEDIUM RESOLUTION
 @media(min-width: $screen-medium-min) {
 
+  #innerContainer {
+
+    margin-top: 1em;
+
+    #addMovieContainer {
+      display: flex;
+
+    }
+
+    #listMoviesFromDbContainer {
+
+      th {
+        text-align: center;
+      }
+
+      td {
+        text-align: center;
+      }
+    }
+  }
 
 }
 

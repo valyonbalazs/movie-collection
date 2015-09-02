@@ -19,9 +19,9 @@ let AddMovie = React.createClass({displayName: "AddMovie",
   },
   render: function () {
     return (
-      React.createElement("div", {id: "addMovieContainer", className: "col-lg-4 col-md-4 col-xs-12"}, 
-        React.createElement("input", {id: "addMovieTitleInputField", type: "text", className: "form-control col-xs-8", placeholder: "Title"}), 
-        React.createElement("button", {className: "btn btn-warning col-xs-4", onClick: this.handleClick}, React.createElement("i", {className: "fa fa-plus-square"}), " Add")
+      React.createElement("div", {id: "addMovieContainer", className: "col-lg-12 col-md-11 col-xs-12"}, 
+        React.createElement("input", {id: "addMovieTitleInputField", type: "text", className: "form-control col-md-4 col-md-offset-1 col-xs-8", placeholder: "Title"}), 
+        React.createElement("button", {className: "btn btn-warning col-md-2 col-md-offset-1  col-xs-4", onClick: this.handleClick}, React.createElement("i", {className: "fa fa-plus-square"}), " Add")
       )
     );
   }
@@ -75,7 +75,7 @@ let ListMoviesFromDb = React.createClass({displayName: "ListMoviesFromDb",
       );
     });
     return (
-      React.createElement("div", {id: "listMoviesFromDbContainer", className: "col-lg-4 col-md-4 col-xs-12"}, 
+      React.createElement("div", {id: "listMoviesFromDbContainer", className: "col-lg-10 col-md-10 col-md-offset-1 col-xs-12"}, 
         React.createElement("table", {className: "table table-striped"}, 
           React.createElement("thead", null, 
             React.createElement("tr", null, 

@@ -132,6 +132,7 @@ let MoviesContainer = React.createClass({displayName: "MoviesContainer",
           }
           console.log("betolt2");
           if(wasItUsed === true) {
+            movieListData = [];
             for (var key in ownMovieTitleList) {
               let title = ownMovieTitleList[key];
               http.ajax(movies.createMovieUrl(title))
