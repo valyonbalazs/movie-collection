@@ -2,18 +2,32 @@
 
 let AddMovie = React.createClass({displayName: "AddMovie",
   handleClick: function () {
+    let movieTitle = document.getElementById('addMovieTitleInputField').value;
+    let uid = localStorage.getItem('uid');
+    let biggestKey = 0;
+    for(let i of indexTitleMap) {
+      if(i[0] > biggestKey) {
+        biggestKey = i[0];
+      }
+    }
+    let convertToNumber = parseInt(biggestKey, 10);
+    let newBiggestKey = convertToNumber + 1;
 
+    ref.child('movielist').child(uid).child('movies').child(newBiggestKey).set({
+      title: movieTitle
+    });
   },
   render: function () {
     return (
       React.createElement("div", {id: "addMovieContainer", className: "col-lg-4 col-md-4 col-xs-12"}, 
-        React.createElement("input", {type: "text", className: "form-control", placeholder: "Title"}), 
-        React.createElement("button", {className: "btn btn-warning"}, React.createElement("i", {className: "fa fa-plus-square"}), " Add")
+        React.createElement("input", {id: "addMovieTitleInputField", type: "text", className: "form-control", placeholder: "Title"}), 
+        React.createElement("button", {className: "btn btn-warning", onClick: this.handleClick}, React.createElement("i", {className: "fa fa-plus-square"}), " Add")
       )
     );
   }
 });
 
+let indexTitleMap = new Map();
 let ListMoviesFromDb = React.createClass({displayName: "ListMoviesFromDb",
   getInitialState: function () {
     return {data: []};
@@ -29,6 +43,12 @@ let ListMoviesFromDb = React.createClass({displayName: "ListMoviesFromDb",
           if(snapshot.val() === null) {
 
           } else {
+
+            for (let i in snapshot.val()) {
+              let values = snapshot.val();
+              indexTitleMap.set(i, values[i].title);
+            }
+
             for (let i of snapshot.val()) {
               if(i === undefined) {
 
@@ -70,16 +90,15 @@ let ListMoviesFromDb = React.createClass({displayName: "ListMoviesFromDb",
   }
 });
 
+let keyTitleMap = new Map();
 let MovieElementFromDb = React.createClass({displayName: "MovieElementFromDb",
   handleClick: function () {
     let uid = localStorage.getItem('uid');
     let title = this.props.title.title;
     ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
-      let keyTitleMap = new Map();
       for (let i in snapshot.val()) {
         let values = snapshot.val();
         keyTitleMap.set(i, values[i].title);
-
       }
 
       for (let i of snapshot.val()) {
@@ -99,8 +118,8 @@ let MovieElementFromDb = React.createClass({displayName: "MovieElementFromDb",
   render: function () {
     return (
       React.createElement("tr", null, 
-        React.createElement("td", null, this.props.title), 
-        React.createElement("td", null, React.createElement("button", {className: "btn btn-danger", onClick: this.handleClick}, React.createElement("i", {className: "fa fa-trash-o"}), " Remove"))
+        React.createElement("td", {className: "col-xs-6"}, this.props.title), 
+        React.createElement("td", {className: "col-xs-6"}, React.createElement("button", {className: "btn btn-danger", onClick: this.handleClick}, React.createElement("i", {className: "fa fa-trash-o"}), " Remove"))
       )
     );
   }

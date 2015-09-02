@@ -391,15 +391,53 @@ function renderLoginPage() {
 }
 /* jshint esnext: true */
 
-"use strict";
+'use strict';
 
 var AddMovie = React.createClass({ displayName: "AddMovie",
-  handleClick: function handleClick() {},
+  handleClick: function handleClick() {
+    var movieTitle = document.getElementById('addMovieTitleInputField').value;
+    var uid = localStorage.getItem('uid');
+    var biggestKey = 0;
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = indexTitleMap[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var i = _step.value;
+
+        if (i[0] > biggestKey) {
+          biggestKey = i[0];
+        }
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator['return']) {
+          _iterator['return']();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+
+    var convertToNumber = parseInt(biggestKey, 10);
+    var newBiggestKey = convertToNumber + 1;
+
+    ref.child('movielist').child(uid).child('movies').child(newBiggestKey).set({
+      title: movieTitle
+    });
+  },
   render: function render() {
-    return React.createElement("div", { id: "addMovieContainer", className: "col-lg-4 col-md-4 col-xs-12" }, React.createElement("input", { type: "text", className: "form-control", placeholder: "Title" }), React.createElement("button", { className: "btn btn-warning" }, React.createElement("i", { className: "fa fa-plus-square" }), " Add"));
+    return React.createElement("div", { id: "addMovieContainer", className: "col-lg-4 col-md-4 col-xs-12" }, React.createElement("input", { id: "addMovieTitleInputField", type: "text", className: "form-control", placeholder: "Title" }), React.createElement("button", { className: "btn btn-warning", onClick: this.handleClick }, React.createElement("i", { className: "fa fa-plus-square" }), " Add"));
   }
 });
 
+var indexTitleMap = new Map();
 var ListMoviesFromDb = React.createClass({ displayName: "ListMoviesFromDb",
   getInitialState: function getInitialState() {
     return { data: [] };
@@ -413,29 +451,35 @@ var ListMoviesFromDb = React.createClass({ displayName: "ListMoviesFromDb",
         var uid = localStorage.getItem('uid');
         ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
           if (snapshot.val() === null) {} else {
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
+
+            for (var i in snapshot.val()) {
+              var values = snapshot.val();
+              indexTitleMap.set(i, values[i].title);
+            }
+
+            var _iteratorNormalCompletion2 = true;
+            var _didIteratorError2 = false;
+            var _iteratorError2 = undefined;
 
             try {
-              for (var _iterator = snapshot.val()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                var i = _step.value;
+              for (var _iterator2 = snapshot.val()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                var i = _step2.value;
 
                 if (i === undefined) {} else {
                   ownMovieTitleList.push(i);
                 }
               }
             } catch (err) {
-              _didIteratorError = true;
-              _iteratorError = err;
+              _didIteratorError2 = true;
+              _iteratorError2 = err;
             } finally {
               try {
-                if (!_iteratorNormalCompletion && _iterator["return"]) {
-                  _iterator["return"]();
+                if (!_iteratorNormalCompletion2 && _iterator2['return']) {
+                  _iterator2['return']();
                 }
               } finally {
-                if (_didIteratorError) {
-                  throw _iteratorError;
+                if (_didIteratorError2) {
+                  throw _iteratorError2;
                 }
               }
             }
@@ -459,72 +503,72 @@ var ListMoviesFromDb = React.createClass({ displayName: "ListMoviesFromDb",
   }
 });
 
+var keyTitleMap = new Map();
 var MovieElementFromDb = React.createClass({ displayName: "MovieElementFromDb",
   handleClick: function handleClick() {
     var uid = localStorage.getItem('uid');
     var title = this.props.title.title;
     ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
-      var keyTitleMap = new Map();
       for (var i in snapshot.val()) {
         var values = snapshot.val();
         keyTitleMap.set(i, values[i].title);
       }
 
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
+      var _iteratorNormalCompletion3 = true;
+      var _didIteratorError3 = false;
+      var _iteratorError3 = undefined;
 
       try {
-        for (var _iterator2 = snapshot.val()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-          var i = _step2.value;
+        for (var _iterator3 = snapshot.val()[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+          var i = _step3.value;
 
           if (i === undefined) {} else {
-            var _iteratorNormalCompletion3 = true;
-            var _didIteratorError3 = false;
-            var _iteratorError3 = undefined;
+            var _iteratorNormalCompletion4 = true;
+            var _didIteratorError4 = false;
+            var _iteratorError4 = undefined;
 
             try {
-              for (var _iterator3 = keyTitleMap[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                var j = _step3.value;
+              for (var _iterator4 = keyTitleMap[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                var j = _step4.value;
 
                 if (title === j[1]) {
                   ref.child('movielist').child(uid).child('movies').child(j[0]).remove();
                 }
               }
             } catch (err) {
-              _didIteratorError3 = true;
-              _iteratorError3 = err;
+              _didIteratorError4 = true;
+              _iteratorError4 = err;
             } finally {
               try {
-                if (!_iteratorNormalCompletion3 && _iterator3["return"]) {
-                  _iterator3["return"]();
+                if (!_iteratorNormalCompletion4 && _iterator4['return']) {
+                  _iterator4['return']();
                 }
               } finally {
-                if (_didIteratorError3) {
-                  throw _iteratorError3;
+                if (_didIteratorError4) {
+                  throw _iteratorError4;
                 }
               }
             }
           }
         }
       } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
+        _didIteratorError3 = true;
+        _iteratorError3 = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion2 && _iterator2["return"]) {
-            _iterator2["return"]();
+          if (!_iteratorNormalCompletion3 && _iterator3['return']) {
+            _iterator3['return']();
           }
         } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
+          if (_didIteratorError3) {
+            throw _iteratorError3;
           }
         }
       }
     });
   },
   render: function render() {
-    return React.createElement("tr", null, React.createElement("td", null, this.props.title), React.createElement("td", null, React.createElement("button", { className: "btn btn-danger", onClick: this.handleClick }, React.createElement("i", { className: "fa fa-trash-o" }), " Remove")));
+    return React.createElement("tr", null, React.createElement("td", { className: "col-xs-6" }, this.props.title), React.createElement("td", { className: "col-xs-6" }, React.createElement("button", { className: "btn btn-danger", onClick: this.handleClick }, React.createElement("i", { className: "fa fa-trash-o" }), " Remove")));
   }
 });
 
