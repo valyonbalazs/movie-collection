@@ -226,7 +226,7 @@ var movies = {
   },
   modifyTitle: function modifyTitle(title) {
     var originalTitle = title;
-    var newTitle = originalTitle.substr(0, 22);
+    var newTitle = originalTitle.substr(0, 20);
     return newTitle;
   },
   createDiscoverUrl: function createDiscoverUrl() {
@@ -432,7 +432,7 @@ var AddMovie = React.createClass({ displayName: "AddMovie",
     });
   },
   render: function render() {
-    return React.createElement("div", { id: "addMovieContainer", className: "col-lg-12 col-md-11 col-xs-12" }, React.createElement("input", { id: "addMovieTitleInputField", type: "text", className: "form-control col-md-4 col-md-offset-1 col-xs-8", placeholder: "Title" }), React.createElement("button", { className: "btn btn-warning col-md-2 col-md-offset-1  col-xs-4", onClick: this.handleClick }, React.createElement("i", { className: "fa fa-plus-square" }), " Add"));
+    return React.createElement("div", { id: "addMovieContainer", className: "col-lg-11 col-md-11 col-xs-12" }, React.createElement("input", { id: "addMovieTitleInputField", type: "text", className: "form-control col-lg-2 col-md-4 col-lg-offset-1 col-md-offset-1 col-xs-8", placeholder: "Title" }), React.createElement("button", { className: "btn btn-warning col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 col-xs-4", onClick: this.handleClick }, React.createElement("i", { className: "fa fa-plus-square" }), " Add"));
   }
 });
 

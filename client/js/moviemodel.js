@@ -54,7 +54,7 @@ let movies = {
   },
   modifyTitle: function (title) {
     let originalTitle = title;
-    let newTitle = originalTitle.substr(0, 22);
+    let newTitle = originalTitle.substr(0, 20);
     return newTitle;
   },
   createDiscoverUrl: function () {
