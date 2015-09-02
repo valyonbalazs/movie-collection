@@ -58,7 +58,6 @@ let ListMoviesFromDb = React.createClass({
               ownMovieTitleList.push(data[j].title);
             }
             this.setState({data: ownMovieTitleList});
-
             resolve(function () { });
           }
         }.bind(context));

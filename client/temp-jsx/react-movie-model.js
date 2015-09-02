@@ -117,25 +117,38 @@ let MoviesContainer = React.createClass({displayName: "MoviesContainer",
      this.loadMovies();
   },
   loadMovies: function() {
-    movieListData = [];
-    starterMovieTitles = [];
+    let context = this;
+    let wasItUsed = false;
     let promise = function () {
       return new Promise(function (resolve, reject) {
         let uid = localStorage.getItem('uid');
         ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
+          console.log("betolt");
+          ownMovieTitleList = [];
+          movieListData = [];
           let data = snapshot.val();
           for (let i in data) {
-            starterMovieTitles.push(data[i].title);
+            ownMovieTitleList.push(data[i].title);
+          }
+          console.log("betolt2");
+          if(wasItUsed === true) {
+            for (var key in ownMovieTitleList) {
+              let title = ownMovieTitleList[key];
+              http.ajax(movies.createMovieUrl(title))
+                .get()
+                .then(http.success.bind(context));
+            }
           }
           resolve(function () { });
         });
       });
     };
 
-    let context = this;
     promise().then(function () {
-      for (var key in starterMovieTitles) {
-        let title = starterMovieTitles[key];
+      wasItUsed = true;
+      console.log("promise then-ben");
+      for (var key in ownMovieTitleList) {
+        let title = ownMovieTitleList[key];
         http.ajax(movies.createMovieUrl(title))
           .get()
           .then(http.success.bind(context));

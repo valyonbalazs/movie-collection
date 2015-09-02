@@ -35,6 +35,7 @@ var http = {
     };
   },
   success: function success(data) {
+    console.log("success-ban van");
     var movieData = undefined;
     movieData = JSON.parse(data);
     var bestVoted = movies.getMaxVotedElement(movieData);
@@ -160,13 +161,11 @@ var login = {
 
 "use strict";
 
-var starterMovieTitles = [];
-
 var movieListData = [];
 
-var discoverMovies = [];
-
 var ownMovieTitleList = [];
+
+var discoverMovies = [];
 /* jshint esnext: true */
 
 'use strict';
@@ -466,7 +465,6 @@ var ListMoviesFromDb = React.createClass({ displayName: "ListMoviesFromDb",
               ownMovieTitleList.push(data[j].title);
             }
             this.setState({ data: ownMovieTitleList });
-
             resolve(function () {});
           }
         }).bind(context));
@@ -618,25 +616,36 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
     this.loadMovies();
   },
   loadMovies: function loadMovies() {
-    movieListData = [];
-    starterMovieTitles = [];
+    var context = this;
+    var wasItUsed = false;
     var promise = function promise() {
       return new Promise(function (resolve, reject) {
         var uid = localStorage.getItem('uid');
         ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
+          console.log("betolt");
+          ownMovieTitleList = [];
+          movieListData = [];
           var data = snapshot.val();
           for (var i in data) {
-            starterMovieTitles.push(data[i].title);
+            ownMovieTitleList.push(data[i].title);
+          }
+          console.log("betolt2");
+          if (wasItUsed === true) {
+            for (var key in ownMovieTitleList) {
+              var title = ownMovieTitleList[key];
+              http.ajax(movies.createMovieUrl(title)).get().then(http.success.bind(context));
+            }
           }
           resolve(function () {});
         });
       });
     };
 
-    var context = this;
     promise().then(function () {
-      for (var key in starterMovieTitles) {
-        var title = starterMovieTitles[key];
+      wasItUsed = true;
+      console.log("promise then-ben");
+      for (var key in ownMovieTitleList) {
+        var title = ownMovieTitleList[key];
         http.ajax(movies.createMovieUrl(title)).get().then(http.success.bind(context));
       }
     });

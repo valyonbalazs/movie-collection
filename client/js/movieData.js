@@ -15,10 +15,8 @@
   {title: 'jurassic park'}
 ];*/
 
-let starterMovieTitles = [];
-
 let movieListData = [];
 
-let discoverMovies = [];
-
 let ownMovieTitleList = [];
+
+let discoverMovies = [];
