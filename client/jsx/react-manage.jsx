@@ -40,22 +40,20 @@ let ListMoviesFromDb = React.createClass({
       return new Promise(function (resolve, reject) {
         let uid = localStorage.getItem('uid');
         ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
-          if(snapshot.val() === null) {
+          let data = snapshot.val();
+          if(data === null) {
 
           } else {
 
-            for (let i in snapshot.val()) {
-              let values = snapshot.val();
+            for (let i in data) {
+              let values = data;
               indexTitleMap.set(i, values[i].title);
             }
 
-            for (let i of snapshot.val()) {
-              if(i === undefined) {
-
-              } else {
-                  ownMovieTitleList.push(i);
-              }
+            for(let j in data) {
+              ownMovieTitleList.push(data[j].title);
             }
+
             resolve(function () { });
           }
         });
@@ -108,6 +106,10 @@ let MovieElementFromDb = React.createClass({
           for(let j of keyTitleMap) {
             if(title === j[1]) {
               ref.child('movielist').child(uid).child('movies').child(j[0]).remove();
+              let indexOfElement = ownMovieTitleList.indexOf(j[1]);
+              if(indexOfElement > -1) {
+                ownMovieTitleList.splice(indexOfElement, 1);
+              }
             }
           }
         }

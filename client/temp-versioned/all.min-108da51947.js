@@ -450,38 +450,16 @@ var ListMoviesFromDb = React.createClass({ displayName: "ListMoviesFromDb",
       return new Promise(function (resolve, reject) {
         var uid = localStorage.getItem('uid');
         ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
-          if (snapshot.val() === null) {} else {
+          var data = snapshot.val();
+          if (data === null) {} else {
 
-            for (var i in snapshot.val()) {
-              var values = snapshot.val();
+            for (var i in data) {
+              var values = data;
               indexTitleMap.set(i, values[i].title);
             }
 
-            var _iteratorNormalCompletion2 = true;
-            var _didIteratorError2 = false;
-            var _iteratorError2 = undefined;
-
-            try {
-              for (var _iterator2 = snapshot.val()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                var i = _step2.value;
-
-                if (i === undefined) {} else {
-                  ownMovieTitleList.push(i);
-                }
-              }
-            } catch (err) {
-              _didIteratorError2 = true;
-              _iteratorError2 = err;
-            } finally {
-              try {
-                if (!_iteratorNormalCompletion2 && _iterator2['return']) {
-                  _iterator2['return']();
-                }
-              } finally {
-                if (_didIteratorError2) {
-                  throw _iteratorError2;
-                }
-              }
+            for (var j in data) {
+              ownMovieTitleList.push(data[j].title);
             }
 
             resolve(function () {});
@@ -514,54 +492,58 @@ var MovieElementFromDb = React.createClass({ displayName: "MovieElementFromDb",
         keyTitleMap.set(i, values[i].title);
       }
 
-      var _iteratorNormalCompletion3 = true;
-      var _didIteratorError3 = false;
-      var _iteratorError3 = undefined;
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
 
       try {
-        for (var _iterator3 = snapshot.val()[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-          var i = _step3.value;
+        for (var _iterator2 = snapshot.val()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var i = _step2.value;
 
           if (i === undefined) {} else {
-            var _iteratorNormalCompletion4 = true;
-            var _didIteratorError4 = false;
-            var _iteratorError4 = undefined;
+            var _iteratorNormalCompletion3 = true;
+            var _didIteratorError3 = false;
+            var _iteratorError3 = undefined;
 
             try {
-              for (var _iterator4 = keyTitleMap[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-                var j = _step4.value;
+              for (var _iterator3 = keyTitleMap[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                var j = _step3.value;
 
                 if (title === j[1]) {
                   ref.child('movielist').child(uid).child('movies').child(j[0]).remove();
+                  var indexOfElement = ownMovieTitleList.indexOf(j[1]);
+                  if (indexOfElement > -1) {
+                    ownMovieTitleList.splice(indexOfElement, 1);
+                  }
                 }
               }
             } catch (err) {
-              _didIteratorError4 = true;
-              _iteratorError4 = err;
+              _didIteratorError3 = true;
+              _iteratorError3 = err;
             } finally {
               try {
-                if (!_iteratorNormalCompletion4 && _iterator4['return']) {
-                  _iterator4['return']();
+                if (!_iteratorNormalCompletion3 && _iterator3['return']) {
+                  _iterator3['return']();
                 }
               } finally {
-                if (_didIteratorError4) {
-                  throw _iteratorError4;
+                if (_didIteratorError3) {
+                  throw _iteratorError3;
                 }
               }
             }
           }
         }
       } catch (err) {
-        _didIteratorError3 = true;
-        _iteratorError3 = err;
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion3 && _iterator3['return']) {
-            _iterator3['return']();
+          if (!_iteratorNormalCompletion2 && _iterator2['return']) {
+            _iterator2['return']();
           }
         } finally {
-          if (_didIteratorError3) {
-            throw _iteratorError3;
+          if (_didIteratorError2) {
+            throw _iteratorError2;
           }
         }
       }
