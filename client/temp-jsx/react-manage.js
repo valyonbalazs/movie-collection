@@ -4,15 +4,16 @@ let AddMovie = React.createClass({displayName: "AddMovie",
   handleClick: function () {
     let movieTitle = document.getElementById('addMovieTitleInputField').value;
     let uid = localStorage.getItem('uid');
-    let biggestKey = 0;
+    let biggestKey = 1;
     for(let i of indexTitleMap) {
-      if(i[0] > biggestKey) {
+      if(parseInt(i[0]) > biggestKey) {
         biggestKey = i[0];
       }
     }
-    let convertToNumber = parseInt(biggestKey, 10);
+    let convertToNumber = parseInt(biggestKey);
     let newBiggestKey = convertToNumber + 1;
 
+    console.log("adding movie");
     ref.child('movielist').child(uid).child('movies').child(newBiggestKey).set({
       title: movieTitle
     });
@@ -36,15 +37,20 @@ let ListMoviesFromDb = React.createClass({displayName: "ListMoviesFromDb",
     this.loadMovieTitles();
   },
   loadMovieTitles: function () {
+    let context = this;
     let promise = function () {
       return new Promise(function (resolve, reject) {
         let uid = localStorage.getItem('uid');
         ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
+          console.log("loading list");
+          ownMovieTitleList = [];
           let data = snapshot.val();
           if(data === null) {
 
           } else {
 
+            //Has to get the keys from the database for the adding-function
+            //to create a non-existing key for the new element
             for (let i in data) {
               let values = data;
               indexTitleMap.set(i, values[i].title);
@@ -53,14 +59,14 @@ let ListMoviesFromDb = React.createClass({displayName: "ListMoviesFromDb",
             for(let j in data) {
               ownMovieTitleList.push(data[j].title);
             }
+            this.setState({data: ownMovieTitleList});
 
             resolve(function () { });
           }
-        });
+        }.bind(context));
       });
     };
 
-    let context = this;
     promise().then(function () {
       this.setState({data: ownMovieTitleList});
     }.bind(context));
@@ -92,30 +98,25 @@ let keyTitleMap = new Map();
 let MovieElementFromDb = React.createClass({displayName: "MovieElementFromDb",
   handleClick: function () {
     let uid = localStorage.getItem('uid');
-    let title = this.props.title.title;
+    let title = this.props.title;
     ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
-      for (let i in snapshot.val()) {
-        let values = snapshot.val();
+      let data = snapshot.val();
+      for (let i in data) {
+        let values = data;
         keyTitleMap.set(i, values[i].title);
       }
 
-      for (let i of snapshot.val()) {
-        if (i === undefined) {
-
-        } else {
-          for(let j of keyTitleMap) {
-            if(title === j[1]) {
-              ref.child('movielist').child(uid).child('movies').child(j[0]).remove();
-              let indexOfElement = ownMovieTitleList.indexOf(j[1]);
-              if(indexOfElement > -1) {
-                ownMovieTitleList.splice(indexOfElement, 1);
-              }
-            }
+      for(let j of keyTitleMap) {
+        if(title === j[1]) {
+          console.log("title: " + title + " j: " + j[1]);
+          ref.child('movielist').child(uid).child('movies').child(j[0]).remove();
+          let indexOfElement = ownMovieTitleList.indexOf(j[1]);
+          if(indexOfElement > -1) {
+            ownMovieTitleList.splice(indexOfElement, 1);
           }
         }
       }
     });
-
   },
   render: function () {
     return (

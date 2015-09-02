@@ -397,7 +397,7 @@ var AddMovie = React.createClass({ displayName: "AddMovie",
   handleClick: function handleClick() {
     var movieTitle = document.getElementById('addMovieTitleInputField').value;
     var uid = localStorage.getItem('uid');
-    var biggestKey = 0;
+    var biggestKey = 1;
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
     var _iteratorError = undefined;
@@ -406,7 +406,7 @@ var AddMovie = React.createClass({ displayName: "AddMovie",
       for (var _iterator = indexTitleMap[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         var i = _step.value;
 
-        if (i[0] > biggestKey) {
+        if (parseInt(i[0]) > biggestKey) {
           biggestKey = i[0];
         }
       }
@@ -425,9 +425,10 @@ var AddMovie = React.createClass({ displayName: "AddMovie",
       }
     }
 
-    var convertToNumber = parseInt(biggestKey, 10);
+    var convertToNumber = parseInt(biggestKey);
     var newBiggestKey = convertToNumber + 1;
 
+    console.log("adding movie");
     ref.child('movielist').child(uid).child('movies').child(newBiggestKey).set({
       title: movieTitle
     });
@@ -446,13 +447,18 @@ var ListMoviesFromDb = React.createClass({ displayName: "ListMoviesFromDb",
     this.loadMovieTitles();
   },
   loadMovieTitles: function loadMovieTitles() {
+    var context = this;
     var promise = function promise() {
       return new Promise(function (resolve, reject) {
         var uid = localStorage.getItem('uid');
-        ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
+        ref.child('movielist').child(uid).child('movies').on('value', (function (snapshot) {
+          console.log("loading list");
+          ownMovieTitleList = [];
           var data = snapshot.val();
           if (data === null) {} else {
 
+            //Has to get the keys from the database for the adding-function
+            //to create a non-existing key for the new element
             for (var i in data) {
               var values = data;
               indexTitleMap.set(i, values[i].title);
@@ -461,14 +467,14 @@ var ListMoviesFromDb = React.createClass({ displayName: "ListMoviesFromDb",
             for (var j in data) {
               ownMovieTitleList.push(data[j].title);
             }
+            this.setState({ data: ownMovieTitleList });
 
             resolve(function () {});
           }
-        });
+        }).bind(context));
       });
     };
 
-    var context = this;
     promise().then((function () {
       this.setState({ data: ownMovieTitleList });
     }).bind(context));
@@ -485,10 +491,11 @@ var keyTitleMap = new Map();
 var MovieElementFromDb = React.createClass({ displayName: "MovieElementFromDb",
   handleClick: function handleClick() {
     var uid = localStorage.getItem('uid');
-    var title = this.props.title.title;
+    var title = this.props.title;
     ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
-      for (var i in snapshot.val()) {
-        var values = snapshot.val();
+      var data = snapshot.val();
+      for (var i in data) {
+        var values = data;
         keyTitleMap.set(i, values[i].title);
       }
 
@@ -497,39 +504,15 @@ var MovieElementFromDb = React.createClass({ displayName: "MovieElementFromDb",
       var _iteratorError2 = undefined;
 
       try {
-        for (var _iterator2 = snapshot.val()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-          var i = _step2.value;
+        for (var _iterator2 = keyTitleMap[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var j = _step2.value;
 
-          if (i === undefined) {} else {
-            var _iteratorNormalCompletion3 = true;
-            var _didIteratorError3 = false;
-            var _iteratorError3 = undefined;
-
-            try {
-              for (var _iterator3 = keyTitleMap[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                var j = _step3.value;
-
-                if (title === j[1]) {
-                  ref.child('movielist').child(uid).child('movies').child(j[0]).remove();
-                  var indexOfElement = ownMovieTitleList.indexOf(j[1]);
-                  if (indexOfElement > -1) {
-                    ownMovieTitleList.splice(indexOfElement, 1);
-                  }
-                }
-              }
-            } catch (err) {
-              _didIteratorError3 = true;
-              _iteratorError3 = err;
-            } finally {
-              try {
-                if (!_iteratorNormalCompletion3 && _iterator3['return']) {
-                  _iterator3['return']();
-                }
-              } finally {
-                if (_didIteratorError3) {
-                  throw _iteratorError3;
-                }
-              }
+          if (title === j[1]) {
+            console.log("title: " + title + " j: " + j[1]);
+            ref.child('movielist').child(uid).child('movies').child(j[0]).remove();
+            var indexOfElement = ownMovieTitleList.indexOf(j[1]);
+            if (indexOfElement > -1) {
+              ownMovieTitleList.splice(indexOfElement, 1);
             }
           }
         }
