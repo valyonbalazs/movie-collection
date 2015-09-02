@@ -118,13 +118,14 @@ let MoviesContainer = React.createClass({
   },
   loadMovies: function() {
     movieListData = [];
-
+    starterMovieTitles = [];
     let promise = function () {
       return new Promise(function (resolve, reject) {
         let uid = localStorage.getItem('uid');
         ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
-          for (let i of snapshot.val()) {
-            starterMovieTitles.push(i);
+          let data = snapshot.val();
+          for (let i in data) {
+            starterMovieTitles.push(data[i].title);
           }
           resolve(function () { });
         });
@@ -134,7 +135,7 @@ let MoviesContainer = React.createClass({
     let context = this;
     promise().then(function () {
       for (var key in starterMovieTitles) {
-        let title = starterMovieTitles[key].title;
+        let title = starterMovieTitles[key];
         http.ajax(movies.createMovieUrl(title))
           .get()
           .then(http.success.bind(context));

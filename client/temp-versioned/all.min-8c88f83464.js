@@ -428,13 +428,12 @@ var AddMovie = React.createClass({ displayName: "AddMovie",
     var convertToNumber = parseInt(biggestKey);
     var newBiggestKey = convertToNumber + 1;
 
-    console.log("adding movie");
     ref.child('movielist').child(uid).child('movies').child(newBiggestKey).set({
       title: movieTitle
     });
   },
   render: function render() {
-    return React.createElement("div", { id: "addMovieContainer", className: "col-lg-4 col-md-4 col-xs-12" }, React.createElement("input", { id: "addMovieTitleInputField", type: "text", className: "form-control", placeholder: "Title" }), React.createElement("button", { className: "btn btn-warning", onClick: this.handleClick }, React.createElement("i", { className: "fa fa-plus-square" }), " Add"));
+    return React.createElement("div", { id: "addMovieContainer", className: "col-lg-4 col-md-4 col-xs-12" }, React.createElement("input", { id: "addMovieTitleInputField", type: "text", className: "form-control col-xs-8", placeholder: "Title" }), React.createElement("button", { className: "btn btn-warning col-xs-4", onClick: this.handleClick }, React.createElement("i", { className: "fa fa-plus-square" }), " Add"));
   }
 });
 
@@ -452,7 +451,6 @@ var ListMoviesFromDb = React.createClass({ displayName: "ListMoviesFromDb",
       return new Promise(function (resolve, reject) {
         var uid = localStorage.getItem('uid');
         ref.child('movielist').child(uid).child('movies').on('value', (function (snapshot) {
-          console.log("loading list");
           ownMovieTitleList = [];
           var data = snapshot.val();
           if (data === null) {} else {
@@ -533,7 +531,7 @@ var MovieElementFromDb = React.createClass({ displayName: "MovieElementFromDb",
     });
   },
   render: function render() {
-    return React.createElement("tr", null, React.createElement("td", { className: "col-xs-6" }, this.props.title), React.createElement("td", { className: "col-xs-6" }, React.createElement("button", { className: "btn btn-danger", onClick: this.handleClick }, React.createElement("i", { className: "fa fa-trash-o" }), " Remove")));
+    return React.createElement("tr", null, React.createElement("td", { className: "col-xs-9" }, this.props.title), React.createElement("td", { className: "col-xs-3" }, React.createElement("button", { className: "btn btn-danger", onClick: this.handleClick }, React.createElement("i", { className: "fa fa-trash-o" }), " Remove")));
   }
 });
 
@@ -621,36 +619,15 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
   },
   loadMovies: function loadMovies() {
     movieListData = [];
-
+    starterMovieTitles = [];
     var promise = function promise() {
       return new Promise(function (resolve, reject) {
         var uid = localStorage.getItem('uid');
         ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
-          var _iteratorNormalCompletion = true;
-          var _didIteratorError = false;
-          var _iteratorError = undefined;
-
-          try {
-            for (var _iterator = snapshot.val()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-              var i = _step.value;
-
-              starterMovieTitles.push(i);
-            }
-          } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
-          } finally {
-            try {
-              if (!_iteratorNormalCompletion && _iterator["return"]) {
-                _iterator["return"]();
-              }
-            } finally {
-              if (_didIteratorError) {
-                throw _iteratorError;
-              }
-            }
+          var data = snapshot.val();
+          for (var i in data) {
+            starterMovieTitles.push(data[i].title);
           }
-
           resolve(function () {});
         });
       });
@@ -659,7 +636,7 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
     var context = this;
     promise().then(function () {
       for (var key in starterMovieTitles) {
-        var title = starterMovieTitles[key].title;
+        var title = starterMovieTitles[key];
         http.ajax(movies.createMovieUrl(title)).get().then(http.success.bind(context));
       }
     });

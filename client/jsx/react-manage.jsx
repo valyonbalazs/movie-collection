@@ -13,7 +13,6 @@ let AddMovie = React.createClass({
     let convertToNumber = parseInt(biggestKey);
     let newBiggestKey = convertToNumber + 1;
 
-    console.log("adding movie");
     ref.child('movielist').child(uid).child('movies').child(newBiggestKey).set({
       title: movieTitle
     });
@@ -21,8 +20,8 @@ let AddMovie = React.createClass({
   render: function () {
     return (
       <div id="addMovieContainer" className="col-lg-4 col-md-4 col-xs-12" >
-        <input id="addMovieTitleInputField" type="text" className="form-control" placeholder="Title" />
-        <button className="btn btn-warning" onClick={this.handleClick}><i className="fa fa-plus-square"></i> Add</button>
+        <input id="addMovieTitleInputField" type="text" className="form-control col-xs-8" placeholder="Title" />
+        <button className="btn btn-warning col-xs-4" onClick={this.handleClick}><i className="fa fa-plus-square"></i> Add</button>
       </div>
     );
   }
@@ -42,7 +41,6 @@ let ListMoviesFromDb = React.createClass({
       return new Promise(function (resolve, reject) {
         let uid = localStorage.getItem('uid');
         ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
-          console.log("loading list");
           ownMovieTitleList = [];
           let data = snapshot.val();
           if(data === null) {
@@ -121,8 +119,8 @@ let MovieElementFromDb = React.createClass({
   render: function () {
     return (
       <tr>
-        <td className="col-xs-6">{this.props.title}</td>
-        <td className="col-xs-6"><button className="btn btn-danger" onClick={this.handleClick} ><i className="fa fa-trash-o"></i> Remove</button></td>
+        <td className="col-xs-9">{this.props.title}</td>
+        <td className="col-xs-3"><button className="btn btn-danger" onClick={this.handleClick} ><i className="fa fa-trash-o"></i> Remove</button></td>
       </tr>
     );
   }

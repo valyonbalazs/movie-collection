@@ -13,7 +13,6 @@ let AddMovie = React.createClass({displayName: "AddMovie",
     let convertToNumber = parseInt(biggestKey);
     let newBiggestKey = convertToNumber + 1;
 
-    console.log("adding movie");
     ref.child('movielist').child(uid).child('movies').child(newBiggestKey).set({
       title: movieTitle
     });
@@ -21,8 +20,8 @@ let AddMovie = React.createClass({displayName: "AddMovie",
   render: function () {
     return (
       React.createElement("div", {id: "addMovieContainer", className: "col-lg-4 col-md-4 col-xs-12"}, 
-        React.createElement("input", {id: "addMovieTitleInputField", type: "text", className: "form-control", placeholder: "Title"}), 
-        React.createElement("button", {className: "btn btn-warning", onClick: this.handleClick}, React.createElement("i", {className: "fa fa-plus-square"}), " Add")
+        React.createElement("input", {id: "addMovieTitleInputField", type: "text", className: "form-control col-xs-8", placeholder: "Title"}), 
+        React.createElement("button", {className: "btn btn-warning col-xs-4", onClick: this.handleClick}, React.createElement("i", {className: "fa fa-plus-square"}), " Add")
       )
     );
   }
@@ -42,7 +41,6 @@ let ListMoviesFromDb = React.createClass({displayName: "ListMoviesFromDb",
       return new Promise(function (resolve, reject) {
         let uid = localStorage.getItem('uid');
         ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
-          console.log("loading list");
           ownMovieTitleList = [];
           let data = snapshot.val();
           if(data === null) {
@@ -121,8 +119,8 @@ let MovieElementFromDb = React.createClass({displayName: "MovieElementFromDb",
   render: function () {
     return (
       React.createElement("tr", null, 
-        React.createElement("td", {className: "col-xs-6"}, this.props.title), 
-        React.createElement("td", {className: "col-xs-6"}, React.createElement("button", {className: "btn btn-danger", onClick: this.handleClick}, React.createElement("i", {className: "fa fa-trash-o"}), " Remove"))
+        React.createElement("td", {className: "col-xs-9"}, this.props.title), 
+        React.createElement("td", {className: "col-xs-3"}, React.createElement("button", {className: "btn btn-danger", onClick: this.handleClick}, React.createElement("i", {className: "fa fa-trash-o"}), " Remove"))
       )
     );
   }
