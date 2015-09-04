@@ -33,7 +33,6 @@ let http = {
     };
   },
   success: function (data) {
-    console.log("success-ban van");
     let movieData;
     movieData = JSON.parse(data);
     let bestVoted = movies.getMaxVotedElement(movieData);
