@@ -430,7 +430,8 @@ body {
           #mobileNavBarLinks .navbarDivOpened #navbarOpenProfileImage #navbarProfileData img {
             border-radius: 2em; }
       #mobileNavBarLinks .navbarDivOpened #navbarOpenLinks {
-        text-align: center; }
+        font-size: 0.8em;
+        text-align: left; }
         #mobileNavBarLinks .navbarDivOpened #navbarOpenLinks ul a {
           color: white; } }
 

@@ -1,7 +1,7 @@
 /* jshint esnext: true */
 
 let menuItems = [
-  {'item': 'fa fa-home,Home,Discover'},
+  {'item': 'fa fa-search,Home,Discover'},
   {'item': 'fa fa-film,Movies,My selection'},
   {'item': 'fa fa-wrench,Manage,Manage'}
 ];
@@ -12,7 +12,7 @@ let MenuItem = React.createClass({
     let path = '#/' + this.props.link;
     return(
       <li>
-        <a href={path}>{this.props.menuItemText}</a>
+        <a href={path}><i className={this.props.menuItemIcon}></i>&nbsp;&nbsp; {this.props.menuItemText}</a>
       </li>
     );
   }

@@ -686,13 +686,13 @@ function renderElements() {
 
 'use strict';
 
-var menuItems = [{ 'item': 'fa fa-home,Home,Discover' }, { 'item': 'fa fa-film,Movies,My selection' }, { 'item': 'fa fa-wrench,Manage,Manage' }];
+var menuItems = [{ 'item': 'fa fa-search,Home,Discover' }, { 'item': 'fa fa-film,Movies,My selection' }, { 'item': 'fa fa-wrench,Manage,Manage' }];
 
 //MEDIUM AND HIGH RESOLUTION NAVBAR
 var MenuItem = React.createClass({ displayName: "MenuItem",
   render: function render() {
     var path = '#/' + this.props.link;
-    return React.createElement("li", null, React.createElement("a", { href: path }, this.props.menuItemText));
+    return React.createElement("li", null, React.createElement("a", { href: path }, React.createElement("i", { className: this.props.menuItemIcon }), "   ", this.props.menuItemText));
   }
 });
 
