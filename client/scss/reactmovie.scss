@@ -74,6 +74,11 @@ $detailsContainerWidth: auto;
               text-align: right;
               padding: 0;
               padding-right: 0.5em;
+
+              .rating {
+                color: #CF1738;
+              }
+
               h3 {
                 font-size: 1.2em;
                 margin: 0 0 0 0;
@@ -102,7 +107,7 @@ $detailsContainerWidth: auto;
       .moviesContainer {
         padding: 0;
 
-        
+
         .movie {
           display: block;
           padding: 0 0 0 0;

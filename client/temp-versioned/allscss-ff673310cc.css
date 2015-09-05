@@ -8,13 +8,26 @@ body {
 
 @media (max-width: 767px) {
   #discoveryChooserContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1.4em; }
-    #discoveryChooserContainer div {
+    margin-top: 1em;
+    padding: 0.5em;
+    background-color: rgba(207, 211, 212, 0.7);
+    border-radius: 0.3em; }
+    #discoveryChooserContainer #discoveryChooserLabel {
       text-align: center;
-      font-size: 1.5em; } }
+      margin-top: 0.5em; }
+      #discoveryChooserContainer #discoveryChooserLabel h3 {
+        margin: 0;
+        margin-bottom: 0.3em;
+        font-size: 1.2em; }
+      #discoveryChooserContainer #discoveryChooserLabel div {
+        text-align: center;
+        font-size: 1.3em; }
+    #discoveryChooserContainer #discoveryChooserButtons {
+      text-align: center; }
+      #discoveryChooserContainer #discoveryChooserButtons div {
+        padding: 0; }
+      #discoveryChooserContainer #discoveryChooserButtons button {
+        font-size: 0.8em; } }
 
 @media (min-width: 768px) {
   #discoveryChooserContainer {
@@ -357,6 +370,8 @@ body {
               text-align: right;
               padding: 0;
               padding-right: 0.5em; }
+              .container #innerContainer .moviesContainer .movie .detailsContainer .ratingYearContainer .rating {
+                color: #CF1738; }
               .container #innerContainer .moviesContainer .movie .detailsContainer .ratingYearContainer h3 {
                 font-size: 1.2em;
                 margin: 0 0 0 0;

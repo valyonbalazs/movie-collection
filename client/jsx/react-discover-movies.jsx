@@ -63,7 +63,7 @@ let DiscoverMoviesContainer = React.createClass({
                   <button className="btn btn-success" onClick={this.handleClick1}>LAST 1 MONTH</button>
               </div>
               <div className="col-lg-5 col-md-6 col-xs-6">
-                  <button className="btn btn-warning" onClick={this.handleClick3}>LAST 3 MONTH </button>
+                  <button className="btn btn-warning" onClick={this.handleClick3}>LAST 3 MONTHS </button>
               </div>
             </div>
           </div>
