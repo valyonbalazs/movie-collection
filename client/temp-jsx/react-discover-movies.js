@@ -15,7 +15,7 @@ let DiscoverMoviesContainer = React.createClass({displayName: "DiscoverMoviesCon
     return {data: []};
   },
   componentDidMount: function() {
-
+    this.handleClick1();
   },
   removeContainer: function () {
     let innerContainerChildren = document.getElementById('innerDiscoverContainer').children;
@@ -29,6 +29,8 @@ let DiscoverMoviesContainer = React.createClass({displayName: "DiscoverMoviesCon
   },
   handleClick1: function () {
     this.removeContainer();
+    var label = document.getElementById('discoverLabel');
+    label.innerHTML = 'Best movies of the last month';
     let context = this;
     http.ajax(movies.create1MonthDiscoverUrl())
       .get()
@@ -36,6 +38,8 @@ let DiscoverMoviesContainer = React.createClass({displayName: "DiscoverMoviesCon
   },
   handleClick3: function () {
     this.removeContainer();
+    var label = document.getElementById('discoverLabel');
+    label.innerHTML = 'Best movies of the last 3 months';
     let context = this;
     http.ajax(movies.create3MonthDiscoverUrl())
       .get()
@@ -51,11 +55,16 @@ let DiscoverMoviesContainer = React.createClass({displayName: "DiscoverMoviesCon
       return (
         React.createElement("div", {id: "moviesContainer", className: "col-lg-12 col-md-12 col-xs-12 moviesContainer"}, 
           React.createElement("div", {id: "discoveryChooserContainer", className: "col-lg-12 col-md-12 col-xs-12"}, 
-            React.createElement("div", {className: "col-lg-2 col-md-2 col-xs-6"}, 
-                React.createElement("button", {className: "btn btn-primary", onClick: this.handleClick1}, "LAST 1 MONTH")
+            React.createElement("div", {id: "discoveryChooserLabel", className: "col-lg-8 col-md-7 col-xs-12"}, 
+              React.createElement("h3", {id: "discoverLabel"}, "Label")
             ), 
-            React.createElement("div", {className: "col-lg-2 col-md-2 col-xs-6"}, 
-                React.createElement("button", {className: "btn btn-primary", onClick: this.handleClick3}, "LAST 3 MONTH ")
+            React.createElement("div", {id: "discoveryChooserButtons", className: "col-lg-5 col-md-5 col-xs-12"}, 
+              React.createElement("div", {className: "col-lg-5 col-md-6 col-xs-6 col-lg-offset-2"}, 
+                  React.createElement("button", {className: "btn btn-success", onClick: this.handleClick1}, "LAST 1 MONTH")
+              ), 
+              React.createElement("div", {className: "col-lg-5 col-md-6 col-xs-6"}, 
+                  React.createElement("button", {className: "btn btn-warning", onClick: this.handleClick3}, "LAST 3 MONTH ")
+              )
             )
           ), 
           React.createElement("div", {id: "innerDiscoverContainer"}, 

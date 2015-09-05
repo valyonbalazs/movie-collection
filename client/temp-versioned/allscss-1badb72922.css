@@ -6,6 +6,33 @@ body {
   border-radius: 0px; }
 
 
+@media (max-width: 767px) {
+  #discoveryChooserContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1.4em; }
+    #discoveryChooserContainer div {
+      text-align: center;
+      font-size: 1.5em; } }
+
+@media (min-width: 768px) {
+  #discoveryChooserContainer {
+    margin-top: 0.5em; }
+    #discoveryChooserContainer #discoveryChooserLabel {
+      text-align: left; }
+    #discoveryChooserContainer #discoveryChooserButtons .btn {
+      float: right;
+      margin-right: 0.2em; } }
+
+@media (min-width: 1200px) {
+  #discoveryChooserContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.5em; }
+    #discoveryChooserContainer div {
+      text-align: center; } }
 
 
 @media (max-width: 767px) {
@@ -303,14 +330,6 @@ body {
       padding-right: 0px; }
       .container #innerContainer .moviesContainer {
         padding-bottom: 15px; }
-        .container #innerContainer .moviesContainer #discoveryChooserContainer {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-top: 1.4em; }
-          .container #innerContainer .moviesContainer #discoveryChooserContainer div {
-            text-align: center;
-            font-size: 1.5em; }
         .container #innerContainer .moviesContainer .movie {
           margin-top: 1em;
           padding: 0 0 0 0;
@@ -354,13 +373,6 @@ body {
       padding-right: 0px; }
       .container #innerContainer .moviesContainer {
         padding: 0; }
-        .container #innerContainer .moviesContainer #discoveryChooserContainer {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-top: 0.5em; }
-          .container #innerContainer .moviesContainer #discoveryChooserContainer div {
-            text-align: center; }
         .container #innerContainer .moviesContainer .movie {
           display: block;
           padding: 0 0 0 0;
@@ -408,13 +420,6 @@ body {
       padding-right: 0px; }
       .container #innerContainer .moviesContainer {
         padding: 0; }
-        .container #innerContainer .moviesContainer #discoveryChooserContainer {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-top: 0.5em; }
-          .container #innerContainer .moviesContainer #discoveryChooserContainer div {
-            text-align: center; }
         .container #innerContainer .moviesContainer .movie {
           display: block;
           padding: 0 0 0 0;

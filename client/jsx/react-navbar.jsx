@@ -1,7 +1,7 @@
 /* jshint esnext: true */
 
 let menuItems = [
-  {'item': 'fa fa-home,Home,Top rated'},
+  {'item': 'fa fa-home,Home,Discover'},
   {'item': 'fa fa-film,Movies,My selection'},
   {'item': 'fa fa-wrench,Manage,Manage'}
 ];

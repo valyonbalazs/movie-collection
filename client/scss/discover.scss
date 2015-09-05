@@ -6,15 +6,53 @@ $screen-ultrahigh-min: 1200px;
 //SMALLEST RESOLUTION
 @media(max-width: $screen-small-max) {
 
+  #discoveryChooserContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 1.4em;
+
+    div {
+      text-align: center;
+      font-size: 1.5em;
+    }
+  }
 
 }
 
 //MEDIUM RESOLUTION
 @media(min-width: $screen-medium-min) {
 
+  #discoveryChooserContainer {
+    margin-top: 0.5em;
+
+    #discoveryChooserLabel {
+      text-align: left;
+    }
+
+    #discoveryChooserButtons {
+
+      .btn {
+        float:right;
+        margin-right: 0.2em;
+      }
+    }
+  }
 
 }
 
 @media(min-width: $screen-ultrahigh-min) {
 
+  #discoveryChooserContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 0.5em;
+
+    div {
+      text-align: center;
+    }
+  }
 }

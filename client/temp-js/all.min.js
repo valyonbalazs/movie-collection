@@ -344,7 +344,9 @@ var DiscoverMoviesContainer = React.createClass({ displayName: "DiscoverMoviesCo
   getInitialState: function getInitialState() {
     return { data: [] };
   },
-  componentDidMount: function componentDidMount() {},
+  componentDidMount: function componentDidMount() {
+    this.handleClick1();
+  },
   removeContainer: function removeContainer() {
     var innerContainerChildren = document.getElementById('innerDiscoverContainer').children;
     var spanChildrenCount = innerContainerChildren[0].childNodes.length;
@@ -357,11 +359,15 @@ var DiscoverMoviesContainer = React.createClass({ displayName: "DiscoverMoviesCo
   },
   handleClick1: function handleClick1() {
     this.removeContainer();
+    var label = document.getElementById('discoverLabel');
+    label.innerHTML = 'Best movies of the last month';
     var context = this;
     http.ajax(movies.create1MonthDiscoverUrl()).get().then(http.successDiscover.bind(context));
   },
   handleClick3: function handleClick3() {
     this.removeContainer();
+    var label = document.getElementById('discoverLabel');
+    label.innerHTML = 'Best movies of the last 3 months';
     var context = this;
     http.ajax(movies.create3MonthDiscoverUrl()).get().then(http.successDiscover.bind(context));
   },
@@ -370,7 +376,7 @@ var DiscoverMoviesContainer = React.createClass({ displayName: "DiscoverMoviesCo
       return React.createElement(Movie, { movie: movie });
     });
 
-    return React.createElement("div", { id: "moviesContainer", className: "col-lg-12 col-md-12 col-xs-12 moviesContainer" }, React.createElement("div", { id: "discoveryChooserContainer", className: "col-lg-12 col-md-12 col-xs-12" }, React.createElement("div", { className: "col-lg-2 col-md-2 col-xs-6" }, React.createElement("button", { className: "btn btn-primary", onClick: this.handleClick1 }, "LAST 1 MONTH")), React.createElement("div", { className: "col-lg-2 col-md-2 col-xs-6" }, React.createElement("button", { className: "btn btn-primary", onClick: this.handleClick3 }, "LAST 3 MONTH "))), React.createElement("div", { id: "innerDiscoverContainer" }, React.createElement(ReactCSSTransitionGroup, { transitionName: "example" }, moviesArray)));
+    return React.createElement("div", { id: "moviesContainer", className: "col-lg-12 col-md-12 col-xs-12 moviesContainer" }, React.createElement("div", { id: "discoveryChooserContainer", className: "col-lg-12 col-md-12 col-xs-12" }, React.createElement("div", { id: "discoveryChooserLabel", className: "col-lg-8 col-md-7 col-xs-12" }, React.createElement("h3", { id: "discoverLabel" }, "Label")), React.createElement("div", { id: "discoveryChooserButtons", className: "col-lg-5 col-md-5 col-xs-12" }, React.createElement("div", { className: "col-lg-5 col-md-6 col-xs-6 col-lg-offset-2" }, React.createElement("button", { className: "btn btn-success", onClick: this.handleClick1 }, "LAST 1 MONTH")), React.createElement("div", { className: "col-lg-5 col-md-6 col-xs-6" }, React.createElement("button", { className: "btn btn-warning", onClick: this.handleClick3 }, "LAST 3 MONTH ")))), React.createElement("div", { id: "innerDiscoverContainer" }, React.createElement(ReactCSSTransitionGroup, { transitionName: "example" }, moviesArray)));
   }
 });
 
@@ -680,7 +686,7 @@ function renderElements() {
 
 'use strict';
 
-var menuItems = [{ 'item': 'fa fa-home,Home,Top rated' }, { 'item': 'fa fa-film,Movies,My selection' }, { 'item': 'fa fa-wrench,Manage,Manage' }];
+var menuItems = [{ 'item': 'fa fa-home,Home,Discover' }, { 'item': 'fa fa-film,Movies,My selection' }, { 'item': 'fa fa-wrench,Manage,Manage' }];
 
 //MEDIUM AND HIGH RESOLUTION NAVBAR
 var MenuItem = React.createClass({ displayName: "MenuItem",
