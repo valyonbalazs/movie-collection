@@ -1,0 +1,20 @@
+$screen-small-max: 767px;
+$screen-medium-min: 768px;
+$screen-high-min: 992px;
+$screen-ultrahigh-min: 1200px;
+
+//SMALLEST RESOLUTION
+@media(max-width: $screen-small-max) {
+
+
+}
+
+//MEDIUM RESOLUTION
+@media(min-width: $screen-medium-min) {
+
+
+}
+
+@media(min-width: $screen-ultrahigh-min) {
+
+}

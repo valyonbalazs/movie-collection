@@ -118,6 +118,7 @@ var login = {
         login.saveUserTokenToLocalStorage(authData.uid);
         login.saveUserDataToLocalStorage(userName, userEmail, userProfilePicUrl);
         renderPage.removeLoginpage();
+        renderPage.renderDiscoverPage();
       }
     }, {
       remember: 'sessionOnly',
@@ -279,6 +280,7 @@ var movies = {
     });
   } else {
     document.addEventListener('DOMContentLoaded', function (event) {
+      renderPage.removeDiscoverPage();
       renderPage.renderLoginPage();
     });
   }
@@ -303,7 +305,19 @@ var renderPage = {
     return renderLoginPage;
   })(function () {
     renderLoginPage();
+    window.onload = function () {
+      var loginInnerDiv = document.getElementById('loginInnerDiv');
+      loginInnerDiv.setAttribute('class', loginInnerDiv.getAttribute('class') + ' loaded');
+    };
   }),
+  renderDiscoverPage: function renderDiscoverPage() {
+    renderDiscoverMovies();
+  },
+  removeDiscoverPage: function removeDiscoverPage() {
+    var discoverBtns = document.getElementById('discoveryChooserContainer');
+    var discoverParent = discoverBtns.parentNode;
+    discoverParent.remove(discoverBtns);
+  },
   removeLoginpage: function removeLoginpage() {
     React.unmountComponentAtNode(document.getElementById('loginContainer'));
     renderPage.removeLoginContainer();
@@ -380,7 +394,7 @@ var Login = React.createClass({ displayName: "Login",
     login.loginBtnClick();
   },
   render: function render() {
-    return React.createElement("div", { id: "loginInnerDiv", className: "col-lg-3 col-md-3 col-xs-8 center" }, React.createElement("h3", null, "Log in with"), React.createElement("button", { className: "btn btn-primary", onClick: this.handleClick }, "Facebook"));
+    return React.createElement("div", { id: "loginInnerDiv", className: "col-lg-3 col-md-4 col-xs-8 center fadein" }, React.createElement("div", { id: "loginInnerUpperDiv", className: "col-lg-12 col-md-12 col-xs-12" }, React.createElement("i", { className: "fa fa-user" })), React.createElement("div", { id: "loginInnerLowerDiv", className: "col-lg-12 col-md-12 col-xs-12" }, React.createElement("button", { className: "btn btn-primary discoverBtn", onClick: this.handleClick }, "Facebook"), React.createElement("button", { className: "btn btn-warning discoverBtn", onClick: this.handleClick }, "  Google  ")));
   }
 });
 

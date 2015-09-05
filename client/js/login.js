@@ -43,6 +43,7 @@ let login = {
         login.saveUserTokenToLocalStorage(authData.uid);
         login.saveUserDataToLocalStorage(userName, userEmail, userProfilePicUrl);
         renderPage.removeLoginpage();
+        renderPage.renderDiscoverPage();
       }
     }, {
       remember: 'sessionOnly',

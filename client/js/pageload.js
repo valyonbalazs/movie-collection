@@ -10,6 +10,7 @@
     });
   } else {
       document.addEventListener('DOMContentLoaded', function(event) {
+      renderPage.removeDiscoverPage();
       renderPage.renderLoginPage();
     });
   }

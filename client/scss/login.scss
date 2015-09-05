@@ -5,6 +5,7 @@ $screen-ultrahigh-min: 1200px;
 $loginLowResBackgroundImage: url('../images/img_low_res/login.jpg');
 $loginMediumResBackgroundImage: url('../images/img_medium_res/login.jpg');
 $loginHighResBackgroundImage: url('../images/img_high_res/login.jpg');
+$loginContainerVisibilityTransition: display 400ms ease-in;
 
 //SMALLEST RESOLUTION
 @media(max-width: $screen-small-max) {
@@ -23,6 +24,18 @@ $loginHighResBackgroundImage: url('../images/img_high_res/login.jpg');
     align-items: center;
   }
 
+  .fadein {
+    opacity: 0;
+    -moz-transition: opacity 1.5s;
+    -webkit-transition: opacity 1.5s;
+    -o-transition: opacity 1.5s;
+    transition: opacity 1.5s;
+  }
+
+  .loaded {
+    opacity: 1;
+  }
+
   #loginContainer {
     background-image: $loginLowResBackgroundImage;
     text-align: center;
@@ -33,15 +46,30 @@ $loginHighResBackgroundImage: url('../images/img_high_res/login.jpg');
     left: 0;
 
     #loginInnerDiv {
-      padding-top: 2em;
-      padding-bottom: 3em;
+      padding: 0;
       background-color: rgba(255, 255, 255, 0.3);
       border-radius: 0.3em;
 
-      h3 {
-        font-size: 2em;
+        #loginInnerUpperDiv {
+          font-size: 3em;
+          min-height: 2em;
+          padding-top: 0.3em;
+        }
+
+        #loginInnerLowerDiv {
+          min-height: 6em;
+          background-color: rgba(255, 255, 255, 0.6);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          .discoverBtn {
+            margin-left: 0.5em;
+            margin-right: 0.5em;
+            font-size: 1.5em;
+          }
+        }
       }
-    }
   }
 
 }
@@ -62,6 +90,18 @@ $loginHighResBackgroundImage: url('../images/img_high_res/login.jpg');
     align-items: center;
   }
 
+  .fadein {
+    opacity: 0;
+    -moz-transition: opacity 1.5s;
+    -webkit-transition: opacity 1.5s;
+    -o-transition: opacity 1.5s;
+    transition: opacity 1.5s;
+  }
+
+  .loaded {
+    opacity: 1;
+  }
+
   #loginContainer {
     background-image: $loginMediumResBackgroundImage;
     text-align: center;
@@ -72,19 +112,30 @@ $loginHighResBackgroundImage: url('../images/img_high_res/login.jpg');
     left: 0;
 
     #loginInnerDiv {
-      padding-top: 2em;
-      padding-bottom: 3em;
+      padding: 0;
       background-color: rgba(255, 255, 255, 0.3);
       border-radius: 0.3em;
 
-      h3 {
-        font-size: 2.3em;
-      }
+        #loginInnerUpperDiv {
+          font-size: 3em;
+          min-height: 2em;
+          padding-top: 0.3em;
+        }
 
-      button {
-        font-size: 2em;
+        #loginInnerLowerDiv {
+          min-height: 6em;
+          background-color: rgba(255, 255, 255, 0.6);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          .discoverBtn {
+            margin-left: 0.5em;
+            margin-right: 0.5em;
+            font-size: 1.5em;
+          }
+        }
       }
-    }
   }
 }
 
@@ -102,6 +153,18 @@ $loginHighResBackgroundImage: url('../images/img_high_res/login.jpg');
     align-items: center;
   }
 
+  .fadein {
+    opacity: 0;
+    -moz-transition: opacity 1.5s;
+    -webkit-transition: opacity 1.5s;
+    -o-transition: opacity 1.5s;
+    transition: opacity 1.5s;
+  }
+
+  .loaded {
+    opacity: 1;
+  }
+
   #loginContainer {
     background-image: $loginHighResBackgroundImage;
     text-align: center;
@@ -112,14 +175,29 @@ $loginHighResBackgroundImage: url('../images/img_high_res/login.jpg');
     left: 0;
 
     #loginInnerDiv {
-      padding-top: 2em;
-      padding-bottom: 3em;
+      padding: 0;
       background-color: rgba(255, 255, 255, 0.3);
       border-radius: 0.3em;
 
-      h3 {
-        font-size: 2em;
+        #loginInnerUpperDiv {
+          font-size: 3em;
+          min-height: 2em;
+          padding-top: 0.3em;
+        }
+
+        #loginInnerLowerDiv {
+          min-height: 6em;
+          background-color: rgba(255, 255, 255, 0.6);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          .discoverBtn {
+            margin-left: 0.5em;
+            margin-right: 0.5em;
+            font-size: 1.5em;
+          }
+        }
       }
-    }
   }
 }

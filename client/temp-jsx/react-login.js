@@ -5,9 +5,14 @@ let Login = React.createClass({displayName: "Login",
   },
   render: function () {
     return (
-      React.createElement("div", {id: "loginInnerDiv", className: "col-lg-3 col-md-3 col-xs-8 center"}, 
-        React.createElement("h3", null, "Log in with"), 
-        React.createElement("button", {className: "btn btn-primary", onClick: this.handleClick}, "Facebook")
+      React.createElement("div", {id: "loginInnerDiv", className: "col-lg-3 col-md-4 col-xs-8 center fadein"}, 
+        React.createElement("div", {id: "loginInnerUpperDiv", className: "col-lg-12 col-md-12 col-xs-12"}, 
+          React.createElement("i", {className: "fa fa-user"})
+        ), 
+        React.createElement("div", {id: "loginInnerLowerDiv", className: "col-lg-12 col-md-12 col-xs-12"}, 
+          React.createElement("button", {className: "btn btn-primary discoverBtn", onClick: this.handleClick}, "Facebook"), 
+          React.createElement("button", {className: "btn btn-warning discoverBtn", onClick: this.handleClick}, "  Google  ")
+        )
       )
     );
   }
