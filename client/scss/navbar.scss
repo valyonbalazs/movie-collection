@@ -6,7 +6,7 @@ $navbarBackground: rgba(58, 146, 255, 0.95);
 $navbarMobileOpenedBackground: rgba(58, 146, 255, 0.95);
 $navbarBoxShadow: 0px 5px 5px #D1D1D1;
 $mobileNavBarLinksTransition: width 300ms ease;
-$mobileNavBarDivOpenedTransition: visibility 100ms ease-out;
+$mobileNavBarDivOpenedTransition: visibility 50ms ease-out;
 
 //SMALLEST RESOLUTION
 @media(max-width: $screen-small-max) {
@@ -60,7 +60,7 @@ $mobileNavBarDivOpenedTransition: visibility 100ms ease-out;
       background: $navbarMobileOpenedBackground;
       text-align: left;
       padding: 0;
-      padding-top: 1em;
+      padding-top: 0em;
       min-height: 50em;
       opacity: 1;
       font-size: 2em;
@@ -75,12 +75,32 @@ $mobileNavBarDivOpenedTransition: visibility 100ms ease-out;
       -moz-transition: $mobileNavBarDivOpenedTransition;
 
       #navbarOpenProfileImage {
-
         text-align: center;
+        margin-top:0.3em;
+        padding-top: 0.5em;
         padding-bottom: 1em;
-        img {
-          border-radius: 2em;
+        z-index: 2;
+
+        #navbarProfileBackground {
+          z-index: -1;
+          background-image: url('../images/img_low_res/avatar_background.jpg');
+          min-height: 13%;
+          min-width: 100%;
+          position: absolute;
+          top:0.3em;
+          opacity: 0.4;
         }
+
+        #navbarProfileData {
+          z-index: 1;
+          color: white;
+
+          img {
+            border-radius: 2em;
+          }
+        }
+
+
       }
 
       #navbarOpenLinks {
@@ -118,7 +138,7 @@ $mobileNavBarDivOpenedTransition: visibility 100ms ease-out;
 
     .nav {
       width: 100%;
-      height: 3em;
+      height: 65px;
       text-align: center;
       padding-top: 0.6em;
 
@@ -129,6 +149,7 @@ $mobileNavBarDivOpenedTransition: visibility 100ms ease-out;
 
       display: inline-flex;
       justify-content: space-around;
+      align-items: center;
 
       ul {
         padding-left: 0;
@@ -140,7 +161,7 @@ $mobileNavBarDivOpenedTransition: visibility 100ms ease-out;
 
         li {
           display: inline;
-          padding: 0 0 0 1em;
+          padding: 0 0 0 0em;
           font-size: 1em;
           color: white;
         }
@@ -159,5 +180,62 @@ $mobileNavBarDivOpenedTransition: visibility 100ms ease-out;
 
 }
 @media(min-width: $screen-ultrahigh-min) {
+  #mobileNavBar {
+    display: none;
+  }
 
+  #mobileNavBarLinks {
+    display: none;
+  }
+
+  #navBar {
+    text-align: center;
+    top: 0px;
+    position: fixed;
+    width: 100%;
+    z-index: 2;
+    flex-grow: 1;
+
+    .nav {
+      width: 100%;
+      height: 65px;
+      text-align: center;
+      padding-top: 0;
+
+      background: $navbarBackground;
+      box-shadow: $navbarBoxShadow;
+
+      color: white;
+
+      display: inline-flex;
+
+
+      ul {
+        margin: 0;
+        padding-left: 0;
+        display: flex;
+        justify-content: center;
+        a {
+          color: white;
+        }
+
+        li {
+          display: inline;
+          padding: 0 0 0 1em;
+          font-size: 1.3em;
+          color: white;
+        }
+      }
+
+      h3 {
+        margin: 0;
+      }
+
+      img {
+        border-radius: 15px;
+        max-width: 2em;
+      }
+
+    }
+  }
 }

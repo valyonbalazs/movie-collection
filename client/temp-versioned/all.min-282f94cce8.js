@@ -400,7 +400,7 @@ var Login = React.createClass({ displayName: "Login",
     login.loginBtnClick();
   },
   render: function render() {
-    return React.createElement("div", { id: "loginInnerDiv", className: "col-lg-3 col-md-4 col-xs-8 center fadein" }, React.createElement("div", { id: "loginInnerUpperDiv", className: "col-lg-12 col-md-12 col-xs-12" }, React.createElement("i", { className: "fa fa-user" })), React.createElement("div", { id: "loginInnerLowerDiv", className: "col-lg-12 col-md-12 col-xs-12" }, React.createElement("button", { className: "btn btn-primary discoverBtn", onClick: this.handleClick }, "Facebook"), React.createElement("button", { className: "btn btn-warning discoverBtn", onClick: this.handleClick }, "  Google  ")));
+    return React.createElement("div", { id: "loginInnerDiv", className: "col-lg-3 col-md-4 col-xs-8 center fadein" }, React.createElement("div", { id: "loginInnerUpperDiv", className: "col-lg-12 col-md-12 col-xs-12" }, React.createElement("i", { className: "fa fa-user" })), React.createElement("div", { id: "loginInnerLowerDiv", className: "col-lg-12 col-md-12 col-xs-12" }, React.createElement("button", { className: "btn btn-primary discoverBtn", onClick: this.handleClick }, React.createElement("i", { className: "fa fa-facebook-official" }), " Facebook"), React.createElement("button", { className: "btn btn-warning discoverBtn", onClick: this.handleClick }, "  ", React.createElement("i", { className: "fa fa-google" }), " Google  ")));
   }
 });
 
@@ -709,7 +709,7 @@ var Navbar = React.createClass({ displayName: "Navbar",
       return React.createElement(MenuItem, { menuItemIcon: params.get('icon'), menuItemText: params.get('menuText'), link: params.get('path') });
     });
 
-    return React.createElement("div", { className: "nav col-lg-12 col-md-12" }, React.createElement("h3", null, "Movie-Collection"), React.createElement("ul", null, menuItemArray), React.createElement("div", null, userName, " ", React.createElement("img", { src: userProfilPic })));
+    return React.createElement("div", { className: "nav col-lg-12 col-md-12" }, React.createElement("h3", { className: "col-lg-4 col-md-4" }, "Movie-Collection"), React.createElement("ul", { className: "col-lg-4 col-md-4" }, menuItemArray), React.createElement("div", { className: "col-lg-4 col-md-4" }, userName, " ", React.createElement("img", { src: userProfilPic })));
   }
 });
 
@@ -729,7 +729,7 @@ var NavbarMobileOpen = React.createClass({ displayName: "NavbarMobileOpen",
       return React.createElement(MenuItem, { menuItemIcon: params.get('icon'), menuItemText: params.get('menuText'), link: params.get('path') });
     });
 
-    return React.createElement("div", { id: "navbarDivOpenedDiv", className: "navbarDivOpened col-xs-12" }, React.createElement("div", { id: "navbarOpenProfileImage" }, React.createElement("img", { src: userProfilPic }), React.createElement("h4", null, userName), React.createElement("h5", null, userEmail)), React.createElement("div", { id: "navbarOpenLinks" }, React.createElement("ul", { className: "nav" }, menuItemArray)));
+    return React.createElement("div", { id: "navbarDivOpenedDiv", className: "navbarDivOpened col-xs-12" }, React.createElement("div", { id: "navbarOpenProfileImage" }, React.createElement("div", { id: "navbarProfileBackground" }), React.createElement("div", { id: "navbarProfileData" }, React.createElement("img", { src: userProfilPic }), React.createElement("h4", null, userName), React.createElement("h5", null, userEmail))), React.createElement("div", { id: "navbarOpenLinks" }, React.createElement("ul", { className: "nav" }, menuItemArray)));
   }
 });
 

@@ -35,11 +35,11 @@ let Navbar = React.createClass({
 
     return(
       <div className="nav col-lg-12 col-md-12">
-          <h3>Movie-Collection</h3>
-        <ul>
+          <h3 className="col-lg-4 col-md-4">Movie-Collection</h3>
+        <ul className="col-lg-4 col-md-4">
           {menuItemArray}
         </ul>
-        <div>
+        <div className="col-lg-4 col-md-4">
           {userName} <img src={userProfilPic} />
         </div>
       </div>
@@ -68,9 +68,13 @@ let NavbarMobileOpen =  React.createClass({
     return(
       <div id="navbarDivOpenedDiv" className="navbarDivOpened col-xs-12">
         <div id="navbarOpenProfileImage" >
-          <img src={userProfilPic} />
-          <h4>{userName}</h4>
-          <h5>{userEmail}</h5>
+          <div id="navbarProfileBackground">
+          </div>
+          <div id="navbarProfileData">
+            <img src={userProfilPic} />
+            <h4>{userName}</h4>
+            <h5>{userEmail}</h5>
+          </div>
         </div>
         <div id="navbarOpenLinks">
           <ul className="nav">

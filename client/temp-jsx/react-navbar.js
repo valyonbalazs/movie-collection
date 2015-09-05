@@ -35,11 +35,11 @@ let Navbar = React.createClass({displayName: "Navbar",
 
     return(
       React.createElement("div", {className: "nav col-lg-12 col-md-12"}, 
-          React.createElement("h3", null, "Movie-Collection"), 
-        React.createElement("ul", null, 
+          React.createElement("h3", {className: "col-lg-4 col-md-4"}, "Movie-Collection"), 
+        React.createElement("ul", {className: "col-lg-4 col-md-4"}, 
           menuItemArray
         ), 
-        React.createElement("div", null, 
+        React.createElement("div", {className: "col-lg-4 col-md-4"}, 
           userName, " ", React.createElement("img", {src: userProfilPic})
         )
       )
@@ -68,9 +68,13 @@ let NavbarMobileOpen =  React.createClass({displayName: "NavbarMobileOpen",
     return(
       React.createElement("div", {id: "navbarDivOpenedDiv", className: "navbarDivOpened col-xs-12"}, 
         React.createElement("div", {id: "navbarOpenProfileImage"}, 
-          React.createElement("img", {src: userProfilPic}), 
-          React.createElement("h4", null, userName), 
-          React.createElement("h5", null, userEmail)
+          React.createElement("div", {id: "navbarProfileBackground"}
+          ), 
+          React.createElement("div", {id: "navbarProfileData"}, 
+            React.createElement("img", {src: userProfilPic}), 
+            React.createElement("h4", null, userName), 
+            React.createElement("h5", null, userEmail)
+          )
         ), 
         React.createElement("div", {id: "navbarOpenLinks"}, 
           React.createElement("ul", {className: "nav"}, 
