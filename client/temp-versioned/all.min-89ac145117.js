@@ -498,7 +498,7 @@ var ListMoviesFromDb = React.createClass({ displayName: "ListMoviesFromDb",
     var movieTitleArray = this.state.data.map(function (title) {
       return React.createElement(MovieElementFromDb, { title: title });
     });
-    return React.createElement("div", { id: "listMoviesFromDbContainer", className: "col-lg-10 col-md-10 col-md-offset-1 col-xs-12" }, React.createElement("table", { className: "table table-striped" }, React.createElement("thead", null, React.createElement("tr", null, React.createElement("th", { colSpan: "2" }, "My movies"))), React.createElement("tbody", null, movieTitleArray)));
+    return React.createElement("div", { id: "listMoviesFromDbContainer", className: "col-lg-10 col-md-10 col-md-offset-1 col-xs-12" }, React.createElement("table", { className: "table table-striped" }, React.createElement("thead", null, React.createElement("tr", null, React.createElement("th", null, "My movies"))), React.createElement("tbody", null, movieTitleArray)));
   }
 });
 
@@ -692,7 +692,7 @@ var menuItems = [{ 'item': 'fa fa-search,Home,Discover' }, { 'item': 'fa fa-film
 var MenuItem = React.createClass({ displayName: "MenuItem",
   render: function render() {
     var path = '#/' + this.props.link;
-    return React.createElement("li", null, React.createElement("a", { href: path }, React.createElement("i", { className: this.props.menuItemIcon }), "   ", this.props.menuItemText));
+    return React.createElement("li", null, React.createElement("a", { href: path }, React.createElement("i", { className: this.props.menuItemIcon }), "  ", this.props.menuItemText));
   }
 });
 

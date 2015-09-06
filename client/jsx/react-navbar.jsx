@@ -12,7 +12,7 @@ let MenuItem = React.createClass({
     let path = '#/' + this.props.link;
     return(
       <li>
-        <a href={path}><i className={this.props.menuItemIcon}></i>&nbsp;&nbsp; {this.props.menuItemText}</a>
+        <a href={path}><i className={this.props.menuItemIcon}></i>&nbsp; {this.props.menuItemText}</a>
       </li>
     );
   }

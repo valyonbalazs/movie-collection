@@ -103,6 +103,7 @@ $detailsContainerWidth: auto;
     #innerContainer {
       padding-left: 0px;
       padding-right: 0px;
+      margin-bottom: 1em;
 
       .moviesContainer {
         padding: 0;
@@ -113,6 +114,7 @@ $detailsContainerWidth: auto;
           padding: 0 0 0 0;
           margin-right: 0em;
           margin-top: 0.5em;
+          margin-bottom: 0.5em;
           box-shadow: $movieBoxShadow;
           .backdrop {
             z-index: 0;

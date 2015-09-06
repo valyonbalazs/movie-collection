@@ -49,18 +49,21 @@ $screen-ultrahigh-min: 1200px;
 @media(min-width: $screen-medium-min) {
 
   #discoveryChooserContainer {
-    margin-top: 0.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1em;
+    min-height: 5em;
 
     #discoveryChooserLabel {
-      text-align: left;
+
+      h3 {
+        margin: 0;
+      }
     }
 
-    #discoveryChooserButtons {
-
-      .btn {
-        float:right;
-        margin-right: 0.2em;
-      }
+    div {
+      text-align: center;
     }
   }
 
@@ -72,8 +75,15 @@ $screen-ultrahigh-min: 1200px;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 1em;
+    min-height: 5em;
 
-    margin-top: 0.5em;
+    #discoveryChooserLabel {
+
+      h3 {
+        margin: 0;
+      }
+    }
 
     div {
       text-align: center;

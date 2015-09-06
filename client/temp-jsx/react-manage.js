@@ -79,7 +79,7 @@ let ListMoviesFromDb = React.createClass({displayName: "ListMoviesFromDb",
         React.createElement("table", {className: "table table-striped"}, 
           React.createElement("thead", null, 
             React.createElement("tr", null, 
-              React.createElement("th", {colSpan: "2"}, "My movies")
+              React.createElement("th", null, "My movies")
             )
           ), 
           React.createElement("tbody", null, 

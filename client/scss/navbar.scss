@@ -2,8 +2,8 @@ $screen-small-max: 767px;
 $screen-medium-min: 768px;
 $screen-high-min: 992px;
 $screen-ultrahigh-min: 1200px;
-$navbarBackground: rgba(58, 146, 255, 0.95);
-$navbarMobileOpenedBackground: rgba(58, 146, 255, 0.95);
+$navbarBackground: rgba(153, 161, 163, 0.95);
+$navbarMobileOpenedBackground: rgba(153, 161, 163, 0.95);
 $navbarBoxShadow: 0px 5px 5px #D1D1D1;
 $mobileNavBarLinksTransition: width 300ms ease;
 $mobileNavBarDivOpenedTransition: visibility 50ms ease-out;
@@ -165,6 +165,7 @@ $mobileNavBarDivOpenedTransition: visibility 50ms ease-out;
           padding: 0 0 0 0em;
           font-size: 1em;
           color: white;
+          padding-right: 0.6em;
         }
       }
       h3 {
