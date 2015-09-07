@@ -1,5 +1,6 @@
 // Gulp plugins from NPM
 var babel = require('gulp-babel');
+var babelRegister = require('babel-core/register');
 var concat = require('gulp-concat');
 var connect = require('gulp-connect');
 var del = require('del');
@@ -357,8 +358,8 @@ gulp.task('watch', ['build', 'connect'], function () {
 
 gulp.task('test:mocha', function () {
   return gulp.src(files.test.mocha)
-    .pipe(plumber())
     .pipe(mocha({
+      compilers: {js: 'babel'},
       ui: 'tdd',
       reporter: 'spec'
     }));
