@@ -40,7 +40,7 @@ $screen-ultrahigh-min: 1200px;
 
   #innerContainer {
 
-    margin-top: 1em;
+    margin-top: 2em;
 
     #addMovieContainer {
       display: flex;
@@ -63,4 +63,24 @@ $screen-ultrahigh-min: 1200px;
 
 @media(min-width: $screen-ultrahigh-min) {
 
+  #innerContainer {
+
+    margin-top: 3em;
+
+    #addMovieContainer {
+      display: flex;
+
+    }
+
+    #listMoviesFromDbContainer {
+
+      th {
+        text-align: center;
+      }
+
+      td {
+        text-align: center;
+      }
+    }
+  }
 }

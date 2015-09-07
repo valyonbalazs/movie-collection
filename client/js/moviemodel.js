@@ -98,3 +98,9 @@ let movies = {
     return url;
   }
 };
+
+// Module export for mocha testing
+var exports = module.exports = {};
+exports = {
+  createImageUrl: function () { return 'hello'; }
+};

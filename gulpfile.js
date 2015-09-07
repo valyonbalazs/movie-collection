@@ -67,7 +67,7 @@ directory.dest.img_low_res = directory.dest.images + 'img_low_res/';
 // TESTING
 directory.test = {};
 directory.test.root = './test/';
-directory.test.api = directory.test.root + 'api/';
+directory.test.mocha = directory.test.root + 'mocha/';
 directory.test.browser = directory.test.root + 'browser/';
 
 // ------------------------------------------------------------------------------
@@ -107,8 +107,9 @@ files.img_high_res = directory.client.img_high_res + extension.jpg;
 files.img_medium_res = directory.client.img_medium_res + extension.jpg;
 files.img_low_res = directory.client.img_low_res + extension.jpg;
 
+// Defining test files
 files.test = {};
-files.test.api = directory.test.api + extension.js;
+files.test.mocha = directory.test.mocha + extension.js;
 files.test.browser = directory.test.browser + extension.js;
 
 // ------------------------------------------------------------------------------
@@ -354,8 +355,8 @@ gulp.task('watch', ['build', 'connect'], function () {
   gulp.watch(files.jsx, ['watch:jsx']);
 });
 
-gulp.task('test:api', function () {
-  return gulp.src(files.test.api)
+gulp.task('test:mocha', function () {
+  return gulp.src(files.test.mocha)
     .pipe(plumber())
     .pipe(mocha({
       ui: 'tdd',
@@ -374,8 +375,7 @@ gulp.task('test:browser', function () {
 
 gulp.task('test', function (cb) {
   runSequence(
-    'test:api',
-    'test:browser',
+    'test:mocha',
     cb
   );
 });
