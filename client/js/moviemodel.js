@@ -40,7 +40,7 @@ let movies = {
   modifyOverview: function (overview) {
     let originalOverview = overview;
     let newOverview;
-    if (originalOverview.length > 150) {
+    if (originalOverview.length > 130) {
       newOverview = originalOverview.substr(0, 130) + '...';
       return newOverview;
     } else {
