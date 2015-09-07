@@ -252,6 +252,14 @@ var movies = {
     return url;
   }
 };
+
+// Module export for mocha testing
+var _exports = module.exports = {};
+_exports = {
+  createImageUrl: function createImageUrl() {
+    return 'hello';
+  }
+};
 /* jshint esnext: true */
 'use strict';
 
@@ -313,6 +321,17 @@ var renderPage = {
     var logContainer = document.getElementById('loginContainer');
     var body = document.body;
     body.removeChild(logContainer);
+  }
+};
+'use strict';
+
+module.exports = {
+  sayHelloInEnglish: function sayHelloInEnglish() {
+    return 'HELLO';
+  },
+
+  sayHelloInSpanish: function sayHelloInSpanish() {
+    return 'Hola';
   }
 };
 /* jshint esnext: true */
