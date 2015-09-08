@@ -1,10 +1,28 @@
 /* jshint esnext: true */
 
+
+let mocha = require('mocha');
+
 let assert = require('assert');
 let expect = require('chai').expect;
 let movieModel = require('../../client/js/movieModel');
 
-describe('Testing movieElement helper methods', function () {
+  mocha.describe('Testing movieElement helper methods', function () {
+    mocha.describe('Testing createImgUrl method', function () {
+      mocha.it('creates a valid URL for the Image of the movie', function () {
+        let urlEndPart = '/sLbXneTErDvS3HIjqRWQJPiZ4Ci.jpg';
+        let urlFirstPart = 'http://image.tmdb.org/t/p/w500';
+        let expectedResult = urlFirstPart + urlEndPart;
+        let gotResult = movieModel.movies.createImageUrl(urlEndPart);
+
+        expect(expectedResult).to.equal(gotResult);
+
+      });
+    });
+  });
+
+
+/*describe('Testing movieElement helper methods', function () {
   describe('Testing createImgUrl method', function () {
     it('creates a valid URL for the Image of the movie', function () {
       let urlEndPart = '/sLbXneTErDvS3HIjqRWQJPiZ4Ci.jpg';
@@ -43,4 +61,4 @@ describe('Testing movieElement helper methods', function () {
 
     });
   });
-});
+});*/
