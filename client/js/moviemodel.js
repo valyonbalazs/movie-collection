@@ -1,7 +1,5 @@
 /* jshint esnext: true */
 
-'use strict';
-
 class MovieElement {
   constructor (title, overview, rating, publishDate, backdropPath, posterPath) {
     this.title = title;

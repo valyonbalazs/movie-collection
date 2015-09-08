@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for js\movieModel.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../prettify.css">
+    <link rel="stylesheet" href="../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header medium">
+    <h1>Code coverage report for <span class="entity">js\movieModel.js</span></h1>
+    <h2>
+        Statements: <span class="metric">50.94% <small>(27 / 53)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">12.5% <small>(1 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">66.67% <small>(6 / 9)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">50.94% <small>(27 / 53)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">js/</a> &#187; movieModel.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* jshint esnext: true */
+&nbsp;
+'use strict';
+&nbsp;
+class MovieElement {
+  constructor <span class="fstat-no" title="function not covered" >(title, overview, rating, publishDate, backdropPath, posterPath) {</span>
+<span class="cstat-no" title="statement not covered" >    this.title = title;</span>
+<span class="cstat-no" title="statement not covered" >    this.description = overview;</span>
+<span class="cstat-no" title="statement not covered" >    this.rating = rating;</span>
+<span class="cstat-no" title="statement not covered" >    this.year = publishDate;</span>
+<span class="cstat-no" title="statement not covered" >    this.backdrop = backdropPath;</span>
+<span class="cstat-no" title="statement not covered" >    this.poster = posterPath;</span>
+  }
+}
+&nbsp;
+let movies = {
+  getMaxVotedElement: <span class="fstat-no" title="function not covered" >function (moviesResult) {</span>
+<span class="cstat-no" title="statement not covered" >    let result = moviesResult.results;</span>
+<span class="cstat-no" title="statement not covered" >    let maxVoted;</span>
+<span class="cstat-no" title="statement not covered" >    let voteCount = 0;</span>
+<span class="cstat-no" title="statement not covered" >    for (var key in result) {</span>
+<span class="cstat-no" title="statement not covered" >      let item = result[key];</span>
+<span class="cstat-no" title="statement not covered" >      if ((item !== null) &amp;&amp; (item.hasOwnProperty('vote_count'))) {</span>
+<span class="cstat-no" title="statement not covered" >        if (parseInt(item.vote_count, 10) &gt; voteCount) {</span>
+<span class="cstat-no" title="statement not covered" >          voteCount = item.vote_count;</span>
+<span class="cstat-no" title="statement not covered" >          maxVoted = item;</span>
+        }
+      }
+    }
+<span class="cstat-no" title="statement not covered" >    return maxVoted;</span>
+  },
+  createImageUrl: function (endOfTheUrl) {
+    let url = 'http://image.tmdb.org/t/p/w500' + endOfTheUrl;
+    return url;
+  },
+  createMovieUrl: function (movieTitle) {
+    let api_key = '&amp;api_key=4a8dce0b18b88827ffbc32dee5b66838';
+    let urlFirstPart = 'https://api.themoviedb.org/3/search/movie?query=';
+    let url = urlFirstPart + movieTitle + api_key;
+    return url;
+  },
+  modifyOverview: function (overview) {
+    let originalOverview = overview;
+    let newOverview;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (originalOverview.length &gt; 130) {
+      newOverview = originalOverview.substr(0, 130) + '...';
+      return newOverview;
+    } else {
+<span class="cstat-no" title="statement not covered" >      return originalOverview;</span>
+    }
+  },
+  modifyReleaseDate: function (releaseDate) {
+    let originalReleaseDate = releaseDate;
+    let newReleaseDate = originalReleaseDate.substr(0, 4) + ' ';
+    return newReleaseDate;
+  },
+  modifyTitle: function (title) {
+    let originalTitle = title;
+    let newTitle = originalTitle.substr(0, 20);
+    return newTitle;
+  },
+  create1MonthDiscoverUrl: function () {
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth();
+    let day = '01';
+    let insertableDate = year + '-' + month + '-' + day;
+    let api_key = '&amp;api_key=4a8dce0b18b88827ffbc32dee5b66838';
+    let urlFirstPart = 'https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&amp;release_date.gte=' +
+                        insertableDate + '&amp;sort_by=popularity.desc&amp;';
+    let url = urlFirstPart + api_key;
+    return url;
+  },
+  create3MonthDiscoverUrl: <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >    let date = new Date();</span>
+<span class="cstat-no" title="statement not covered" >    let year = date.getFullYear();</span>
+<span class="cstat-no" title="statement not covered" >    let month = date.getMonth() - 2;</span>
+<span class="cstat-no" title="statement not covered" >    let day = '01';</span>
+<span class="cstat-no" title="statement not covered" >    let insertableDate = year + '-' + month + '-' + day;</span>
+<span class="cstat-no" title="statement not covered" >    let api_key = '&amp;api_key=4a8dce0b18b88827ffbc32dee5b66838';</span>
+<span class="cstat-no" title="statement not covered" >    let urlFirstPart = 'https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&amp;release_date.gte=' +</span>
+                        insertableDate + '&amp;sort_by=vote_count.desc&amp;';
+<span class="cstat-no" title="statement not covered" >    let url = urlFirstPart + api_key;</span>
+<span class="cstat-no" title="statement not covered" >    return url;</span>
+  }
+};
+&nbsp;
+// Module export for mocha testing
+&nbsp;
+/*module.exports = {};
+module.exports.movies = movies;*/
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Sep 08 2015 22:40:14 GMT+0200 (Central Europe Daylight Time)</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

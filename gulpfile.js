@@ -368,7 +368,11 @@ gulp.task('test:serverSide', function () {
 });
 
 gulp.task('test:clientSideBrowser', function () {
-  return gulp.src([files.test.mocha, './client/js/movieModel.js'])
+  return gulp.src([
+    files.test.mocha,
+    './client/js/movieModel.js',
+    './test/browser/test-userActions.js'
+  ])
     .pipe(karma({
       configFile: './test/browser/my.conf.js',
       action: 'run'

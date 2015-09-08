@@ -152,6 +152,98 @@ var ownMovieTitleList = [];
 
 var discoverMovies = [];
 /* jshint esnext: true */
+
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var MovieElement = function MovieElement(title, overview, rating, publishDate, backdropPath, posterPath) {
+  _classCallCheck(this, MovieElement);
+
+  this.title = title;
+  this.description = overview;
+  this.rating = rating;
+  this.year = publishDate;
+  this.backdrop = backdropPath;
+  this.poster = posterPath;
+};
+
+var movies = {
+  getMaxVotedElement: function getMaxVotedElement(moviesResult) {
+    var result = moviesResult.results;
+    var maxVoted = undefined;
+    var voteCount = 0;
+    for (var key in result) {
+      var item = result[key];
+      if (item !== null && item.hasOwnProperty('vote_count')) {
+        if (parseInt(item.vote_count, 10) > voteCount) {
+          voteCount = item.vote_count;
+          maxVoted = item;
+        }
+      }
+    }
+    return maxVoted;
+  },
+  createImageUrl: function createImageUrl(endOfTheUrl) {
+    var url = 'http://image.tmdb.org/t/p/w500' + endOfTheUrl;
+    return url;
+  },
+  createMovieUrl: function createMovieUrl(movieTitle) {
+    var api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
+    var urlFirstPart = 'https://api.themoviedb.org/3/search/movie?query=';
+    var url = urlFirstPart + movieTitle + api_key;
+    return url;
+  },
+  modifyOverview: function modifyOverview(overview) {
+    var originalOverview = overview;
+    var newOverview = undefined;
+    if (originalOverview.length > 130) {
+      newOverview = originalOverview.substr(0, 130) + '...';
+      return newOverview;
+    } else {
+      return originalOverview;
+    }
+  },
+  modifyReleaseDate: function modifyReleaseDate(releaseDate) {
+    var originalReleaseDate = releaseDate;
+    var newReleaseDate = originalReleaseDate.substr(0, 4) + ' ';
+    return newReleaseDate;
+  },
+  modifyTitle: function modifyTitle(title) {
+    var originalTitle = title;
+    var newTitle = originalTitle.substr(0, 20);
+    return newTitle;
+  },
+  create1MonthDiscoverUrl: function create1MonthDiscoverUrl() {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth();
+    var day = '01';
+    var insertableDate = year + '-' + month + '-' + day;
+    var api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
+    var urlFirstPart = 'https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&release_date.gte=' + insertableDate + '&sort_by=popularity.desc&';
+    var url = urlFirstPart + api_key;
+    return url;
+  },
+  create3MonthDiscoverUrl: function create3MonthDiscoverUrl() {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() - 2;
+    var day = '01';
+    var insertableDate = year + '-' + month + '-' + day;
+    var api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
+    var urlFirstPart = 'https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&release_date.gte=' + insertableDate + '&sort_by=vote_count.desc&';
+    var url = urlFirstPart + api_key;
+    return url;
+  }
+};
+
+// Module export for mocha testing
+
+/*module.exports = {};
+module.exports.movies = movies;*/
+/* jshint esnext: true */
+
 'use strict';
 
 (function pageLoad() {
@@ -170,6 +262,7 @@ var discoverMovies = [];
   }
 })();
 /* jshint esnext: true */
+
 'use strict';
 
 var renderPage = {
