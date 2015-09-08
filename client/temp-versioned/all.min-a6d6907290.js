@@ -152,115 +152,6 @@ var ownMovieTitleList = [];
 
 var discoverMovies = [];
 /* jshint esnext: true */
-
-'use strict';
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-var MovieElement = function MovieElement(title, overview, rating, publishDate, backdropPath, posterPath) {
-  _classCallCheck(this, MovieElement);
-
-  this.title = title;
-  this.description = overview;
-  this.rating = rating;
-  this.year = publishDate;
-  this.backdrop = backdropPath;
-  this.poster = posterPath;
-};
-
-var movies = {
-  getMaxVotedElement: function getMaxVotedElement(moviesResult) {
-    var result = moviesResult.results;
-    var maxVoted = undefined;
-    var voteCount = 0;
-    for (var key in result) {
-      var item = result[key];
-      if (item !== null && item.hasOwnProperty('vote_count')) {
-        if (parseInt(item.vote_count, 10) > voteCount) {
-          voteCount = item.vote_count;
-          maxVoted = item;
-        }
-      }
-    }
-    return maxVoted;
-  },
-  createImageUrl: function createImageUrl(endOfTheUrl) {
-    var url = 'http://image.tmdb.org/t/p/w500' + endOfTheUrl;
-    return url;
-  },
-  createMovieUrl: function createMovieUrl(movieTitle) {
-    var api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
-    var urlFirstPart = 'https://api.themoviedb.org/3/search/movie?query=';
-    var url = urlFirstPart + movieTitle + api_key;
-    return url;
-  },
-  modifyOverview: function modifyOverview(overview) {
-    var originalOverview = overview;
-    var newOverview = undefined;
-    if (originalOverview.length > 150) {
-      newOverview = originalOverview.substr(0, 130) + '...';
-      return newOverview;
-    } else {
-      return originalOverview;
-    }
-  },
-  modifyReleaseDate: function modifyReleaseDate(releaseDate) {
-    var originalReleaseDate = releaseDate;
-    var newReleaseDate = originalReleaseDate.substr(0, 4) + ' ';
-    return newReleaseDate;
-  },
-  modifyTitle: function modifyTitle(title) {
-    var originalTitle = title;
-    var newTitle = originalTitle.substr(0, 20);
-    return newTitle;
-  },
-  createDiscoverUrl: function createDiscoverUrl() {
-    var date = new Date();
-    var year = date.getFullYear();
-    var month = date.getMonth();
-    var day = '01';
-    var insertableDate = year + '-' + month + '-' + day;
-    var api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
-    var urlFirstPart = 'https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&release_date.gte=' + insertableDate + '&sort_by=popularity.desc&';
-    var url = urlFirstPart + api_key;
-    return url;
-  },
-  create1MonthDiscoverUrl: function create1MonthDiscoverUrl() {
-    var date = new Date();
-
-    var year = date.getFullYear();
-    var month = date.getMonth();
-    var day = '01';
-    var insertableDate = year + '-' + month + '-' + day;
-    var api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
-    var urlFirstPart = 'https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&release_date.gte=' + insertableDate + '&sort_by=popularity.desc&';
-    var url = urlFirstPart + api_key;
-    console.log(url);
-    return url;
-  },
-  create3MonthDiscoverUrl: function create3MonthDiscoverUrl() {
-    var date = new Date();
-
-    var year = date.getFullYear();
-    var month = date.getMonth() - 2;
-    var day = '01';
-    var insertableDate = year + '-' + month + '-' + day;
-    var api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
-    var urlFirstPart = 'https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&release_date.gte=' + insertableDate + '&sort_by=vote_count.desc&';
-    var url = urlFirstPart + api_key;
-    console.log(url);
-    return url;
-  }
-};
-
-// Module export for mocha testing
-var _exports = module.exports = {};
-_exports = {
-  createImageUrl: function createImageUrl() {
-    return 'hello';
-  }
-};
-/* jshint esnext: true */
 'use strict';
 
 (function pageLoad() {
@@ -321,17 +212,6 @@ var renderPage = {
     var logContainer = document.getElementById('loginContainer');
     var body = document.body;
     body.removeChild(logContainer);
-  }
-};
-'use strict';
-
-module.exports = {
-  sayHelloInEnglish: function sayHelloInEnglish() {
-    return 'HELLO';
-  },
-
-  sayHelloInSpanish: function sayHelloInSpanish() {
-    return 'Hola';
   }
 };
 /* jshint esnext: true */
@@ -455,7 +335,7 @@ var AddMovie = React.createClass({ displayName: "AddMovie",
     });
   },
   render: function render() {
-    return React.createElement("div", { id: "addMovieContainer", className: "col-lg-11 col-md-11 col-xs-12" }, React.createElement("input", { id: "addMovieTitleInputField", type: "text", className: "form-control col-lg-2 col-md-4 col-lg-offset-1 col-md-offset-1 col-xs-8", placeholder: "Title" }), React.createElement("button", { className: "btn btn-warning col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 col-xs-4", onClick: this.handleClick }, React.createElement("i", { className: "fa fa-plus-square" }), " Add"));
+    return React.createElement("div", { id: "addMovieContainer", className: "col-lg-11 col-md-11 col-xs-12" }, React.createElement("input", { id: "addMovieTitleInputField", type: "text", className: "form-control col-lg-2 col-md-4 col-lg-offset-1 col-md-offset-1 col-xs-8", placeholder: "Title" }), React.createElement("button", { id: "addMovieTitleButton", className: "btn btn-warning col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 col-xs-4", onClick: this.handleClick }, React.createElement("i", { className: "fa fa-plus-square" }), " Add"));
   }
 });
 
@@ -507,6 +387,7 @@ var ListMoviesFromDb = React.createClass({ displayName: "ListMoviesFromDb",
 });
 
 var keyTitleMap = new Map();
+var idCounter = 1;
 var MovieElementFromDb = React.createClass({ displayName: "MovieElementFromDb",
   handleClick: function handleClick() {
     var uid = localStorage.getItem('uid');
@@ -552,7 +433,9 @@ var MovieElementFromDb = React.createClass({ displayName: "MovieElementFromDb",
     });
   },
   render: function render() {
-    return React.createElement("tr", null, React.createElement("td", { className: "col-xs-9" }, this.props.title), React.createElement("td", { className: "col-xs-3" }, React.createElement("button", { className: "btn btn-danger", onClick: this.handleClick }, React.createElement("i", { className: "fa fa-trash-o" }), " Remove")));
+    var btnId = 'removeBtn' + idCounter;
+    idCounter++;
+    return React.createElement("tr", null, React.createElement("td", { className: "col-xs-9" }, this.props.title), React.createElement("td", { className: "col-xs-3" }, React.createElement("button", { id: btnId, className: "btn btn-danger", onClick: this.handleClick }, React.createElement("i", { className: "fa fa-trash-o" }), " Remove")));
   }
 });
 

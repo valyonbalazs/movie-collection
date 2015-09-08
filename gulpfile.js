@@ -358,7 +358,7 @@ gulp.task('watch', ['build', 'connect'], function () {
   gulp.watch(files.jsx, ['watch:jsx']);
 });
 
-gulp.task('test:mocha', function () {
+gulp.task('test:serverSide', function () {
   return gulp.src(files.test.mocha)
     .pipe(mocha({
       compilers: {js: 'babel'},
@@ -367,18 +367,17 @@ gulp.task('test:mocha', function () {
     }));
 });
 
-gulp.task('test:browser', function () {
-  return gulp.src(files.test.browser)
-    .pipe(plumber())
+gulp.task('test:clientSideBrowser', function () {
+  return gulp.src([files.test.mocha, './client/js/movieModel.js'])
     .pipe(karma({
-      configFile: './test/karma.conf.js',
+      configFile: './test/browser/my.conf.js',
       action: 'run'
     }));
 });
 
 gulp.task('test', function (cb) {
   runSequence(
-    'test:mocha',
+    'test:clientSideBrowser',
     cb
   );
 });

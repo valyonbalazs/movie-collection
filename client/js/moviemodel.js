@@ -1,5 +1,7 @@
 /* jshint esnext: true */
 
+'use strict';
+
 class MovieElement {
   constructor (title, overview, rating, publishDate, backdropPath, posterPath) {
     this.title = title;
@@ -84,5 +86,6 @@ let movies = {
 };
 
 // Module export for mocha testing
-module.exports = {};
-module.exports.movies = movies;
+
+/*module.exports = {};
+module.exports.movies = movies;*/

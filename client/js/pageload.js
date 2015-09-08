@@ -1,4 +1,5 @@
 /* jshint esnext: true */
+
 (function pageLoad () {
 
   if (localStorage.uid) {

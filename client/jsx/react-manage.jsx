@@ -21,7 +21,7 @@ let AddMovie = React.createClass({
     return (
       <div id="addMovieContainer" className="col-lg-11 col-md-11 col-xs-12" >
         <input id="addMovieTitleInputField" type="text" className="form-control col-lg-2 col-md-4 col-lg-offset-1 col-md-offset-1 col-xs-8" placeholder="Title" />
-        <button className="btn btn-warning col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 col-xs-4" onClick={this.handleClick}><i className="fa fa-plus-square"></i> Add</button>
+        <button id="addMovieTitleButton" className="btn btn-warning col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 col-xs-4" onClick={this.handleClick}><i className="fa fa-plus-square"></i> Add</button>
       </div>
     );
   }
@@ -92,6 +92,7 @@ let ListMoviesFromDb = React.createClass({
 });
 
 let keyTitleMap = new Map();
+let idCounter = 1;
 let MovieElementFromDb = React.createClass({
   handleClick: function () {
     let uid = localStorage.getItem('uid');
@@ -116,10 +117,12 @@ let MovieElementFromDb = React.createClass({
     });
   },
   render: function () {
+    let btnId = 'removeBtn' + idCounter;
+    idCounter++;
     return (
       <tr>
         <td className="col-xs-9">{this.props.title}</td>
-        <td className="col-xs-3"><button className="btn btn-danger" onClick={this.handleClick} ><i className="fa fa-trash-o"></i> Remove</button></td>
+        <td className="col-xs-3"><button id={btnId} className="btn btn-danger" onClick={this.handleClick} ><i className="fa fa-trash-o"></i> Remove</button></td>
       </tr>
     );
   }

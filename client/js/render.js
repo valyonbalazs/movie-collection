@@ -1,4 +1,5 @@
 /* jshint esnext: true */
+
 let renderPage = {
   renderMoviePage: function () {
     renderAllNavbar();
