@@ -1,3 +1,5 @@
+/* jshint esnext: true */
+
 // Gulp plugins from NPM
 var babel = require('gulp-babel');
 var babelRegister = require('babel-core/register');
