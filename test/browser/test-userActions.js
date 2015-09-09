@@ -1,13 +1,9 @@
 /* jshint esnext: true */
 
-/*'use strict';
+'use strict';
 
-describe('sample.html', function() {
-  it('displays 42', function() {
-    window.location.href = '/#/Manage';
+describe('basic react testing method', function() {
+  it('react click event testing', function() {
 
-    // This assertion will fail
-    document.getElementById('addMovieTitleInputField').value =  'batman';
-    expect(element('#addMovieTitleInputField').text()).toBe('batman');
   });
-});*/
+});

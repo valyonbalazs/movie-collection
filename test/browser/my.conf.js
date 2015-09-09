@@ -14,9 +14,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      '../../client/js/movieModel.js',
-      '../mocha/*.js',
-      '../browser/test-userActions.js'
+
     ],
 
 

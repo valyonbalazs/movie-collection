@@ -369,10 +369,14 @@ gulp.task('test:serverSide', function () {
 
 gulp.task('test:clientSideBrowser', function () {
   return gulp.src([
+    directory.dest.jslib + '/firebase.js',
+    directory.dest.jslib + '/react-with-addons.min.js',
+    directory.dest.jslib + '/reactrouter.js',
     files.test.mocha,
-    './client/js/movieModel.js',
+    directory.dest.js + extension.js,
     './test/browser/test-userActions.js'
   ])
+    .pipe(plumber())
     .pipe(karma({
       configFile: './test/browser/my.conf.js',
       action: 'run'
@@ -381,6 +385,7 @@ gulp.task('test:clientSideBrowser', function () {
 
 gulp.task('test', function (cb) {
   runSequence(
+    'build',
     'test:clientSideBrowser',
     cb
   );
