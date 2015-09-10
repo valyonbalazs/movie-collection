@@ -60,10 +60,10 @@ let DiscoverMoviesContainer = React.createClass({
             </div>
             <div id="discoveryChooserButtons" className="col-lg-5 col-md-5 col-xs-12">
               <div className="col-lg-5 col-md-6 col-xs-6 col-lg-offset-2">
-                  <button className="btn btn-success" onClick={this.handleClick1}>LAST 1 MONTH</button>
+                  <button id="OneMonthButton" className="btn btn-success" onClick={this.handleClick1}>LAST 1 MONTH</button>
               </div>
               <div className="col-lg-5 col-md-6 col-xs-6">
-                  <button className="btn btn-warning" onClick={this.handleClick3}>LAST 3 MONTHS </button>
+                  <button id="ThreeMonthButton" className="btn btn-warning" onClick={this.handleClick3}>LAST 3 MONTHS </button>
               </div>
             </div>
           </div>

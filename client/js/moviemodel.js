@@ -61,14 +61,22 @@ let movies = {
 
   },
   modifyReleaseDate: function (releaseDate) {
-    let originalReleaseDate = releaseDate;
-    let newReleaseDate = originalReleaseDate.substr(0, 4) + ' ';
-    return newReleaseDate;
+    if (typeof(releaseDate) === 'string') {
+      let originalReleaseDate = releaseDate;
+      let newReleaseDate = originalReleaseDate.substr(0, 4) + ' ';
+      return newReleaseDate;
+    } else {
+      throw new Error('Input type is not string!');
+    }
   },
   modifyTitle: function (title) {
-    let originalTitle = title;
-    let newTitle = originalTitle.substr(0, 20);
-    return newTitle;
+    if (typeof(title) === 'string') {
+      let originalTitle = title;
+      let newTitle = originalTitle.substr(0, 20);
+      return newTitle;
+    } else {
+      throw new Error('Input type is not string!');
+    }
   },
   create1MonthDiscoverUrl: function () {
     let date = new Date();

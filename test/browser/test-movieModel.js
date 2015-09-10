@@ -64,7 +64,12 @@ describe('Testing movieElement helper methods', function () {
       let gotResult = movies.modifyReleaseDate(releaseDate);
 
       expect(expectedResult).to.equal(gotResult);
+    });
 
+    it('input validation if not string', function () {
+      let input = new Object();
+
+      assert.throws(function () { movies.modifyReleaseDate(input); }, Error, 'Input type is not string!');
     });
   });
 
@@ -75,7 +80,12 @@ describe('Testing movieElement helper methods', function () {
       let gotResult = movies.modifyTitle(title);
 
       expect(expectedResult).to.equal(gotResult);
+    });
 
+    it('input validation if not string', function () {
+      let input = new Date();
+
+      assert.throws(function () { movies.modifyTitle(input); }, Error, 'Input type is not string!');
     });
   });
 

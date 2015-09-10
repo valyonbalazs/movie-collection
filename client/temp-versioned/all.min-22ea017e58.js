@@ -217,14 +217,22 @@ var movies = {
     }
   },
   modifyReleaseDate: function modifyReleaseDate(releaseDate) {
-    var originalReleaseDate = releaseDate;
-    var newReleaseDate = originalReleaseDate.substr(0, 4) + ' ';
-    return newReleaseDate;
+    if (typeof releaseDate === 'string') {
+      var originalReleaseDate = releaseDate;
+      var newReleaseDate = originalReleaseDate.substr(0, 4) + ' ';
+      return newReleaseDate;
+    } else {
+      throw new Error('Input type is not string!');
+    }
   },
   modifyTitle: function modifyTitle(title) {
-    var originalTitle = title;
-    var newTitle = originalTitle.substr(0, 20);
-    return newTitle;
+    if (typeof title === 'string') {
+      var originalTitle = title;
+      var newTitle = originalTitle.substr(0, 20);
+      return newTitle;
+    } else {
+      throw new Error('Input type is not string!');
+    }
   },
   create1MonthDiscoverUrl: function create1MonthDiscoverUrl() {
     var date = new Date();
@@ -365,7 +373,7 @@ var DiscoverMoviesContainer = React.createClass({ displayName: "DiscoverMoviesCo
       return React.createElement(Movie, { movie: movie });
     });
 
-    return React.createElement("div", { id: "moviesContainer", className: "col-lg-12 col-md-12 col-xs-12 moviesContainer" }, React.createElement("div", { id: "discoveryChooserContainer", className: "col-lg-12 col-md-12 col-xs-12" }, React.createElement("div", { id: "discoveryChooserLabel", className: "col-lg-8 col-md-7 col-xs-12" }, React.createElement("h3", { id: "discoverLabel" }, "Label")), React.createElement("div", { id: "discoveryChooserButtons", className: "col-lg-5 col-md-5 col-xs-12" }, React.createElement("div", { className: "col-lg-5 col-md-6 col-xs-6 col-lg-offset-2" }, React.createElement("button", { className: "btn btn-success", onClick: this.handleClick1 }, "LAST 1 MONTH")), React.createElement("div", { className: "col-lg-5 col-md-6 col-xs-6" }, React.createElement("button", { className: "btn btn-warning", onClick: this.handleClick3 }, "LAST 3 MONTHS ")))), React.createElement("div", { id: "innerDiscoverContainer" }, React.createElement(ReactCSSTransitionGroup, { transitionName: "example" }, moviesArray)));
+    return React.createElement("div", { id: "moviesContainer", className: "col-lg-12 col-md-12 col-xs-12 moviesContainer" }, React.createElement("div", { id: "discoveryChooserContainer", className: "col-lg-12 col-md-12 col-xs-12" }, React.createElement("div", { id: "discoveryChooserLabel", className: "col-lg-8 col-md-7 col-xs-12" }, React.createElement("h3", { id: "discoverLabel" }, "Label")), React.createElement("div", { id: "discoveryChooserButtons", className: "col-lg-5 col-md-5 col-xs-12" }, React.createElement("div", { className: "col-lg-5 col-md-6 col-xs-6 col-lg-offset-2" }, React.createElement("button", { id: "OneMonthButton", className: "btn btn-success", onClick: this.handleClick1 }, "LAST 1 MONTH")), React.createElement("div", { className: "col-lg-5 col-md-6 col-xs-6" }, React.createElement("button", { id: "ThreeMonthButton", className: "btn btn-warning", onClick: this.handleClick3 }, "LAST 3 MONTHS ")))), React.createElement("div", { id: "innerDiscoverContainer" }, React.createElement(ReactCSSTransitionGroup, { transitionName: "example" }, moviesArray)));
   }
 });
 

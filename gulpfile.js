@@ -370,12 +370,13 @@ gulp.task('test:serverSide', function () {
 gulp.task('test:clientSideBrowser', function () {
   return gulp.src([
     directory.dest.jslib + '/firebase.js',
-    directory.dest.jslib + '/react-with-addons.min.js',
+    directory.dest.jslib + '/react.js',
+    directory.dest.jslib + '/react-with-addons.js',
     directory.dest.jslib + '/reactrouter.js',
+    directory.dest.js + extension.js,
     files.test.browser,
-    directory.dest.js + extension.js
+    directory.test.browser + '**/*.jsx'
   ])
-    .pipe(plumber())
     .pipe(karma({
       configFile: './test/browser/my.conf.js',
       action: 'run'

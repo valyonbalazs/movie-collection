@@ -53,6 +53,7 @@
     "gulp-watch": "^4.3.4",
     "gulp-watch-sequence": "0.0.4",
     "jasmine-core": "^2.3.4",
+    "jest-cli": "^0.5.2",
     "jshint-stylish": "^2.0.1",
     "karma": "^0.12.37",
     "karma-chai": "^0.1.0",
@@ -63,8 +64,10 @@
     "karma-mocha": "^0.2.0",
     "karma-mocha-reporter": "^1.0.2",
     "karma-phantomjs-launcher": "^0.2.0",
+    "karma-react-preprocessor": "0.0.4",
     "mocha": "^2.2.5",
     "phantomjs": "^1.9.17",
+    "react-tools": "^0.13.3",
     "run-sequence": "^1.1.1",
     "should": "^7.1.0",
     "superagent": "^1.2.0"
