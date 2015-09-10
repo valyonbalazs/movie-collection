@@ -185,23 +185,35 @@ var movies = {
     return maxVoted;
   },
   createImageUrl: function createImageUrl(endOfTheUrl) {
-    var url = 'http://image.tmdb.org/t/p/w500' + endOfTheUrl;
-    return url;
+    if (typeof endOfTheUrl === 'string') {
+      var url = 'http://image.tmdb.org/t/p/w500' + endOfTheUrl;
+      return url;
+    } else {
+      throw new Error('Input type is not string!');
+    }
   },
   createMovieUrl: function createMovieUrl(movieTitle) {
-    var api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
-    var urlFirstPart = 'https://api.themoviedb.org/3/search/movie?query=';
-    var url = urlFirstPart + movieTitle + api_key;
-    return url;
+    if (typeof movieTitle === 'string') {
+      var api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
+      var urlFirstPart = 'https://api.themoviedb.org/3/search/movie?query=';
+      var url = urlFirstPart + movieTitle + api_key;
+      return url;
+    } else {
+      throw new Error('Input type is not string!');
+    }
   },
   modifyOverview: function modifyOverview(overview) {
-    var originalOverview = overview;
-    var newOverview = undefined;
-    if (originalOverview.length > 130) {
-      newOverview = originalOverview.substr(0, 130) + '...';
-      return newOverview;
+    if (typeof overview === 'string') {
+      var originalOverview = overview;
+      var newOverview = undefined;
+      if (originalOverview.length > 130) {
+        newOverview = originalOverview.substr(0, 130) + '...';
+        return newOverview;
+      } else {
+        return originalOverview;
+      }
     } else {
-      return originalOverview;
+      throw new Error('Input type is not string!');
     }
   },
   modifyReleaseDate: function modifyReleaseDate(releaseDate) {

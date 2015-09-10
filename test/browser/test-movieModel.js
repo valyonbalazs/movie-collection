@@ -2,11 +2,6 @@
 
 'use strict';
 
-/*let mocha = require('mocha');
-let assert = require('assert');
-let expect = require('chai').expect;
-let movieModel = require('../../client/js/movieModel');*/
-
 describe('Testing movieElement helper methods', function () {
   describe('Testing createImgUrl method', function () {
     it('creates a valid URL for the Image of the movie', function () {
@@ -16,20 +11,12 @@ describe('Testing movieElement helper methods', function () {
       let gotResult = movies.createImageUrl(urlEndPart);
 
       expect(expectedResult).to.equal(gotResult);
-
     });
-  });
 
+    it('input validation if not string', function () {
+      let input = new Date();
 
-  describe('Testing createImgUrl method', function () {
-    it('creates a valid URL for the Image of the movie', function () {
-      let urlEndPart = '/sLbXneTErDvS3HIjqRWQJPiZ4Ci.jpg';
-      let urlFirstPart = 'http://image.tmdb.org/t/p/w500';
-      let expectedResult = urlFirstPart + urlEndPart;
-      let gotResult = movies.createImageUrl(urlEndPart);
-
-      expect(expectedResult).to.equal(gotResult);
-
+      assert.throws(function () { movies.createImageUrl(input); }, Error, 'Input type is not string!');
     });
   });
 
@@ -42,7 +29,12 @@ describe('Testing movieElement helper methods', function () {
       let gotResult = movies.createMovieUrl(movieTitle);
 
       expect(expectedResult).to.equal(gotResult);
+    });
 
+    it('input validation if not string', function () {
+      let input = new Date();
+
+      assert.throws(function () { movies.createMovieUrl(input); }, Error, 'Input type is not string!');
     });
   });
 
@@ -56,7 +48,12 @@ describe('Testing movieElement helper methods', function () {
       let gotResult = movies.modifyOverview(originalOverview);
 
       expect(expectedResult).to.equal(gotResult);
+    });
 
+    it('input validation if not string', function () {
+      let input = new Date();
+
+      assert.throws(function () { movies.modifyOverview(input); }, Error, 'Input type is not string!');
     });
   });
 

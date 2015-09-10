@@ -28,24 +28,37 @@ let movies = {
     return maxVoted;
   },
   createImageUrl: function (endOfTheUrl) {
-    let url = 'http://image.tmdb.org/t/p/w500' + endOfTheUrl;
-    return url;
+    if (typeof(endOfTheUrl) === 'string') {
+      let url = 'http://image.tmdb.org/t/p/w500' + endOfTheUrl;
+      return url;
+    } else {
+      throw new Error('Input type is not string!');
+    }
   },
   createMovieUrl: function (movieTitle) {
-    let api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
-    let urlFirstPart = 'https://api.themoviedb.org/3/search/movie?query=';
-    let url = urlFirstPart + movieTitle + api_key;
-    return url;
+    if (typeof(movieTitle) === 'string') {
+      let api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
+      let urlFirstPart = 'https://api.themoviedb.org/3/search/movie?query=';
+      let url = urlFirstPart + movieTitle + api_key;
+      return url;
+    } else {
+      throw new Error('Input type is not string!');
+    }
   },
   modifyOverview: function (overview) {
-    let originalOverview = overview;
-    let newOverview;
-    if (originalOverview.length > 130) {
-      newOverview = originalOverview.substr(0, 130) + '...';
-      return newOverview;
+    if (typeof(overview) === 'string') {
+      let originalOverview = overview;
+      let newOverview;
+      if (originalOverview.length > 130) {
+        newOverview = originalOverview.substr(0, 130) + '...';
+        return newOverview;
+      } else {
+        return originalOverview;
+      }
     } else {
-      return originalOverview;
+      throw new Error('Input type is not string!');
     }
+
   },
   modifyReleaseDate: function (releaseDate) {
     let originalReleaseDate = releaseDate;
