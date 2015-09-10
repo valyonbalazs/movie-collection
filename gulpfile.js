@@ -70,7 +70,7 @@ directory.dest.img_low_res = directory.dest.images + 'img_low_res/';
 // TESTING
 directory.test = {};
 directory.test.root = './test/';
-directory.test.mocha = directory.test.root + 'mocha/';
+directory.test.server = directory.test.root + 'server/';
 directory.test.browser = directory.test.root + 'browser/';
 
 // ------------------------------------------------------------------------------
@@ -372,9 +372,8 @@ gulp.task('test:clientSideBrowser', function () {
     directory.dest.jslib + '/firebase.js',
     directory.dest.jslib + '/react-with-addons.min.js',
     directory.dest.jslib + '/reactrouter.js',
-    files.test.mocha,
-    directory.dest.js + extension.js,
-    './test/browser/test-userActions.js'
+    files.test.browser,
+    directory.dest.js + extension.js
   ])
     .pipe(plumber())
     .pipe(karma({
