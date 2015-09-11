@@ -8,12 +8,10 @@ describe('basic react testing method', function() {
     let TestUtils = React.addons.TestUtils;
 
     document.addEventListener('DOMContentLoaded', function(event) {
-        let discoverContainer = TestUtils.renderIntoDocument(<DiscoverMoviesContainer />);
-        let OneMonthButton = React.findDOMNode(document.getElementById('OneMonthButton'));
+        //let discoverContainer = TestUtils.renderIntoDocument(<DiscoverMoviesContainer />);
+        //let OneMonthButton = React.findDOMNode(document.getElementById('OneMonthButton'));
 
-        expect(React.findDOMNode(OneMonthButton).textContent).toEqual('LAST 1 MONTH');
+      //  expect(React.findDOMNode(OneMonthButton).textContent).toEqual('LAST 1 MONTH');
     });
-
-
   });
 });

@@ -7,11 +7,13 @@ module.exports = function(config) {
     basePath: '',
     frameworks: ['mocha', 'chai'],
     files: [
+      {pattern: '/../../build/html/*.html', included: true, served: true }
     ],
     exclude: [
     ],
     preprocessors: {
-      '**/*.jsx': ['react']
+      '**/*.jsx': ['react'],
+      '**/*.html': ['html2js']
     },
     reactPreprocessor: {
         harmony: true,

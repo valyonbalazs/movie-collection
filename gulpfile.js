@@ -369,17 +369,21 @@ gulp.task('test:serverSide', function () {
 
 gulp.task('test:clientSideBrowser', function () {
   return gulp.src([
+    directory.dest.html + extension.html,
     directory.dest.jslib + '/firebase.js',
-    directory.dest.jslib + '/react.js',
+    directory.dest.jslib + '/jquery.min.js',
     directory.dest.jslib + '/react-with-addons.js',
     directory.dest.jslib + '/reactrouter.js',
+    directory.dest.css + extension.css,
+    directory.dest.csslib + extension.css,
     directory.dest.js + extension.js,
     files.test.browser,
     directory.test.browser + '**/*.jsx'
   ])
     .pipe(karma({
       configFile: './test/browser/my.conf.js',
-      action: 'run'
+      action: 'watch',
+      showStack: true
     }));
 });
 
