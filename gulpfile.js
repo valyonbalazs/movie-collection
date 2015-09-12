@@ -391,6 +391,7 @@ gulp.task('test:karma', function () {
     directory.dest.css + extension.css,
     directory.dest.csslib + extension.css,
     directory.dest.js + extension.js,
+    directory.dest.html + extension.html,
     files.test.jsdom,
     directory.test.browser + '**/*.jsx'
   ])
