@@ -258,10 +258,17 @@ var movies = {
   }
 };
 
-// Module export for mocha testing
-
-/*module.exports = {};
-module.exports.movies = movies;*/
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+  module.exports = movies;
+} else {
+  if (typeof define === 'function' && define.amd) {
+    define([], function () {
+      return movies;
+    });
+  } else {
+    window.movies = movies;
+  }
+}
 /* jshint esnext: true */
 
 'use strict';
@@ -327,6 +334,9 @@ var renderPage = {
     body.removeChild(logContainer);
   }
 };
+"use strict";
+
+/* jshint esnext: true */
 /* jshint esnext: true */
 
 "use strict";
@@ -378,7 +388,7 @@ var DiscoverMoviesContainer = React.createClass({ displayName: "DiscoverMoviesCo
 });
 
 function renderDiscoverMovies() {
-  React.render(React.createElement(DiscoverMoviesContainer, null), document.getElementById("innerContainer"));
+  React.render(React.createElement(DiscoverMoviesContainer, null), document.getElementById('innerContainer'));
 };
 /* jshint esnext: true */
 

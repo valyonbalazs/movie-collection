@@ -70,6 +70,7 @@ directory.dest.img_low_res = directory.dest.images + 'img_low_res/';
 // TESTING
 directory.test = {};
 directory.test.root = './test/';
+directory.test.jsdom = directory.test.root + 'jsdom/';
 directory.test.server = directory.test.root + 'server/';
 directory.test.browser = directory.test.root + 'browser/';
 
@@ -112,8 +113,9 @@ files.img_low_res = directory.client.img_low_res + extension.jpg;
 
 // Defining test files
 files.test = {};
-files.test.mocha = directory.test.mocha + extension.js;
+files.test.jsdom = directory.test.jsdom + extension.js;
 files.test.browser = directory.test.browser + extension.js;
+files.test.firebase = directory.dest.jslib + '/firebase.js';
 
 // ------------------------------------------------------------------------------
 // Defining Gulp-tasks, which are the steps of the building-process
@@ -359,9 +361,25 @@ gulp.task('watch', ['build', 'connect'], function () {
 });
 
 gulp.task('test:serverSide', function () {
-  return gulp.src(files.test.mocha)
+  return gulp.src([
+    files.test.browser
+  ])
     .pipe(mocha({
       compilers: {js: 'babel'},
+      ui: 'tdd',
+      reporter: 'spec'
+    }));
+});
+
+gulp.task('test:jsdom', function () {
+  return gulp.src([
+    directory.client.jslib + '/react-with-addons.min.js',
+    directory.client.jslib + '/react.min.js',
+    directory.dest.jsx + '/react-discover-movies.js',
+    files.test.jsdom
+  ])
+    .pipe(mocha({
+      compilers: {js: 'babel/register --recursive'},
       ui: 'tdd',
       reporter: 'spec'
     }));
@@ -370,7 +388,8 @@ gulp.task('test:serverSide', function () {
 gulp.task('test:clientSideBrowser', function () {
   return gulp.src([
     directory.dest.html + extension.html,
-    directory.dest.jslib + '/firebase.js',
+    directory.dest.jslib + '/bootstrap.min.js',
+    files.test.firebase,
     directory.dest.jslib + '/jquery.min.js',
     directory.dest.jslib + '/react-with-addons.js',
     directory.dest.jslib + '/reactrouter.js',
@@ -390,7 +409,7 @@ gulp.task('test:clientSideBrowser', function () {
 gulp.task('test', function (cb) {
   runSequence(
     'build',
-    'test:clientSideBrowser',
+    'test:jsdom',
     cb
   );
 });

@@ -104,7 +104,14 @@ let movies = {
   }
 };
 
-// Module export for mocha testing
-
-/*module.exports = {};
-module.exports.movies = movies;*/
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+  module.exports = movies;
+} else {
+  if (typeof define === 'function' && define.amd) {
+    define([], function() {
+      return movies;
+    });
+  } else {
+    window.movies = movies;
+  }
+}

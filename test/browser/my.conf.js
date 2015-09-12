@@ -1,5 +1,4 @@
 // Karma configuration
-// Generated on Tue Sep 08 2015 20:21:27 GMT+0200 (Central Europe Daylight Time)
 
 module.exports = function(config) {
   config.set({
@@ -7,9 +6,10 @@ module.exports = function(config) {
     basePath: '',
     frameworks: ['mocha', 'chai'],
     files: [
-      {pattern: '/../../build/html/*.html', included: true, served: true }
+      '../../client/js/movieModel.js'
     ],
     exclude: [
+
     ],
     preprocessors: {
       '**/*.jsx': ['react'],

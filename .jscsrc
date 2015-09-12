@@ -22,7 +22,6 @@
     "requireLineFeedAtFileEnd": true,
     "maximumLineLength": 120,
     "requireCapitalizedConstructors": true,
-    "requireDotNotation": true,
     "disallowImplicitTypeConversion": ["numeric", "boolean", "binary", "string"],
     "disallowDanglingUnderscores": { "allExcept": ["_exception"] },
     "disallowTrailingWhitespace": true,

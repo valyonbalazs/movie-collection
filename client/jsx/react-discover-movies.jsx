@@ -78,5 +78,5 @@ let DiscoverMoviesContainer = React.createClass({
 });
 
 function renderDiscoverMovies() {
-  React.render(<DiscoverMoviesContainer />, document.getElementById("innerContainer"));
+  React.render(<DiscoverMoviesContainer />, document.getElementById('innerContainer'));
 };
