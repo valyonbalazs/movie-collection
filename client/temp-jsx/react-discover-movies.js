@@ -80,3 +80,15 @@ let DiscoverMoviesContainer = React.createClass({displayName: "DiscoverMoviesCon
 function renderDiscoverMovies() {
   React.render(React.createElement(DiscoverMoviesContainer, null), document.getElementById('innerContainer'));
 };
+
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+  module.exports = DiscoverMoviesContainer;
+} else {
+  if (typeof define === 'function' && define.amd) {
+    define([], function() {
+      return DiscoverMoviesContainer;
+    });
+  } else {
+    window.DiscoverMoviesContainer = DiscoverMoviesContainer;
+  }
+}

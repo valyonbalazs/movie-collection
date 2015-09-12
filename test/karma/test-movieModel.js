@@ -1,5 +1,7 @@
 /* jshint esnext: true */
 
+'use strict';
+
 let mocha = require('mocha');
 let assert = require('assert');
 let expect = require('chai').expect;

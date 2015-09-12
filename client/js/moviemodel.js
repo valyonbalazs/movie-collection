@@ -104,7 +104,7 @@ let movies = {
   }
 };
 
-if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+/*if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
   module.exports = movies;
 } else {
   if (typeof define === 'function' && define.amd) {
@@ -114,4 +114,4 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
   } else {
     window.movies = movies;
   }
-}
+}*/

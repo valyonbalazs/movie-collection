@@ -258,17 +258,17 @@ var movies = {
   }
 };
 
-if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+/*if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
   module.exports = movies;
 } else {
   if (typeof define === 'function' && define.amd) {
-    define([], function () {
+    define([], function() {
       return movies;
     });
   } else {
     window.movies = movies;
   }
-}
+}*/
 /* jshint esnext: true */
 
 'use strict';
@@ -390,6 +390,18 @@ var DiscoverMoviesContainer = React.createClass({ displayName: "DiscoverMoviesCo
 function renderDiscoverMovies() {
   React.render(React.createElement(DiscoverMoviesContainer, null), document.getElementById('innerContainer'));
 };
+
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+  module.exports = DiscoverMoviesContainer;
+} else {
+  if (typeof define === 'function' && define.amd) {
+    define([], function () {
+      return DiscoverMoviesContainer;
+    });
+  } else {
+    window.DiscoverMoviesContainer = DiscoverMoviesContainer;
+  }
+}
 /* jshint esnext: true */
 
 "use strict";

@@ -5,6 +5,7 @@
 let mocha = require('mocha');
 let React = require('react/addons');
 let assert = require('assert');
+let container = require('../../client/temp-jsx/react-discover-movies.js')
 let TestUtils = React.addons.TestUtils;
 
 mocha.describe('basic react testing method', function() {

@@ -1,6 +1,8 @@
 /* jshint esnext: true */
 
-let jsdom = require('jsdom');
+'use strict';
+
+/*let jsdom = require('jsdom');
 
 // setup the simplest document possible
 let doc = jsdom.jsdom('<!doctype html><html><body></body></html>');
@@ -30,3 +32,4 @@ function propagateToGlobal (window) {
     global[key] = window[key];
   }
 }
+*/

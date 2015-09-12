@@ -71,8 +71,7 @@ directory.dest.img_low_res = directory.dest.images + 'img_low_res/';
 directory.test = {};
 directory.test.root = './test/';
 directory.test.jsdom = directory.test.root + 'jsdom/';
-directory.test.server = directory.test.root + 'server/';
-directory.test.browser = directory.test.root + 'browser/';
+directory.test.browser = directory.test.root + 'karma/';
 
 // ------------------------------------------------------------------------------
 // Defining file EXTensions
@@ -360,7 +359,7 @@ gulp.task('watch', ['build', 'connect'], function () {
   gulp.watch(files.jsx, ['watch:jsx']);
 });
 
-gulp.task('test:serverSide', function () {
+gulp.task('test:mocha', function () {
   return gulp.src([
     files.test.browser
   ])
@@ -373,34 +372,30 @@ gulp.task('test:serverSide', function () {
 
 gulp.task('test:jsdom', function () {
   return gulp.src([
-    directory.client.jslib + '/react-with-addons.min.js',
-    directory.client.jslib + '/react.min.js',
-    directory.dest.jsx + '/react-discover-movies.js',
     files.test.jsdom
   ])
     .pipe(mocha({
-      compilers: {js: 'babel/register --recursive'},
+      compilers: {js: 'babel'},
       ui: 'tdd',
       reporter: 'spec'
     }));
 });
 
-gulp.task('test:clientSideBrowser', function () {
+gulp.task('test:karma', function () {
   return gulp.src([
-    directory.dest.html + extension.html,
+    directory.dest.jslib + '/jquery.min.js',
     directory.dest.jslib + '/bootstrap.min.js',
     files.test.firebase,
-    directory.dest.jslib + '/jquery.min.js',
     directory.dest.jslib + '/react-with-addons.js',
-    directory.dest.jslib + '/reactrouter.js',
+    directory.dest.jslib + '/reactrouter.min.js',
     directory.dest.css + extension.css,
     directory.dest.csslib + extension.css,
     directory.dest.js + extension.js,
-    files.test.browser,
+    files.test.jsdom,
     directory.test.browser + '**/*.jsx'
   ])
     .pipe(karma({
-      configFile: './test/browser/my.conf.js',
+      configFile: './test/karma/my.conf.js',
       action: 'watch',
       showStack: true
     }));
@@ -409,7 +404,7 @@ gulp.task('test:clientSideBrowser', function () {
 gulp.task('test', function (cb) {
   runSequence(
     'build',
-    'test:jsdom',
+    'test:mocha',
     cb
   );
 });
