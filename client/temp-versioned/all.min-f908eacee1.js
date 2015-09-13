@@ -166,7 +166,7 @@ var discoverMovies = [];
 /* jshint esnext: true */
 
 // needed for Karma testing, ES6 tests only works with this
-// 'use strict';
+//'use strict';
 
 'use strict';
 
@@ -356,11 +356,11 @@ var renderPage = {
 /* jshint esnext: true */
 
 // for jsdom testing, it has to be uncommented during tests
-'use strict';
+/*let React = require('react/addons');
+let http = require('../js/http.js');
+let movies = require('../js/movieModel.js');*/
 
-var React = require('react/addons');
-var http = require('../js/http.js');
-var movies = require('../js/movieModel.js');
+"use strict";
 
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 

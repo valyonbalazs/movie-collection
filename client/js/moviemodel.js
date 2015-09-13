@@ -1,7 +1,7 @@
 /* jshint esnext: true */
 
 // needed for Karma testing, ES6 tests only works with this
-// 'use strict';
+//'use strict';
 
 class MovieElement {
   constructor (title, overview, rating, publishDate, backdropPath, posterPath) {

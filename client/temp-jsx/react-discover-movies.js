@@ -1,9 +1,9 @@
 /* jshint esnext: true */
 
 // for jsdom testing, it has to be uncommented during tests
-let React = require('react/addons');
+/*let React = require('react/addons');
 let http = require('../js/http.js');
-let movies = require('../js/movieModel.js');
+let movies = require('../js/movieModel.js');*/
 
 let ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
