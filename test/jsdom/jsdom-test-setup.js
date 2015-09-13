@@ -2,10 +2,24 @@
 
 'use strict';
 
-/*let jsdom = require('jsdom');
+let jsdom = require('jsdom');
 
-// setup the simplest document possible
-let doc = jsdom.jsdom('<!doctype html><html><body></body></html>');
+let doc = jsdom.jsdom(
+    '<!doctype html><html><body>' +
+      '<div id="loginContainer" class="col-lg-12 col-md-12 col-xs-12 vertical-center></div>' +
+      '<div id="navBar"></div>'+
+      '<div id="mobileNavBar"></div><div id="mobileNavBarLinks"></div>' +
+      '<div class="container">' +
+        '<div id="innerContainer" class="col-lg-12 col-md-12 col-xs-12 moviesContainer">' +
+          '<div id="moviesContainer">' +
+            '<div id="discoveryChooserContainer">' +
+              '<div id="discoveryChooserLabel"><h3 id="discoverLabel" /></div>' +
+            '<div id="discoveryChooserButtons"></div>' +
+          '</div>' +
+          '<div id="innerDiscoverContainer"></div>' +
+        '</div>' +
+    '</body></html>'
+  );
 
 // get the window object out of the document
 let win = doc.defaultView;
@@ -28,8 +42,6 @@ function propagateToGlobal (window) {
     if (key in global) {
       continue;
     }
-
     global[key] = window[key];
   }
 }
-*/

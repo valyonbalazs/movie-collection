@@ -53,7 +53,6 @@ var http = {
   successDiscover: function successDiscover(data) {
     var movieData = undefined;
     movieData = JSON.parse(data);
-    console.log(movieData);
 
     for (var key in movieData.results) {
       var title = movies.modifyTitle(movieData.results[key].title);
@@ -69,6 +68,19 @@ var http = {
     }
   }
 };
+
+// module.exports for testing
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+  module.exports = http;
+} else {
+  if (typeof define === 'function' && define.amd) {
+    define([], function () {
+      return http;
+    });
+  } else {
+    window.http = http;
+  }
+}
 /* jshint esnext: true */
 
 // Making the User a Singleton object
@@ -152,6 +164,9 @@ var ownMovieTitleList = [];
 
 var discoverMovies = [];
 /* jshint esnext: true */
+
+// needed for Karma testing, ES6 tests only works with this
+// 'use strict';
 
 'use strict';
 
@@ -258,17 +273,18 @@ var movies = {
   }
 };
 
-/*if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+// module.exports for testing
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
   module.exports = movies;
 } else {
   if (typeof define === 'function' && define.amd) {
-    define([], function() {
+    define([], function () {
       return movies;
     });
   } else {
     window.movies = movies;
   }
-}*/
+}
 /* jshint esnext: true */
 
 'use strict';
@@ -339,7 +355,14 @@ var renderPage = {
 /* jshint esnext: true */
 /* jshint esnext: true */
 
-"use strict";
+// for jsdom testing, it has to be uncommented during tests
+'use strict';
+
+var React = require('react/addons');
+var http = require('../js/http.js');
+var movies = require('../js/movieModel.js');
+
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var DiscoveryChooser = React.createClass({ displayName: "DiscoveryChooser",
   render: function render() {
@@ -356,11 +379,13 @@ var DiscoverMoviesContainer = React.createClass({ displayName: "DiscoverMoviesCo
   },
   removeContainer: function removeContainer() {
     var innerContainerChildren = document.getElementById('innerDiscoverContainer').children;
-    var spanChildrenCount = innerContainerChildren[0].childNodes.length;
-    var spanElement = innerContainerChildren[0];
-    if (spanChildrenCount > 0) {
-      while (spanElement.firstChild) {
-        spanElement.removeChild(spanElement.firstChild);
+    if (innerContainerChildren[0] === undefined) {} else {
+      var spanChildrenCount = innerContainerChildren[0].childNodes.length;
+      var spanElement = innerContainerChildren[0];
+      if (spanChildrenCount > 0) {
+        while (spanElement.firstChild) {
+          spanElement.removeChild(spanElement.firstChild);
+        }
       }
     }
   },
@@ -391,6 +416,7 @@ function renderDiscoverMovies() {
   React.render(React.createElement(DiscoverMoviesContainer, null), document.getElementById('innerContainer'));
 };
 
+// module.exports for testing
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
   module.exports = DiscoverMoviesContainer;
 } else {

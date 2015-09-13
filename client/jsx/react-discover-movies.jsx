@@ -1,5 +1,12 @@
 /* jshint esnext: true */
 
+// for jsdom testing, it has to be uncommented during tests
+let React = require('react/addons');
+let http = require('../js/http.js');
+let movies = require('../js/movieModel.js');
+
+let ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
 let DiscoveryChooser = React.createClass({
   render: function () {
     return (
@@ -19,11 +26,15 @@ let DiscoverMoviesContainer = React.createClass({
   },
   removeContainer: function () {
     let innerContainerChildren = document.getElementById('innerDiscoverContainer').children;
-    let spanChildrenCount = innerContainerChildren[0].childNodes.length;
-    let spanElement = innerContainerChildren[0];
-    if(spanChildrenCount > 0) {
-      while (spanElement.firstChild) {
-        spanElement.removeChild(spanElement.firstChild);
+    if (innerContainerChildren[0] === undefined) {
+
+    } else {
+      let spanChildrenCount = innerContainerChildren[0].childNodes.length;
+      let spanElement = innerContainerChildren[0];
+      if(spanChildrenCount > 0) {
+        while (spanElement.firstChild) {
+          spanElement.removeChild(spanElement.firstChild);
+        }
       }
     }
   },
@@ -81,6 +92,8 @@ function renderDiscoverMovies() {
   React.render(<DiscoverMoviesContainer />, document.getElementById('innerContainer'));
 };
 
+
+// module.exports for testing
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
   module.exports = DiscoverMoviesContainer;
 } else {

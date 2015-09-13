@@ -1,7 +1,7 @@
 /* jshint esnext: true */
 
 // needed for Karma testing, ES6 tests only works with this
-'use strict';
+// 'use strict';
 
 class MovieElement {
   constructor (title, overview, rating, publishDate, backdropPath, posterPath) {
@@ -107,6 +107,7 @@ let movies = {
   }
 };
 
+// module.exports for testing
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
   module.exports = movies;
 } else {

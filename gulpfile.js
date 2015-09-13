@@ -397,7 +397,7 @@ gulp.task('test:karma', function () {
 gulp.task('test', function (cb) {
   runSequence(
     'build',
-    'test:mocha',
+    'test:jsdom',
     cb
   );
 });

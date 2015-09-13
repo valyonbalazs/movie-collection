@@ -58,7 +58,6 @@ let http = {
   successDiscover: function (data) {
     let movieData;
     movieData = JSON.parse(data);
-    console.log(movieData);
 
     for (let key in movieData.results) {
       let title = movies.modifyTitle(movieData.results[key].title);
@@ -81,3 +80,16 @@ let http = {
     }
   }
 };
+
+// module.exports for testing
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+  module.exports = http;
+} else {
+  if (typeof define === 'function' && define.amd) {
+    define([], function() {
+      return http;
+    });
+  } else {
+    window.http = http;
+  }
+}
