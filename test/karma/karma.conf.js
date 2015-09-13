@@ -5,15 +5,8 @@ module.exports = function(config) {
 
     basePath: '',
     frameworks: ['mocha', 'chai'],
-    client: {
-      contextFile: '../../client/html/index.html'
-    },
-    files: [
-      '../../client/js/movieModel.js'
-    ],
-    exclude: [
-
-    ],
+    files: [],
+    exclude: [],
     preprocessors: {
       '**/*.jsx': ['react'],
       '**/*.html': ['html2js']

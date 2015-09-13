@@ -71,7 +71,8 @@ directory.dest.img_low_res = directory.dest.images + 'img_low_res/';
 directory.test = {};
 directory.test.root = './test/';
 directory.test.jsdom = directory.test.root + 'jsdom/';
-directory.test.browser = directory.test.root + 'karma/';
+directory.test.karma = directory.test.root + 'karma/';
+directory.test.mocha = directory.test.root + 'mocha/';
 
 // ------------------------------------------------------------------------------
 // Defining file EXTensions
@@ -113,8 +114,8 @@ files.img_low_res = directory.client.img_low_res + extension.jpg;
 // Defining test files
 files.test = {};
 files.test.jsdom = directory.test.jsdom + extension.js;
-files.test.browser = directory.test.browser + extension.js;
-files.test.firebase = directory.dest.jslib + '/firebase.js';
+files.test.karma = directory.test.karma + extension.js;
+files.test.mocha = directory.test.mocha + extension.js;
 
 // ------------------------------------------------------------------------------
 // Defining Gulp-tasks, which are the steps of the building-process
@@ -361,7 +362,7 @@ gulp.task('watch', ['build', 'connect'], function () {
 
 gulp.task('test:mocha', function () {
   return gulp.src([
-    files.test.browser
+    files.test.mocha
   ])
     .pipe(mocha({
       compilers: {js: 'babel'},
@@ -383,21 +384,12 @@ gulp.task('test:jsdom', function () {
 
 gulp.task('test:karma', function () {
   return gulp.src([
-    directory.dest.jslib + '/jquery.min.js',
-    directory.dest.jslib + '/bootstrap.min.js',
-    files.test.firebase,
-    directory.dest.jslib + '/react-with-addons.js',
-    directory.dest.jslib + '/reactrouter.min.js',
-    directory.dest.css + extension.css,
-    directory.dest.csslib + extension.css,
-    directory.dest.js + extension.js,
-    directory.dest.html + extension.html,
-    files.test.jsdom,
-    directory.test.browser + '**/*.jsx'
+    directory.test.karma + 'test-movideModel-without-require.js',
+    './client/js/movieModel.js'
   ])
     .pipe(karma({
-      configFile: './test/karma/my.conf.js',
-      action: 'watch',
+      configFile: './test/karma/karma.conf.js',
+      action: 'run',
       showStack: true
     }));
 });
