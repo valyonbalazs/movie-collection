@@ -183,6 +183,8 @@ var MovieElement = function MovieElement(title, overview, rating, publishDate, b
   this.poster = posterPath;
 };
 
+var tmdbApiKey = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
+
 var movies = {
   getMaxVotedElement: function getMaxVotedElement(moviesResult) {
     var result = moviesResult.results;
@@ -209,7 +211,7 @@ var movies = {
   },
   createMovieUrl: function createMovieUrl(movieTitle) {
     if (typeof movieTitle === 'string') {
-      var api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
+      var api_key = tmdbApiKey;
       var urlFirstPart = 'https://api.themoviedb.org/3/search/movie?query=';
       var url = urlFirstPart + movieTitle + api_key;
       return url;
@@ -255,7 +257,7 @@ var movies = {
     var month = date.getMonth();
     var day = '01';
     var insertableDate = year + '-' + month + '-' + day;
-    var api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
+    var api_key = tmdbApiKey;
     var urlFirstPart = 'https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&release_date.gte=' + insertableDate + '&sort_by=popularity.desc&';
     var url = urlFirstPart + api_key;
     return url;
@@ -266,7 +268,7 @@ var movies = {
     var month = date.getMonth() - 2;
     var day = '01';
     var insertableDate = year + '-' + month + '-' + day;
-    var api_key = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
+    var api_key = tmdbApiKey;
     var urlFirstPart = 'https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&release_date.gte=' + insertableDate + '&sort_by=vote_count.desc&';
     var url = urlFirstPart + api_key;
     return url;
