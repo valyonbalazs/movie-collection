@@ -8,7 +8,7 @@ let movies = require('../js/movieModel.js');*/
 let ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 let DiscoveryChooser = React.createClass({displayName: "DiscoveryChooser",
-  render: function () {
+  render: () => {
     return (
       React.createElement("div", {id: "discoveryChooserContainer", className: "col-lg-12 col-md-12 col-xs-12"}, 
         React.createElement("h5", null, "A B C")
@@ -18,13 +18,13 @@ let DiscoveryChooser = React.createClass({displayName: "DiscoveryChooser",
 });
 
 let DiscoverMoviesContainer = React.createClass({displayName: "DiscoverMoviesContainer",
-  getInitialState: function() {
+  getInitialState: () => {
     return {data: []};
   },
-  componentDidMount: function() {
+  componentDidMount: function () {
     this.handleClick1();
   },
-  removeContainer: function () {
+  removeContainer: () => {
     let innerContainerChildren = document.getElementById('innerDiscoverContainer').children;
     if (innerContainerChildren[0] === undefined) {
 
@@ -98,7 +98,7 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
   module.exports = DiscoverMoviesContainer;
 } else {
   if (typeof define === 'function' && define.amd) {
-    define([], function() {
+    define([], () => {
       return DiscoverMoviesContainer;
     });
   } else {

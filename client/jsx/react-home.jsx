@@ -1,7 +1,7 @@
 /* jshint esnext: true */
 
 let Home = React.createClass({
-  render: function () {
+  render: () => {
     return (
       <div id="loginInnerDiv">
         <h3>Home</h3>

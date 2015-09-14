@@ -1,7 +1,7 @@
 /* jshint esnext: true */
 
 let AddMovie = React.createClass({
-  handleClick: function () {
+  handleClick: () => {
     let movieTitle = document.getElementById('addMovieTitleInputField').value;
     let uid = localStorage.getItem('uid');
     let biggestKey = 1;
@@ -29,7 +29,7 @@ let AddMovie = React.createClass({
 
 let indexTitleMap = new Map();
 let ListMoviesFromDb = React.createClass({
-  getInitialState: function () {
+  getInitialState: () => {
     return {data: []};
   },
   componentDidMount: function () {
@@ -129,7 +129,7 @@ let MovieElementFromDb = React.createClass({
 });
 
 let ManagePage = React.createClass({
-  render: function () {
+  render: () => {
     return (
       <div>
         <AddMovie />

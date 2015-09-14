@@ -1,6 +1,6 @@
 /* jshint esnext: true */
 let Login = React.createClass({displayName: "Login",
-  handleClick: function () {
+  handleClick: () => {
     login.loginBtnClick();
   },
   render: function () {
