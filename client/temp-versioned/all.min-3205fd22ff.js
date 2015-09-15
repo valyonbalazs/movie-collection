@@ -310,27 +310,28 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 
 'use strict';
 
-var MovieActions = Reflux.createActions(['oneMonthDiscoverBtnClicked', 'threeMonthDiscoverBtnClicked']);
+var DiscoverActions = Reflux.createActions(['oneMonthDiscoverBtnClicked', 'threeMonthDiscoverBtnClicked']);
 /* jshint esnext: true */
 
 'use strict';
 
-var movieActionStore = Reflux.createStore({
-  listenables: [MovieActions],
+var discoverActionStore = Reflux.createStore({
+  listenables: [DiscoverActions],
   init: function init() {},
   oneMonthDiscoverBtnClicked: function oneMonthDiscoverBtnClicked(that) {
     var context = that;
-    context.removeContainer();
-    var label = document.getElementById('discoverLabel');
-    label.innerHTML = 'Best movies of the last month';
-    http.ajax(movies.create1MonthDiscoverUrl()).get().then(http.successDiscover.bind(context));
+    this.btnClicked('Best movies of the last month', context, movies.create1MonthDiscoverUrl());
   },
   threeMonthDiscoverBtnClicked: function threeMonthDiscoverBtnClicked(that) {
     var context = that;
+    this.btnClicked('Best movies of the last 3 months', context, movies.create3MonthDiscoverUrl());
+  },
+  btnClicked: function btnClicked(labelText, that, monthFunction) {
+    var context = that;
     context.removeContainer();
     var label = document.getElementById('discoverLabel');
-    label.innerHTML = 'Best movies of the last 3 months';
-    http.ajax(movies.create3MonthDiscoverUrl()).get().then(http.successDiscover.bind(context));
+    label.innerHTML = labelText;
+    http.ajax(monthFunction).get().then(http.successDiscover.bind(context));
   }
 });
 /* jshint esnext: true */
@@ -421,11 +422,11 @@ var DiscoverMoviesContainer = React.createClass({ displayName: "DiscoverMoviesCo
   },
   handleClick1: function handleClick1() {
     var context = this;
-    MovieActions.oneMonthDiscoverBtnClicked(context);
+    discoverActionStore.oneMonthDiscoverBtnClicked(context);
   },
   handleClick3: function handleClick3() {
     var context = this;
-    MovieActions.threeMonthDiscoverBtnClicked(context);
+    discoverActionStore.threeMonthDiscoverBtnClicked(context);
   },
   render: function render() {
     var moviesArray = this.state.data.map(function (movie) {
