@@ -22,6 +22,7 @@ let DiscoverMoviesContainer = React.createClass({
     return {data: []};
   },
   componentDidMount: function () {
+
     this.handleClick1();
   },
   removeContainer: () => {
@@ -39,22 +40,12 @@ let DiscoverMoviesContainer = React.createClass({
     }
   },
   handleClick1: function () {
-    this.removeContainer();
-    var label = document.getElementById('discoverLabel');
-    label.innerHTML = 'Best movies of the last month';
     let context = this;
-    http.ajax(movies.create1MonthDiscoverUrl())
-      .get()
-      .then(http.successDiscover.bind(context));
+    MovieActions.oneMonthDiscoverBtnClicked(context);
   },
   handleClick3: function () {
-    this.removeContainer();
-    var label = document.getElementById('discoverLabel');
-    label.innerHTML = 'Best movies of the last 3 months';
     let context = this;
-    http.ajax(movies.create3MonthDiscoverUrl())
-      .get()
-      .then(http.successDiscover.bind(context));
+    MovieActions.threeMonthDiscoverBtnClicked(context);
   },
   render: function () {
       let moviesArray = this.state.data.map(function (movie) {

@@ -310,6 +310,33 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 
 'use strict';
 
+var MovieActions = Reflux.createActions(['oneMonthDiscoverBtnClicked', 'threeMonthDiscoverBtnClicked']);
+/* jshint esnext: true */
+
+'use strict';
+
+var movieActionStore = Reflux.createStore({
+  listenables: [MovieActions],
+  init: function init() {},
+  oneMonthDiscoverBtnClicked: function oneMonthDiscoverBtnClicked(that) {
+    var context = that;
+    context.removeContainer();
+    var label = document.getElementById('discoverLabel');
+    label.innerHTML = 'Best movies of the last month';
+    http.ajax(movies.create1MonthDiscoverUrl()).get().then(http.successDiscover.bind(context));
+  },
+  threeMonthDiscoverBtnClicked: function threeMonthDiscoverBtnClicked(that) {
+    var context = that;
+    context.removeContainer();
+    var label = document.getElementById('discoverLabel');
+    label.innerHTML = 'Best movies of the last 3 months';
+    http.ajax(movies.create3MonthDiscoverUrl()).get().then(http.successDiscover.bind(context));
+  }
+});
+/* jshint esnext: true */
+
+'use strict';
+
 var renderPage = {
   renderMoviePage: function renderMoviePage() {
     renderAllNavbar();
@@ -377,6 +404,7 @@ var DiscoverMoviesContainer = React.createClass({ displayName: "DiscoverMoviesCo
     return { data: [] };
   },
   componentDidMount: function componentDidMount() {
+
     this.handleClick1();
   },
   removeContainer: function removeContainer() {
@@ -392,18 +420,12 @@ var DiscoverMoviesContainer = React.createClass({ displayName: "DiscoverMoviesCo
     }
   },
   handleClick1: function handleClick1() {
-    this.removeContainer();
-    var label = document.getElementById('discoverLabel');
-    label.innerHTML = 'Best movies of the last month';
     var context = this;
-    http.ajax(movies.create1MonthDiscoverUrl()).get().then(http.successDiscover.bind(context));
+    MovieActions.oneMonthDiscoverBtnClicked(context);
   },
   handleClick3: function handleClick3() {
-    this.removeContainer();
-    var label = document.getElementById('discoverLabel');
-    label.innerHTML = 'Best movies of the last 3 months';
     var context = this;
-    http.ajax(movies.create3MonthDiscoverUrl()).get().then(http.successDiscover.bind(context));
+    MovieActions.threeMonthDiscoverBtnClicked(context);
   },
   render: function render() {
     var moviesArray = this.state.data.map(function (movie) {
