@@ -10,5 +10,6 @@ let DiscoverActions = Reflux.createActions([
 let MyMoviesActions = Reflux.createActions([
   'loadMovies',
   'addMovieToMyList',
-  'removeMovieFromMyList'
+  'removeMovieFromDb',
+  'addMovieToDb'
 ]);

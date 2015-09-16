@@ -45,6 +45,7 @@ let discoverActionStore = Reflux.createStore({
 let myMoviesActionStore = Reflux.createStore({
   movieListData: [],
   ownMovieTitleList: [],
+  keyTitleMap: new Map(),
   listenables: [MyMoviesActions],
   init: () => {
   },
@@ -85,11 +86,47 @@ let myMoviesActionStore = Reflux.createStore({
       }
     });
   },
+  addMovieToDb: function (item) {
+    let movieTitle = document.getElementById('addMovieTitleInputField').value;
+    let uid = localStorage.getItem('uid');
+    let biggestKey = 1;
+    for(let i of indexTitleMap) {
+      if(parseInt(i[0]) > biggestKey) {
+        biggestKey = i[0];
+      }
+    }
+    let convertToNumber = parseInt(biggestKey);
+    let newBiggestKey = convertToNumber + 1;
+
+    ref.child('movielist').child(uid).child('movies').child(newBiggestKey).set({
+      title: movieTitle
+    });
+  },
   addMovieToMyList: function (item, context) {
     this.movieListData.push(item);
     context.setState({data: this.movieListData});
   },
-  removeMovieFromMyList: function () {
+  removeMovieFromDb: function (that) {
+    let context = that;
+    let uid = localStorage.getItem('uid');
+    let title = context.props.title;
+    ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
+      let data = snapshot.val();
+      for (let i in data) {
+        let values = data;
+        myMoviesActionStore.keyTitleMap.set(i, values[i].title);
+      }
 
+      for(let j of myMoviesActionStore.keyTitleMap) {
+        if(title === j[1]) {
+          console.log("title: " + title + " j: " + j[1]);
+          ref.child('movielist').child(uid).child('movies').child(j[0]).remove();
+          let indexOfElement = ownMovieTitleList.indexOf(j[1]);
+          if(indexOfElement > -1) {
+            ownMovieTitleList.splice(indexOfElement, 1);
+          }
+        }
+      }
+    });
   }
 });

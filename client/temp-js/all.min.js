@@ -309,7 +309,7 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 
 var DiscoverActions = Reflux.createActions(['addMovieToStore', 'oneMonthDiscoverBtnClicked', 'threeMonthDiscoverBtnClicked', 'removeContainer']);
 
-var MyMoviesActions = Reflux.createActions(['loadMovies', 'addMovieToMyList', 'removeMovieFromMyList']);
+var MyMoviesActions = Reflux.createActions(['loadMovies', 'addMovieToMyList', 'removeMovieFromDb', 'addMovieToDb']);
 /* jshint esnext: true */
 
 'use strict';
@@ -354,6 +354,7 @@ var discoverActionStore = Reflux.createStore({
 var myMoviesActionStore = Reflux.createStore({
   movieListData: [],
   ownMovieTitleList: [],
+  keyTitleMap: new Map(),
   listenables: [MyMoviesActions],
   init: function init() {},
   loadMovies: function loadMovies(that) {
@@ -389,11 +390,92 @@ var myMoviesActionStore = Reflux.createStore({
       }
     });
   },
+  addMovieToDb: function addMovieToDb(item) {
+    var movieTitle = document.getElementById('addMovieTitleInputField').value;
+    var uid = localStorage.getItem('uid');
+    var biggestKey = 1;
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = indexTitleMap[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var i = _step.value;
+
+        if (parseInt(i[0]) > biggestKey) {
+          biggestKey = i[0];
+        }
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator['return']) {
+          _iterator['return']();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+
+    var convertToNumber = parseInt(biggestKey);
+    var newBiggestKey = convertToNumber + 1;
+
+    ref.child('movielist').child(uid).child('movies').child(newBiggestKey).set({
+      title: movieTitle
+    });
+  },
   addMovieToMyList: function addMovieToMyList(item, context) {
     this.movieListData.push(item);
     context.setState({ data: this.movieListData });
   },
-  removeMovieFromMyList: function removeMovieFromMyList() {}
+  removeMovieFromDb: function removeMovieFromDb(that) {
+    var context = that;
+    var uid = localStorage.getItem('uid');
+    var title = context.props.title;
+    ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
+      var data = snapshot.val();
+      for (var i in data) {
+        var values = data;
+        myMoviesActionStore.keyTitleMap.set(i, values[i].title);
+      }
+
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = myMoviesActionStore.keyTitleMap[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var j = _step2.value;
+
+          if (title === j[1]) {
+            console.log("title: " + title + " j: " + j[1]);
+            ref.child('movielist').child(uid).child('movies').child(j[0]).remove();
+            var indexOfElement = ownMovieTitleList.indexOf(j[1]);
+            if (indexOfElement > -1) {
+              ownMovieTitleList.splice(indexOfElement, 1);
+            }
+          }
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2['return']) {
+            _iterator2['return']();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
+    });
+  }
 });
 /* jshint esnext: true */
 
@@ -527,46 +609,11 @@ function renderLoginPage() {
 }
 /* jshint esnext: true */
 
-'use strict';
+"use strict";
 
 var AddMovie = React.createClass({ displayName: "AddMovie",
   handleClick: function handleClick() {
-    var movieTitle = document.getElementById('addMovieTitleInputField').value;
-    var uid = localStorage.getItem('uid');
-    var biggestKey = 1;
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
-
-    try {
-      for (var _iterator = indexTitleMap[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        var i = _step.value;
-
-        if (parseInt(i[0]) > biggestKey) {
-          biggestKey = i[0];
-        }
-      }
-    } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion && _iterator['return']) {
-          _iterator['return']();
-        }
-      } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
-        }
-      }
-    }
-
-    var convertToNumber = parseInt(biggestKey);
-    var newBiggestKey = convertToNumber + 1;
-
-    ref.child('movielist').child(uid).child('movies').child(newBiggestKey).set({
-      title: movieTitle
-    });
+    MyMoviesActions.addMovieToDb();
   },
   render: function render() {
     return React.createElement("div", { id: "addMovieContainer", className: "col-lg-11 col-md-11 col-xs-12" }, React.createElement("input", { id: "addMovieTitleInputField", type: "text", className: "form-control col-lg-2 col-md-4 col-lg-offset-1 col-md-offset-1 col-xs-8", placeholder: "Title" }), React.createElement("button", { id: "addMovieTitleButton", className: "btn btn-warning col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 col-xs-4", onClick: this.handleClick }, React.createElement("i", { className: "fa fa-plus-square" }), " Add"));
@@ -624,47 +671,8 @@ var keyTitleMap = new Map();
 var idCounter = 1;
 var MovieElementFromDb = React.createClass({ displayName: "MovieElementFromDb",
   handleClick: function handleClick() {
-    var uid = localStorage.getItem('uid');
-    var title = this.props.title;
-    ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
-      var data = snapshot.val();
-      for (var i in data) {
-        var values = data;
-        keyTitleMap.set(i, values[i].title);
-      }
-
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
-
-      try {
-        for (var _iterator2 = keyTitleMap[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-          var j = _step2.value;
-
-          if (title === j[1]) {
-            console.log("title: " + title + " j: " + j[1]);
-            ref.child('movielist').child(uid).child('movies').child(j[0]).remove();
-            var indexOfElement = ownMovieTitleList.indexOf(j[1]);
-            if (indexOfElement > -1) {
-              ownMovieTitleList.splice(indexOfElement, 1);
-            }
-          }
-        }
-      } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion2 && _iterator2['return']) {
-            _iterator2['return']();
-          }
-        } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
-          }
-        }
-      }
-    });
+    var context = this;
+    MyMoviesActions.removeMovieFromDb(context);
   },
   render: function render() {
     var btnId = 'removeBtn' + idCounter;
