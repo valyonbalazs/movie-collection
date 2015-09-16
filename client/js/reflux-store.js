@@ -43,11 +43,45 @@ let discoverActionStore = Reflux.createStore({
 });
 
 let myMoviesActionStore = Reflux.createStore({
+  indexTitleMap: new Map(),
   movieListData: [],
   ownMovieTitleList: [],
   keyTitleMap: new Map(),
   listenables: [MyMoviesActions],
   init: () => {
+  },
+  loadMovieTitles: function (that) {
+    let context = that;
+    let promise = function () {
+      return new Promise(function (resolve, reject) {
+        let uid = localStorage.getItem('uid');
+        ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
+          myMoviesActionStore.ownMovieTitleList = [];
+          let data = snapshot.val();
+          if(data === null) {
+
+          } else {
+
+            //Has to get the keys from the database for the adding-function
+            //to create a non-existing key for the new element
+            for (let i in data) {
+              let values = data;
+              myMoviesActionStore.indexTitleMap.set(i, values[i].title);
+            }
+
+            for(let j in data) {
+              myMoviesActionStore.ownMovieTitleList.push(data[j].title);
+            }
+            this.setState({data: myMoviesActionStore.ownMovieTitleList});
+            resolve(function () { });
+          }
+        }.bind(context));
+      });
+    };
+
+    promise().then(function () {
+      this.setState({data: myMoviesActionStore.ownMovieTitleList});
+    }.bind(context));
   },
   loadMovies: function (that) {
     let context = that;

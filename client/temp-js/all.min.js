@@ -309,7 +309,7 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 
 var DiscoverActions = Reflux.createActions(['addMovieToStore', 'oneMonthDiscoverBtnClicked', 'threeMonthDiscoverBtnClicked', 'removeContainer']);
 
-var MyMoviesActions = Reflux.createActions(['loadMovies', 'addMovieToMyList', 'removeMovieFromDb', 'addMovieToDb']);
+var MyMoviesActions = Reflux.createActions(['loadMovieTitles', 'loadMovies', 'addMovieToMyList', 'removeMovieFromDb', 'addMovieToDb']);
 /* jshint esnext: true */
 
 'use strict';
@@ -352,11 +352,43 @@ var discoverActionStore = Reflux.createStore({
 });
 
 var myMoviesActionStore = Reflux.createStore({
+  indexTitleMap: new Map(),
   movieListData: [],
   ownMovieTitleList: [],
   keyTitleMap: new Map(),
   listenables: [MyMoviesActions],
   init: function init() {},
+  loadMovieTitles: function loadMovieTitles(that) {
+    var context = that;
+    var promise = function promise() {
+      return new Promise(function (resolve, reject) {
+        var uid = localStorage.getItem('uid');
+        ref.child('movielist').child(uid).child('movies').on('value', (function (snapshot) {
+          myMoviesActionStore.ownMovieTitleList = [];
+          var data = snapshot.val();
+          if (data === null) {} else {
+
+            //Has to get the keys from the database for the adding-function
+            //to create a non-existing key for the new element
+            for (var i in data) {
+              var values = data;
+              myMoviesActionStore.indexTitleMap.set(i, values[i].title);
+            }
+
+            for (var j in data) {
+              myMoviesActionStore.ownMovieTitleList.push(data[j].title);
+            }
+            this.setState({ data: myMoviesActionStore.ownMovieTitleList });
+            resolve(function () {});
+          }
+        }).bind(context));
+      });
+    };
+
+    promise().then((function () {
+      this.setState({ data: myMoviesActionStore.ownMovieTitleList });
+    }).bind(context));
+  },
   loadMovies: function loadMovies(that) {
     var context = that;
     var wasItUsed = false;
@@ -620,7 +652,6 @@ var AddMovie = React.createClass({ displayName: "AddMovie",
   }
 });
 
-var indexTitleMap = new Map();
 var ListMoviesFromDb = React.createClass({ displayName: "ListMoviesFromDb",
   getInitialState: function getInitialState() {
     return { data: [] };
@@ -630,34 +661,7 @@ var ListMoviesFromDb = React.createClass({ displayName: "ListMoviesFromDb",
   },
   loadMovieTitles: function loadMovieTitles() {
     var context = this;
-    var promise = function promise() {
-      return new Promise(function (resolve, reject) {
-        var uid = localStorage.getItem('uid');
-        ref.child('movielist').child(uid).child('movies').on('value', (function (snapshot) {
-          ownMovieTitleList = [];
-          var data = snapshot.val();
-          if (data === null) {} else {
-
-            //Has to get the keys from the database for the adding-function
-            //to create a non-existing key for the new element
-            for (var i in data) {
-              var values = data;
-              indexTitleMap.set(i, values[i].title);
-            }
-
-            for (var j in data) {
-              ownMovieTitleList.push(data[j].title);
-            }
-            this.setState({ data: ownMovieTitleList });
-            resolve(function () {});
-          }
-        }).bind(context));
-      });
-    };
-
-    promise().then((function () {
-      this.setState({ data: ownMovieTitleList });
-    }).bind(context));
+    MyMoviesActions.loadMovieTitles(context);
   },
   render: function render() {
     var movieTitleArray = this.state.data.map(function (title) {
@@ -667,7 +671,6 @@ var ListMoviesFromDb = React.createClass({ displayName: "ListMoviesFromDb",
   }
 });
 
-var keyTitleMap = new Map();
 var idCounter = 1;
 var MovieElementFromDb = React.createClass({ displayName: "MovieElementFromDb",
   handleClick: function handleClick() {

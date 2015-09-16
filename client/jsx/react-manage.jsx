@@ -14,7 +14,6 @@ let AddMovie = React.createClass({
   }
 });
 
-let indexTitleMap = new Map();
 let ListMoviesFromDb = React.createClass({
   getInitialState: () => {
     return {data: []};
@@ -24,36 +23,7 @@ let ListMoviesFromDb = React.createClass({
   },
   loadMovieTitles: function () {
     let context = this;
-    let promise = function () {
-      return new Promise(function (resolve, reject) {
-        let uid = localStorage.getItem('uid');
-        ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
-          ownMovieTitleList = [];
-          let data = snapshot.val();
-          if(data === null) {
-
-          } else {
-
-            //Has to get the keys from the database for the adding-function
-            //to create a non-existing key for the new element
-            for (let i in data) {
-              let values = data;
-              indexTitleMap.set(i, values[i].title);
-            }
-
-            for(let j in data) {
-              ownMovieTitleList.push(data[j].title);
-            }
-            this.setState({data: ownMovieTitleList});
-            resolve(function () { });
-          }
-        }.bind(context));
-      });
-    };
-
-    promise().then(function () {
-      this.setState({data: ownMovieTitleList});
-    }.bind(context));
+    MyMoviesActions.loadMovieTitles(context);
   },
   render: function () {
     let movieTitleArray = this.state.data.map(function (title) {
@@ -78,7 +48,6 @@ let ListMoviesFromDb = React.createClass({
   }
 });
 
-let keyTitleMap = new Map();
 let idCounter = 1;
 let MovieElementFromDb = React.createClass({
   handleClick: function () {
