@@ -40,11 +40,11 @@ let DiscoverMoviesContainer = React.createClass({
   },
   handleClick1: function () {
     let context = this;
-    discoverActionStore.oneMonthDiscoverBtnClicked(context);
+    DiscoverActions.oneMonthDiscoverBtnClicked(context);
   },
   handleClick3: function () {
     let context = this;
-    discoverActionStore.threeMonthDiscoverBtnClicked(context);
+    DiscoverActions.threeMonthDiscoverBtnClicked(context);
   },
   render: function () {
       let moviesArray = this.state.data.map(function (movie) {

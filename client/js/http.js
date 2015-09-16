@@ -74,9 +74,8 @@ let http = {
         backdropPath,
         posterPath
       );
-
-      discoverMovies.push(movie);
-      this.setState({data: discoverMovies});
+      let context = this;
+      DiscoverActions.addMovieToStore(movie, context);
     }
   }
 };

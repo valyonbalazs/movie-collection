@@ -62,9 +62,8 @@ var http = {
       var releaseDate = movies.modifyReleaseDate(movieData.results[key].release_date);
       var average = movieData.results[key].vote_average + ' ';
       var movie = new MovieElement(title, overview, average, releaseDate, backdropPath, posterPath);
-
-      discoverMovies.push(movie);
-      this.setState({ data: discoverMovies });
+      var context = this;
+      DiscoverActions.addMovieToStore(movie, context);
     }
   }
 };
@@ -310,14 +309,19 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 
 'use strict';
 
-var DiscoverActions = Reflux.createActions(['oneMonthDiscoverBtnClicked', 'threeMonthDiscoverBtnClicked']);
+var DiscoverActions = Reflux.createActions(['addMovieToStore', 'oneMonthDiscoverBtnClicked', 'threeMonthDiscoverBtnClicked']);
 /* jshint esnext: true */
 
 'use strict';
 
 var discoverActionStore = Reflux.createStore({
+  discoverMovies: [],
   listenables: [DiscoverActions],
   init: function init() {},
+  addMovieToStore: function addMovieToStore(item, context) {
+    this.discoverMovies.push(item);
+    context.setState({ data: this.discoverMovies });
+  },
   oneMonthDiscoverBtnClicked: function oneMonthDiscoverBtnClicked(that) {
     var context = that;
     this.btnClicked('Best movies of the last month', context, movies.create1MonthDiscoverUrl());
@@ -421,11 +425,11 @@ var DiscoverMoviesContainer = React.createClass({ displayName: "DiscoverMoviesCo
   },
   handleClick1: function handleClick1() {
     var context = this;
-    discoverActionStore.oneMonthDiscoverBtnClicked(context);
+    DiscoverActions.oneMonthDiscoverBtnClicked(context);
   },
   handleClick3: function handleClick3() {
     var context = this;
-    discoverActionStore.threeMonthDiscoverBtnClicked(context);
+    DiscoverActions.threeMonthDiscoverBtnClicked(context);
   },
   render: function render() {
     var moviesArray = this.state.data.map(function (movie) {

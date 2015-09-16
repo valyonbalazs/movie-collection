@@ -1,8 +1,13 @@
 /* jshint esnext: true */
 
 let discoverActionStore = Reflux.createStore({
+  discoverMovies: [],
   listenables: [DiscoverActions],
   init: function () {
+  },
+  addMovieToStore: function (item, context) {
+    this.discoverMovies.push(item);
+    context.setState({data: this.discoverMovies});
   },
   oneMonthDiscoverBtnClicked: function (that) {
     let context = that;
