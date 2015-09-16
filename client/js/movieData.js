@@ -4,4 +4,4 @@ let movieListData = [];
 
 let ownMovieTitleList = [];
 
-let discoverMovies = [];
+//let discoverMovies = [];

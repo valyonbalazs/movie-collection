@@ -24,20 +24,6 @@ let DiscoverMoviesContainer = React.createClass({
   componentDidMount: function () {
     this.handleClick1();
   },
-  removeContainer: () => {
-    let innerContainerChildren = document.getElementById('innerDiscoverContainer').children;
-    if (innerContainerChildren[0] === undefined) {
-
-    } else {
-      let spanChildrenCount = innerContainerChildren[0].childNodes.length;
-      let spanElement = innerContainerChildren[0];
-      if(spanChildrenCount > 0) {
-        while (spanElement.firstChild) {
-          spanElement.removeChild(spanElement.firstChild);
-        }
-      }
-    }
-  },
   handleClick1: function () {
     let context = this;
     DiscoverActions.oneMonthDiscoverBtnClicked(context);

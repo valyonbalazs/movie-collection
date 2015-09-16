@@ -50,10 +50,8 @@ let http = {
       backdropPath,
       posterPath
     );
-    movieListData.push(movie);
-
-    // React container update
-    this.setState({data: movieListData});
+    let context = this;
+    MyMoviesActions.addMovieToMyList(movie, context);
   },
   successDiscover: function (data) {
     let movieData;

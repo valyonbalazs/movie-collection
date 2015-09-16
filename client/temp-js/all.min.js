@@ -45,10 +45,8 @@ var http = {
     var releaseDate = movies.modifyReleaseDate(bestVoted.release_date);
     var average = bestVoted.vote_average + ' ';
     var movie = new MovieElement(title, overview, average, releaseDate, backdropPath, posterPath);
-    movieListData.push(movie);
-
-    // React container update
-    this.setState({ data: movieListData });
+    var context = this;
+    MyMoviesActions.addMovieToMyList(movie, context);
   },
   successDiscover: function successDiscover(data) {
     var movieData = undefined;
@@ -161,7 +159,7 @@ var movieListData = [];
 
 var ownMovieTitleList = [];
 
-var discoverMovies = [];
+//let discoverMovies = [];
 /* jshint esnext: true */
 
 // needed for Karma testing, ES6 tests only works with this
@@ -309,7 +307,9 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 
 'use strict';
 
-var DiscoverActions = Reflux.createActions(['addMovieToStore', 'oneMonthDiscoverBtnClicked', 'threeMonthDiscoverBtnClicked']);
+var DiscoverActions = Reflux.createActions(['addMovieToStore', 'oneMonthDiscoverBtnClicked', 'threeMonthDiscoverBtnClicked', 'removeContainer']);
+
+var MyMoviesActions = Reflux.createActions(['loadMovies', 'addMovieToMyList', 'removeMovieFromMyList']);
 /* jshint esnext: true */
 
 'use strict';
@@ -322,6 +322,18 @@ var discoverActionStore = Reflux.createStore({
     this.discoverMovies.push(item);
     context.setState({ data: this.discoverMovies });
   },
+  removeContainer: function removeContainer() {
+    var innerContainerChildren = document.getElementById('innerDiscoverContainer').children;
+    if (innerContainerChildren[0] === undefined) {} else {
+      var spanChildrenCount = innerContainerChildren[0].childNodes.length;
+      var spanElement = innerContainerChildren[0];
+      if (spanChildrenCount > 0) {
+        while (spanElement.firstChild) {
+          spanElement.removeChild(spanElement.firstChild);
+        }
+      }
+    }
+  },
   oneMonthDiscoverBtnClicked: function oneMonthDiscoverBtnClicked(that) {
     var context = that;
     this.btnClicked('Best movies of the last month', context, movies.create1MonthDiscoverUrl());
@@ -332,11 +344,56 @@ var discoverActionStore = Reflux.createStore({
   },
   btnClicked: function btnClicked(labelText, that, monthFunction) {
     var context = that;
-    context.removeContainer();
+    DiscoverActions.removeContainer();
     var label = document.getElementById('discoverLabel');
     label.innerHTML = labelText;
     http.ajax(monthFunction).get().then(http.successDiscover.bind(context));
   }
+});
+
+var myMoviesActionStore = Reflux.createStore({
+  movieListData: [],
+  ownMovieTitleList: [],
+  listenables: [MyMoviesActions],
+  init: function init() {},
+  loadMovies: function loadMovies(that) {
+    var context = that;
+    var wasItUsed = false;
+    var promise = function promise() {
+      return new Promise(function (resolve, reject) {
+        var uid = localStorage.getItem('uid');
+        ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
+          myMoviesActionStore.ownMovieTitleList = [];
+          myMoviesActionStore.movieListData = [];
+          var data = snapshot.val();
+          for (var i in data) {
+            myMoviesActionStore.ownMovieTitleList.push(data[i].title);
+          }
+          if (wasItUsed === true) {
+            myMoviesActionStore.movieListData = [];
+            for (var key in myMoviesActionStore.ownMovieTitleList) {
+              var title = myMoviesActionStore.ownMovieTitleList[key];
+              http.ajax(movies.createMovieUrl(title)).get().then(http.success.bind(context));
+            }
+          }
+          resolve(function () {});
+        });
+      });
+    };
+
+    promise().then(function () {
+      wasItUsed = true;
+      for (var key in myMoviesActionStore.ownMovieTitleList) {
+        var title = myMoviesActionStore.ownMovieTitleList[key];
+        http.ajax(movies.createMovieUrl(title)).get().then(http.success.bind(context));
+      }
+    });
+  },
+  addMovieToMyList: function addMovieToMyList(item, context) {
+    this.movieListData.push(item);
+    context.setState({ data: this.movieListData });
+  },
+  removeMovieFromMyList: function removeMovieFromMyList() {}
 });
 /* jshint esnext: true */
 
@@ -410,18 +467,6 @@ var DiscoverMoviesContainer = React.createClass({ displayName: "DiscoverMoviesCo
   },
   componentDidMount: function componentDidMount() {
     this.handleClick1();
-  },
-  removeContainer: function removeContainer() {
-    var innerContainerChildren = document.getElementById('innerDiscoverContainer').children;
-    if (innerContainerChildren[0] === undefined) {} else {
-      var spanChildrenCount = innerContainerChildren[0].childNodes.length;
-      var spanElement = innerContainerChildren[0];
-      if (spanChildrenCount > 0) {
-        while (spanElement.firstChild) {
-          spanElement.removeChild(spanElement.firstChild);
-        }
-      }
-    }
   },
   handleClick1: function handleClick1() {
     var context = this;
@@ -708,43 +753,12 @@ var MoviesContainer = React.createClass({ displayName: "MoviesContainer",
     return { data: [] };
   },
   componentDidMount: function componentDidMount() {
-    this.loadMovies();
+    var context = this;
+    this.loadMovies(context);
   },
   loadMovies: function loadMovies() {
     var context = this;
-    var wasItUsed = false;
-    var promise = function promise() {
-      return new Promise(function (resolve, reject) {
-        var uid = localStorage.getItem('uid');
-        ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
-          console.log("betolt");
-          ownMovieTitleList = [];
-          movieListData = [];
-          var data = snapshot.val();
-          for (var i in data) {
-            ownMovieTitleList.push(data[i].title);
-          }
-          console.log("betolt2");
-          if (wasItUsed === true) {
-            movieListData = [];
-            for (var key in ownMovieTitleList) {
-              var title = ownMovieTitleList[key];
-              http.ajax(movies.createMovieUrl(title)).get().then(http.success.bind(context));
-            }
-          }
-          resolve(function () {});
-        });
-      });
-    };
-
-    promise().then(function () {
-      wasItUsed = true;
-      console.log("promise then-ben");
-      for (var key in ownMovieTitleList) {
-        var title = ownMovieTitleList[key];
-        http.ajax(movies.createMovieUrl(title)).get().then(http.success.bind(context));
-      }
-    });
+    MyMoviesActions.loadMovies(context);
   },
   render: function render() {
     var moviesArray = this.state.data.map(function (movie) {

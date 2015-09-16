@@ -3,5 +3,12 @@
 let DiscoverActions = Reflux.createActions([
   'addMovieToStore',
   'oneMonthDiscoverBtnClicked',
-  'threeMonthDiscoverBtnClicked'
+  'threeMonthDiscoverBtnClicked',
+  'removeContainer'
+]);
+
+let MyMoviesActions = Reflux.createActions([
+  'loadMovies',
+  'addMovieToMyList',
+  'removeMovieFromMyList'
 ]);

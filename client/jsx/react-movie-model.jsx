@@ -114,47 +114,12 @@ let MoviesContainer = React.createClass({
     return {data: []};
   },
   componentDidMount: function() {
-     this.loadMovies();
+    let context = this;
+    this.loadMovies(context);
   },
   loadMovies: function() {
     let context = this;
-    let wasItUsed = false;
-    let promise = function () {
-      return new Promise(function (resolve, reject) {
-        let uid = localStorage.getItem('uid');
-        ref.child('movielist').child(uid).child('movies').on('value', function (snapshot) {
-          console.log("betolt");
-          ownMovieTitleList = [];
-          movieListData = [];
-          let data = snapshot.val();
-          for (let i in data) {
-            ownMovieTitleList.push(data[i].title);
-          }
-          console.log("betolt2");
-          if(wasItUsed === true) {
-            movieListData = [];
-            for (var key in ownMovieTitleList) {
-              let title = ownMovieTitleList[key];
-              http.ajax(movies.createMovieUrl(title))
-                .get()
-                .then(http.success.bind(context));
-            }
-          }
-          resolve(function () { });
-        });
-      });
-    };
-
-    promise().then(function () {
-      wasItUsed = true;
-      console.log("promise then-ben");
-      for (var key in ownMovieTitleList) {
-        let title = ownMovieTitleList[key];
-        http.ajax(movies.createMovieUrl(title))
-          .get()
-          .then(http.success.bind(context));
-      }
-    });
+    MyMoviesActions.loadMovies(context);
   },
   render: function () {
       let moviesArray = this.state.data.map(function (movie) {
