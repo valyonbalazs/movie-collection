@@ -405,7 +405,6 @@ var DiscoverMoviesContainer = React.createClass({ displayName: "DiscoverMoviesCo
     return { data: [] };
   },
   componentDidMount: function componentDidMount() {
-
     this.handleClick1();
   },
   removeContainer: function removeContainer() {

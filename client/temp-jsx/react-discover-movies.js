@@ -22,7 +22,6 @@ let DiscoverMoviesContainer = React.createClass({displayName: "DiscoverMoviesCon
     return {data: []};
   },
   componentDidMount: function () {
-
     this.handleClick1();
   },
   removeContainer: () => {
@@ -82,7 +81,6 @@ let DiscoverMoviesContainer = React.createClass({displayName: "DiscoverMoviesCon
 function renderDiscoverMovies() {
   React.render(React.createElement(DiscoverMoviesContainer, null), document.getElementById('innerContainer'));
 };
-
 
 // module.exports for testing
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
