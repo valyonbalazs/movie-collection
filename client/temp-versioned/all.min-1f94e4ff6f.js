@@ -317,22 +317,26 @@ var MyMoviesActions = Reflux.createActions(['loadMovieTitles', 'loadMovies', 'ad
 var discoverActionStore = Reflux.createStore({
   discoverMovies: [],
   listenables: [DiscoverActions],
-  init: function init() {},
+  init: function init() {
+    // do initializtion
+  },
   addMovieToStore: function addMovieToStore(item, context) {
     this.discoverMovies.push(item);
     context.setState({ data: this.discoverMovies });
   },
   removeContainer: function removeContainer() {
     var innerContainerChildren = document.getElementById('innerDiscoverContainer').children;
-    if (innerContainerChildren[0] === undefined) {} else {
-      var spanChildrenCount = innerContainerChildren[0].childNodes.length;
-      var spanElement = innerContainerChildren[0];
-      if (spanChildrenCount > 0) {
-        while (spanElement.firstChild) {
-          spanElement.removeChild(spanElement.firstChild);
+    if (innerContainerChildren[0] === undefined) {
+      // do nothing
+    } else {
+        var spanChildrenCount = innerContainerChildren[0].childNodes.length;
+        var spanElement = innerContainerChildren[0];
+        if (spanChildrenCount > 0) {
+          while (spanElement.firstChild) {
+            spanElement.removeChild(spanElement.firstChild);
+          }
         }
       }
-    }
   },
   oneMonthDiscoverBtnClicked: function oneMonthDiscoverBtnClicked(that) {
     var context = that;
@@ -357,7 +361,9 @@ var myMoviesActionStore = Reflux.createStore({
   ownMovieTitleList: [],
   keyTitleMap: new Map(),
   listenables: [MyMoviesActions],
-  init: function init() {},
+  init: function init() {
+    // do initializtion
+  },
   loadMovieTitles: function loadMovieTitles(that) {
     var context = that;
     var promise = function promise() {
@@ -366,21 +372,23 @@ var myMoviesActionStore = Reflux.createStore({
         ref.child('movielist').child(uid).child('movies').on('value', (function (snapshot) {
           myMoviesActionStore.ownMovieTitleList = [];
           var data = snapshot.val();
-          if (data === null) {} else {
+          if (data === null) {
+            //do nothing
+          } else {
 
-            //Has to get the keys from the database for the adding-function
-            //to create a non-existing key for the new element
-            for (var i in data) {
-              var values = data;
-              myMoviesActionStore.indexTitleMap.set(i, values[i].title);
-            }
+              //Has to get the keys from the database for the adding-function
+              //to create a non-existing key for the new element
+              for (var i in data) {
+                var values = data;
+                myMoviesActionStore.indexTitleMap.set(i, values[i].title);
+              }
 
-            for (var j in data) {
-              myMoviesActionStore.ownMovieTitleList.push(data[j].title);
+              for (var j in data) {
+                myMoviesActionStore.ownMovieTitleList.push(data[j].title);
+              }
+              this.setState({ data: myMoviesActionStore.ownMovieTitleList });
+              resolve(function () {});
             }
-            this.setState({ data: myMoviesActionStore.ownMovieTitleList });
-            resolve(function () {});
-          }
         }).bind(context));
       });
     };
@@ -484,7 +492,6 @@ var myMoviesActionStore = Reflux.createStore({
           var j = _step2.value;
 
           if (title === j[1]) {
-            console.log("title: " + title + " j: " + j[1]);
             ref.child('movielist').child(uid).child('movies').child(j[0]).remove();
             var indexOfElement = ownMovieTitleList.indexOf(j[1]);
             if (indexOfElement > -1) {
