@@ -165,3 +165,31 @@ let myMoviesActionStore = Reflux.createStore({
     });
   }
 });
+
+let movieDetailsActionStore = Reflux.createStore({
+  movieData: {},
+  listenables: [MovieDetailsActions],
+  init: () => {
+    // do initializtion
+  },
+  addMovieData: function (item, context) {
+    this.movieData = item;
+    context.setState({data: this.movieData});
+    console.log(this.movieData);
+  },
+  loadMovieData: function (id, that) {
+    let context = that;
+    let promise = function () {
+      return new Promise(function (resolve, reject) {
+          http.ajax(movieDetails.createMovieUrl(id))
+            .get()
+            .then(http.successDetails.bind(context));
+          resolve(function () { });
+        });
+    };
+
+    promise().then(function () {
+
+    });
+  }
+});

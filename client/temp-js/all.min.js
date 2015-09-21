@@ -64,6 +64,18 @@ var http = {
       var context = this;
       DiscoverActions.addMovieToStore(movie, context);
     }
+  },
+  successDetails: function successDetails(data) {
+    var movieData = undefined;
+    movieData = JSON.parse(data);
+    var genre = [];
+    for (var key in movieData.genres) {
+      genre.push(movieData.genres[key].name);
+    }
+    var posterPath = movies.createImageUrl(movieData.poster_path);
+    var movie = new MovieDetails(movieData.original_title, movieData.overview, genre, movieData.release_date, movieData.runtime, movieData.vote_average, movieData.vote_count, movieData.homepage, posterPath);
+    var context = this;
+    MovieDetailsActions.addMovieData(movie, context);
   }
 };
 
@@ -167,28 +179,26 @@ var ownMovieTitleList = [];
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var MovieDetails = function MovieDetails(title, overview, genre, publishDate, runTime, vote_average, vote_count, homePage) {
+var MovieDetails = function MovieDetails(title, overview, genre, publishDate, runTime, vote_average, vote_count, homePage, posterPath) {
   _classCallCheck(this, MovieDetails);
 
   this.title = title;
   this.overview = overview;
+  this.genre = genre;
   this.publishDate = publishDate;
   this.runTime = runTime;
   this.vote_average = vote_average;
   this.vote_count = vote_count;
   this.homePage = homePage;
+  this.posterPath = posterPath;
 };
 
 var movieDetails = {
   createMovieUrl: function createMovieUrl(id) {
-    if (typeof id === 'string') {
-      var api_key = '?' + tmdbApiKey;
-      var urlFirstPart = 'https://api.themoviedb.org/3/movie/';
-      var url = urlFirstPart + id + api_key;
-      return url;
-    } else {
-      throw new Error('Input type is not string!');
-    }
+    var api_key = '?' + tmdbApiKey;
+    var urlFirstPart = 'https://api.themoviedb.org/3/movie/';
+    var url = urlFirstPart + id + api_key;
+    return url;
   }
 };
 /* jshint esnext: true */
@@ -342,6 +352,8 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 var DiscoverActions = Reflux.createActions(['addMovieToStore', 'oneMonthDiscoverBtnClicked', 'threeMonthDiscoverBtnClicked', 'removeContainer']);
 
 var MyMoviesActions = Reflux.createActions(['loadMovieTitles', 'loadMovies', 'addMovieToMyList', 'removeMovieFromDb', 'addMovieToDb']);
+
+var MovieDetailsActions = Reflux.createActions(['loadMovieData', 'addMovieData']);
 /* jshint esnext: true */
 
 'use strict';
@@ -548,6 +560,30 @@ var myMoviesActionStore = Reflux.createStore({
     });
   }
 });
+
+var movieDetailsActionStore = Reflux.createStore({
+  movieData: {},
+  listenables: [MovieDetailsActions],
+  init: function init() {
+    // do initializtion
+  },
+  addMovieData: function addMovieData(item, context) {
+    this.movieData = item;
+    context.setState({ data: this.movieData });
+    console.log(this.movieData);
+  },
+  loadMovieData: function loadMovieData(id, that) {
+    var context = that;
+    var promise = function promise() {
+      return new Promise(function (resolve, reject) {
+        http.ajax(movieDetails.createMovieUrl(id)).get().then(http.successDetails.bind(context));
+        resolve(function () {});
+      });
+    };
+
+    promise().then(function () {});
+  }
+});
 /* jshint esnext: true */
 
 'use strict';
@@ -733,9 +769,16 @@ var ManagePage = React.createClass({ displayName: "ManagePage",
 "use strict";
 
 var MovieDetailsContainer = React.createClass({ displayName: "MovieDetailsContainer",
-  render: function render() {
+  getInitialState: function getInitialState() {
+    return { data: [] };
+  },
+  componentDidMount: function componentDidMount() {
+    var context = this;
     var id = this.props.params.id;
-    return React.createElement("div", null, React.createElement("p", null, id));
+    MovieDetailsActions.loadMovieData(id, context);
+  },
+  render: function render() {
+    return React.createElement("div", { id: "movieDetailsContainer", className: "col-lg-10 col-md-10 col-xs-12 movie" }, React.createElement("div", { id: "movieDetailsPoster", className: "col-lg-5 col-md-5" }, React.createElement("img", { src: this.state.data.posterPath })), React.createElement("div", { id: "movieDetailsContent", className: "col-lg-7 col-md-7" }));
   }
 });
 /* jshint esnext: true */

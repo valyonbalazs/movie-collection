@@ -78,6 +78,28 @@ let http = {
       let context = this;
       DiscoverActions.addMovieToStore(movie, context);
     }
+  },
+  successDetails: function (data) {
+    let movieData;
+    movieData = JSON.parse(data);
+    let genre = [];
+    for (var key in movieData.genres) {
+      genre.push(movieData.genres[key].name);
+    }
+    let posterPath = movies.createImageUrl(movieData.poster_path);
+    let movie = new MovieDetails(
+      movieData.original_title,
+      movieData.overview,
+      genre,
+      movieData.release_date,
+      movieData.runtime,
+      movieData.vote_average,
+      movieData.vote_count,
+      movieData.homepage,
+      posterPath
+    );
+    let context = this;
+    MovieDetailsActions.addMovieData(movie, context);
   }
 };
 

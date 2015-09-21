@@ -14,3 +14,8 @@ let MyMoviesActions = Reflux.createActions([
   'removeMovieFromDb',
   'addMovieToDb'
 ]);
+
+let MovieDetailsActions = Reflux.createActions([
+  'loadMovieData',
+  'addMovieData'
+]);
