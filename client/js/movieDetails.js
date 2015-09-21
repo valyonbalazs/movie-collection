@@ -30,5 +30,12 @@ let movieDetails = {
     let urlFirstPart = 'https://api.themoviedb.org/3/movie/';
     let url = urlFirstPart + id + api_key;
     return url;
+  },
+  createCreditsUrl: function (id) {
+    let api_key = '?' + tmdbApiKey;
+    let urlSecondPart = '/credits';
+    let urlFirstPart = 'https://api.themoviedb.org/3/movie/';
+    let url = urlFirstPart + id + urlSecondPart + api_key;
+    return url;
   }
 };

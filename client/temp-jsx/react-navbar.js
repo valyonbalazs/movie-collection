@@ -56,7 +56,6 @@ let NavbarMobileOpen =  React.createClass({displayName: "NavbarMobileOpen",
     let userProfilPic = userInstance.ProfilePicUrl;
     let userName = userInstance.UserName;
     let userEmail = userInstance.Email;
-    console.log(userProfilPic);
 
     let menuItemArray = this.state.data.map(function (item) {
       let params = createMenuItemParams(item);

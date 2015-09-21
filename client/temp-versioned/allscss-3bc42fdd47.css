@@ -220,6 +220,19 @@ body {
     #innerContainer #listMoviesFromDbContainer td {
       text-align: center; } }
 
+@media (min-width: 1200px) {
+  #movieDetailsCrew {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; }
+    #movieDetailsCrew .creditMember {
+      text-align: center; }
+    #movieDetailsCrew .creditMemberPic {
+      max-height: 8em;
+      margin-left: 2em;
+      margin-right: 2em;
+      margin-top: 2em;
+      margin-bottom: 0.5; } }
 
 .detailsContainer {
   color: #000;

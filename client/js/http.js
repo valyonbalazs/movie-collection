@@ -100,6 +100,43 @@ let http = {
     );
     let context = this;
     MovieDetailsActions.addMovieData(movie, context);
+  },
+  successDetailsCredits: function (data) {
+    let movieData;
+    movieData = JSON.parse(data);
+    let credits = [];
+    let cast = movieData.cast;
+    let castCounter = 0;
+    for (let key in cast) {
+      if (castCounter < 6) {
+        castCounter++;
+        let actor = {};
+        actor.name = cast[key].name;
+        actor.character = cast[key].character;
+        actor.picture = movies.createImageUrl(cast[key].profile_path);
+        credits.push(actor);
+      } else {
+        break;
+      }
+    }
+
+    let crews = [];
+    let crewCounter = 0;
+    let crew = movieData.crew;
+    for (let key in crew) {
+      if (crewCounter < 4) {
+        crewCounter++;
+        let crewMember = {};
+        crewMember.job = crew[key].job;
+        crewMember.name = crew[key].name;
+        crews.push(crewMember);
+      } else {
+        break;
+      }
+    }
+
+    let context = this;
+    MovieDetailsActions.addCreditsData(credits, crews, context);
   }
 };
 

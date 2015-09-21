@@ -76,6 +76,43 @@ var http = {
     var movie = new MovieDetails(movieData.original_title, movieData.overview, genre, movieData.release_date, movieData.runtime, movieData.vote_average, movieData.vote_count, movieData.homepage, posterPath);
     var context = this;
     MovieDetailsActions.addMovieData(movie, context);
+  },
+  successDetailsCredits: function successDetailsCredits(data) {
+    var movieData = undefined;
+    movieData = JSON.parse(data);
+    var credits = [];
+    var cast = movieData.cast;
+    var castCounter = 0;
+    for (var key in cast) {
+      if (castCounter < 6) {
+        castCounter++;
+        var actor = {};
+        actor.name = cast[key].name;
+        actor.character = cast[key].character;
+        actor.picture = movies.createImageUrl(cast[key].profile_path);
+        credits.push(actor);
+      } else {
+        break;
+      }
+    }
+
+    var crews = [];
+    var crewCounter = 0;
+    var crew = movieData.crew;
+    for (var key in crew) {
+      if (crewCounter < 4) {
+        crewCounter++;
+        var crewMember = {};
+        crewMember.job = crew[key].job;
+        crewMember.name = crew[key].name;
+        crews.push(crewMember);
+      } else {
+        break;
+      }
+    }
+
+    var context = this;
+    MovieDetailsActions.addCreditsData(credits, crews, context);
   }
 };
 
@@ -198,6 +235,13 @@ var movieDetails = {
     var api_key = '?' + tmdbApiKey;
     var urlFirstPart = 'https://api.themoviedb.org/3/movie/';
     var url = urlFirstPart + id + api_key;
+    return url;
+  },
+  createCreditsUrl: function createCreditsUrl(id) {
+    var api_key = '?' + tmdbApiKey;
+    var urlSecondPart = '/credits';
+    var urlFirstPart = 'https://api.themoviedb.org/3/movie/';
+    var url = urlFirstPart + id + urlSecondPart + api_key;
     return url;
   }
 };
@@ -353,7 +397,7 @@ var DiscoverActions = Reflux.createActions(['addMovieToStore', 'oneMonthDiscover
 
 var MyMoviesActions = Reflux.createActions(['loadMovieTitles', 'loadMovies', 'addMovieToMyList', 'removeMovieFromDb', 'addMovieToDb']);
 
-var MovieDetailsActions = Reflux.createActions(['loadMovieData', 'addMovieData']);
+var MovieDetailsActions = Reflux.createActions(['loadMovieData', 'loadCredtisData', 'addMovieData', 'addCreditsData']);
 /* jshint esnext: true */
 
 'use strict';
@@ -563,6 +607,8 @@ var myMoviesActionStore = Reflux.createStore({
 
 var movieDetailsActionStore = Reflux.createStore({
   movieData: {},
+  movieCredits: [],
+  movieCrew: [],
   listenables: [MovieDetailsActions],
   init: function init() {
     // do initializtion
@@ -570,7 +616,12 @@ var movieDetailsActionStore = Reflux.createStore({
   addMovieData: function addMovieData(item, context) {
     this.movieData = item;
     context.setState({ data: this.movieData });
-    console.log(this.movieData);
+  },
+  addCreditsData: function addCreditsData(credits, crew, context) {
+    this.movieCredits = credits;
+    this.movieCrew = crew;
+    context.setState({ movieCredits: this.movieCredits });
+    context.setState({ movieCrew: this.movieCrew });
   },
   loadMovieData: function loadMovieData(id, that) {
     var context = that;
@@ -581,6 +632,16 @@ var movieDetailsActionStore = Reflux.createStore({
       });
     };
 
+    promise().then(function () {});
+  },
+  loadCredtisData: function loadCredtisData(id, that) {
+    var context = that;
+    var promise = function promise() {
+      return new Promise(function (resolve, reject) {
+        http.ajax(movieDetails.createCreditsUrl(id)).get().then(http.successDetailsCredits.bind(context));
+        resolve(function () {});
+      });
+    };
     promise().then(function () {});
   }
 });
@@ -768,17 +829,31 @@ var ManagePage = React.createClass({ displayName: "ManagePage",
 
 "use strict";
 
+var CreditMember = React.createClass({ displayName: "CreditMember",
+  render: function render() {
+    return React.createElement("div", { className: "creditMember" }, React.createElement("img", { className: "creditMemberPic", src: this.props.credit.picture }), React.createElement("h4", null, this.props.credit.character), React.createElement("h5", null, this.props.credit.name));
+  }
+});
+
 var MovieDetailsContainer = React.createClass({ displayName: "MovieDetailsContainer",
   getInitialState: function getInitialState() {
-    return { data: [] };
+    return {
+      data: [],
+      movieCredits: [],
+      movieCrew: []
+    };
   },
   componentDidMount: function componentDidMount() {
     var context = this;
     var id = this.props.params.id;
     MovieDetailsActions.loadMovieData(id, context);
+    MovieDetailsActions.loadCredtisData(id, context);
   },
   render: function render() {
-    return React.createElement("div", { id: "movieDetailsContainer", className: "col-lg-12 col-md-12 col-xs-12 movie" }, React.createElement("div", { id: "movieDetailsPoster", className: "col-lg-6 col-md-6" }, React.createElement("img", { src: this.state.data.posterPath })), React.createElement("div", { id: "movieDetailsContent", className: "col-lg-6 col-md-6" }, React.createElement("div", { id: "movieDetailsTitleAndYear", className: "col-lg-12 col-md-12" }, React.createElement("h3", null, this.state.data.title), React.createElement("h5", null, "Publishing date: ", this.state.data.publishDate), React.createElement("h5", null, this.state.data.genre, "  ", this.state.data.vote_average)), React.createElement("div", { id: "movieDetailsOverview", className: "col-lg-12 col-md-12" }, React.createElement("h5", null, this.state.data.overview))));
+    var creditsArray = this.state.movieCredits.map(function (credit) {
+      return React.createElement(CreditMember, { credit: credit });
+    });
+    return React.createElement("div", { id: "movieDetailsContainer", className: "col-lg-12 col-md-12 col-xs-12 movie" }, React.createElement("div", { id: "movieDetailsPoster", className: "col-lg-6 col-md-6" }, React.createElement("img", { src: this.state.data.posterPath })), React.createElement("div", { id: "movieDetailsContent", className: "col-lg-6 col-md-6" }, React.createElement("div", { id: "movieDetailsTitleAndYear", className: "col-lg-12 col-md-12" }, React.createElement("h3", null, this.state.data.title), React.createElement("h5", null, this.state.data.publishDate), React.createElement("h5", null, this.state.data.genre, "  ", this.state.data.vote_average)), React.createElement("div", { id: "movieDetailsOverview", className: "col-lg-12 col-md-12" }, React.createElement("h5", null, this.state.data.overview)), React.createElement("div", { id: "movieDetailsCrew", className: "col-lg-12 col-md-12" }, creditsArray)));
   }
 });
 /* jshint esnext: true */
@@ -916,7 +991,6 @@ var NavbarMobileOpen = React.createClass({ displayName: "NavbarMobileOpen",
     var userProfilPic = userInstance.ProfilePicUrl;
     var userName = userInstance.UserName;
     var userEmail = userInstance.Email;
-    console.log(userProfilPic);
 
     var menuItemArray = this.state.data.map(function (item) {
       var params = createMenuItemParams(item);
