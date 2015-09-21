@@ -12,22 +12,124 @@ $screen-ultrahigh-min: 1200px;
 
 //MEDIUM RESOLUTION
 @media(min-width: $screen-medium-min) {
+  #movieDetailsContainer {
+    padding: 0;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&amp;0+0,0.65+100 */
+    background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 ); /* IE6-9 */
 
+    box-shadow: 3px 3px 5px #888888;
 
+    #movieDetailsPoster {
+      padding: 0;
 
+      img {
+        max-height: 48.5em;
+      }
+    }
+
+    #movieDetailsContent {
+
+      padding: 0;
+      min-height: 100%;
+
+      #movieDetailsTitle {
+        text-align: center;
+      }
+
+      #movieDetailsYear {
+        text-align: center;
+      }
+
+      #movieDetailsOverview {
+        text-align: justify;
+        h5 {
+          font-size: 1.2em;
+        }
+      }
+
+      #movieDetailsCrew {
+
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+
+        .crewMember {
+          text-align: center;
+          color: white;
+          padding: 0;
+
+          h4 {
+            font-size: 1em;
+            margin-top: 3em;
+            margin-bottom: 0.2em;
+          }
+
+          h5 {
+            margin-top: 0.2em;
+            margin-bottom: 0.2em;
+            opacity: 0.7;
+          }
+        }
+      }
+
+      #movieDetailsCredit {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .creditMember {
+          text-align: center;
+
+          h5 {
+            margin-top: 0.2em;
+            margin-bottom: 0.2em;
+          }
+        }
+
+        .creditMemberPic {
+          box-shadow: 3px 3px 5px #888888;
+          max-height: 6em;
+          margin-left: 0.5em;
+          margin-right: 0.5em;
+          margin-top: 0.4em;
+          margin-bottom: 0.5;
+        }
+      }
+    }
+  }
 }
 
 @media(min-width: $screen-ultrahigh-min) {
 
   #movieDetailsContainer {
     padding-left: 0;
+    background-color: #C7C9C9;
     box-shadow: 3px 3px 5px #888888;
 
     #movieDetailsPoster {
       padding-left: 0;
     }
 
-    background-color: #C7C9C9;
+    #movieDetailsTitle {
+      text-align: center;
+    }
+
+    #movieDetailsYear {
+      text-align: center;
+    }
+
+    #movieDetailsOverview {
+      text-align: justify;
+      h5 {
+        font-size: 1.2em;
+      }
+    }
 
     #movieDetailsCrew {
 
@@ -38,6 +140,15 @@ $screen-ultrahigh-min: 1200px;
       .crewMember {
         text-align: center;
 
+        h4 {
+          margin-top: 0.2em;
+          margin-bottom: 0.2em;
+        }
+
+        h5 {
+          margin-top: 0.2em;
+          margin-bottom: 0.2em;
+        }
       }
     }
 
@@ -48,6 +159,7 @@ $screen-ultrahigh-min: 1200px;
 
       .creditMember {
         text-align: center;
+        margin-right: 1em;
       }
 
       .creditMemberPic {

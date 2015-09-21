@@ -84,7 +84,7 @@ let http = {
     movieData = JSON.parse(data);
     let genre = [];
     for (var key in movieData.genres) {
-      genre.push(movieData.genres[key].name);
+      genre.push(' ' + movieData.genres[key].name);
     }
     let posterPath = movies.createImageUrl(movieData.poster_path);
     let movie = new MovieDetails(
