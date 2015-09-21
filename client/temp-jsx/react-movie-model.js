@@ -100,10 +100,13 @@ let Backdrop = React.createClass({displayName: "Backdrop",
 
 let Movie = React.createClass({displayName: "Movie",
   render: function() {
+    let link = '/MovieDetails/' + this.props.movie.movieId;
     return(
       React.createElement("div", {className: "col-lg-4 col-md-6 col-xs-12 movie"}, 
-        React.createElement(Backdrop, {backdrop: this.props.movie.backdrop}), 
-        React.createElement(DetailsContainer, {data: this.props.movie})
+        React.createElement(Link, {to: link}, 
+          React.createElement(Backdrop, {backdrop: this.props.movie.backdrop}), 
+          React.createElement(DetailsContainer, {data: this.props.movie})
+        )
       )
     );
   }

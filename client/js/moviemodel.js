@@ -4,17 +4,18 @@
 //'use strict';
 
 class MovieElement {
-  constructor (title, overview, rating, publishDate, backdropPath, posterPath) {
+  constructor (title, overview, rating, publishDate, backdropPath, posterPath, movieId) {
     this.title = title;
     this.description = overview;
     this.rating = rating;
     this.year = publishDate;
     this.backdrop = backdropPath;
     this.poster = posterPath;
+    this.movieId = movieId;
   }
 }
 
-const tmdbApiKey = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
+const tmdbApiKey = 'api_key=4a8dce0b18b88827ffbc32dee5b66838';
 
 let movies = {
   getMaxVotedElement: function (moviesResult) {
@@ -42,7 +43,7 @@ let movies = {
   },
   createMovieUrl: function (movieTitle) {
     if (typeof(movieTitle) === 'string') {
-      let api_key = tmdbApiKey;
+      let api_key = '&' + tmdbApiKey;
       let urlFirstPart = 'https://api.themoviedb.org/3/search/movie?query=';
       let url = urlFirstPart + movieTitle + api_key;
       return url;
@@ -89,7 +90,7 @@ let movies = {
     let month = date.getMonth();
     let day = '01';
     let insertableDate = year + '-' + month + '-' + day;
-    let api_key = tmdbApiKey;
+    let api_key = '&' + tmdbApiKey;
     let urlFirstPart = 'https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&release_date.gte=' +
                         insertableDate + '&sort_by=popularity.desc&';
     let url = urlFirstPart + api_key;
@@ -101,7 +102,7 @@ let movies = {
     let month = date.getMonth() - 2;
     let day = '01';
     let insertableDate = year + '-' + month + '-' + day;
-    let api_key = tmdbApiKey;
+    let api_key = '&' + tmdbApiKey;
     let urlFirstPart = 'https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&release_date.gte=' +
                         insertableDate + '&sort_by=vote_count.desc&';
     let url = urlFirstPart + api_key;

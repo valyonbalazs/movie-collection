@@ -44,14 +44,14 @@ var http = {
     var overview = movies.modifyOverview(bestVoted.overview);
     var releaseDate = movies.modifyReleaseDate(bestVoted.release_date);
     var average = bestVoted.vote_average + ' ';
-    var movie = new MovieElement(title, overview, average, releaseDate, backdropPath, posterPath);
+    var movieId = bestVoted.id;
+    var movie = new MovieElement(title, overview, average, releaseDate, backdropPath, posterPath, movieId);
     var context = this;
     MyMoviesActions.addMovieToMyList(movie, context);
   },
   successDiscover: function successDiscover(data) {
     var movieData = undefined;
     movieData = JSON.parse(data);
-
     for (var key in movieData.results) {
       var title = movies.modifyTitle(movieData.results[key].title);
       var backdropPath = movies.createImageUrl(movieData.results[key].backdrop_path);
@@ -59,7 +59,8 @@ var http = {
       var overview = movies.modifyOverview(movieData.results[key].overview);
       var releaseDate = movies.modifyReleaseDate(movieData.results[key].release_date);
       var average = movieData.results[key].vote_average + ' ';
-      var movie = new MovieElement(title, overview, average, releaseDate, backdropPath, posterPath);
+      var movieId = movieData.results[key].id;
+      var movie = new MovieElement(title, overview, average, releaseDate, backdropPath, posterPath, movieId);
       var context = this;
       DiscoverActions.addMovieToStore(movie, context);
     }
@@ -162,6 +163,36 @@ var ownMovieTitleList = [];
 //let discoverMovies = [];
 /* jshint esnext: true */
 
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var MovieDetails = function MovieDetails(title, overview, genre, publishDate, runTime, vote_average, vote_count, homePage) {
+  _classCallCheck(this, MovieDetails);
+
+  this.title = title;
+  this.overview = overview;
+  this.publishDate = publishDate;
+  this.runTime = runTime;
+  this.vote_average = vote_average;
+  this.vote_count = vote_count;
+  this.homePage = homePage;
+};
+
+var movieDetails = {
+  createMovieUrl: function createMovieUrl(id) {
+    if (typeof id === 'string') {
+      var api_key = '?' + tmdbApiKey;
+      var urlFirstPart = 'https://api.themoviedb.org/3/movie/';
+      var url = urlFirstPart + id + api_key;
+      return url;
+    } else {
+      throw new Error('Input type is not string!');
+    }
+  }
+};
+/* jshint esnext: true */
+
 // needed for Karma testing, ES6 tests only works with this
 //'use strict';
 
@@ -169,7 +200,7 @@ var ownMovieTitleList = [];
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var MovieElement = function MovieElement(title, overview, rating, publishDate, backdropPath, posterPath) {
+var MovieElement = function MovieElement(title, overview, rating, publishDate, backdropPath, posterPath, movieId) {
   _classCallCheck(this, MovieElement);
 
   this.title = title;
@@ -178,9 +209,10 @@ var MovieElement = function MovieElement(title, overview, rating, publishDate, b
   this.year = publishDate;
   this.backdrop = backdropPath;
   this.poster = posterPath;
+  this.movieId = movieId;
 };
 
-var tmdbApiKey = '&api_key=4a8dce0b18b88827ffbc32dee5b66838';
+var tmdbApiKey = 'api_key=4a8dce0b18b88827ffbc32dee5b66838';
 
 var movies = {
   getMaxVotedElement: function getMaxVotedElement(moviesResult) {
@@ -208,7 +240,7 @@ var movies = {
   },
   createMovieUrl: function createMovieUrl(movieTitle) {
     if (typeof movieTitle === 'string') {
-      var api_key = tmdbApiKey;
+      var api_key = '&' + tmdbApiKey;
       var urlFirstPart = 'https://api.themoviedb.org/3/search/movie?query=';
       var url = urlFirstPart + movieTitle + api_key;
       return url;
@@ -254,7 +286,7 @@ var movies = {
     var month = date.getMonth();
     var day = '01';
     var insertableDate = year + '-' + month + '-' + day;
-    var api_key = tmdbApiKey;
+    var api_key = '&' + tmdbApiKey;
     var urlFirstPart = 'https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&release_date.gte=' + insertableDate + '&sort_by=popularity.desc&';
     var url = urlFirstPart + api_key;
     return url;
@@ -265,7 +297,7 @@ var movies = {
     var month = date.getMonth() - 2;
     var day = '01';
     var insertableDate = year + '-' + month + '-' + day;
-    var api_key = tmdbApiKey;
+    var api_key = '&' + tmdbApiKey;
     var urlFirstPart = 'https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&release_date.gte=' + insertableDate + '&sort_by=vote_count.desc&';
     var url = urlFirstPart + api_key;
     return url;
@@ -697,6 +729,16 @@ var ManagePage = React.createClass({ displayName: "ManagePage",
   }
 });
 /* jshint esnext: true */
+
+"use strict";
+
+var MovieDetailsContainer = React.createClass({ displayName: "MovieDetailsContainer",
+  render: function render() {
+    var id = this.props.params.id;
+    return React.createElement("div", null, React.createElement("p", null, id));
+  }
+});
+/* jshint esnext: true */
 "use strict";
 
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
@@ -762,7 +804,8 @@ var Backdrop = React.createClass({ displayName: "Backdrop",
 
 var Movie = React.createClass({ displayName: "Movie",
   render: function render() {
-    return React.createElement("div", { className: "col-lg-4 col-md-6 col-xs-12 movie" }, React.createElement(Backdrop, { backdrop: this.props.movie.backdrop }), React.createElement(DetailsContainer, { data: this.props.movie }));
+    var link = '/MovieDetails/' + this.props.movie.movieId;
+    return React.createElement("div", { className: "col-lg-4 col-md-6 col-xs-12 movie" }, React.createElement(Link, { to: link }, React.createElement(Backdrop, { backdrop: this.props.movie.backdrop }), React.createElement(DetailsContainer, { data: this.props.movie })));
   }
 });
 
@@ -904,7 +947,7 @@ var RouteHandler = ReactRouter.RouteHandler;
 var Link = ReactRouter.Link;
 var Redirect = ReactRouter.Redirect;
 
-var routes = React.createElement(Route, { name: "default", path: "/", handler: App }, React.createElement(Redirect, { from: "/", to: "/home" }), React.createElement(Route, { name: "home", path: "/Home", handler: DiscoverMoviesContainer }), React.createElement(Route, { name: "movies", path: "/Movies", handler: MoviesContainer }), React.createElement(Route, { name: "manage", path: "/Manage", handler: ManagePage }));
+var routes = React.createElement(Route, { name: "default", path: "/", handler: App }, React.createElement(Redirect, { from: "/", to: "/home" }), React.createElement(Route, { name: "home", path: "/Home", handler: DiscoverMoviesContainer }), React.createElement(Route, { name: "movies", path: "/Movies", handler: MoviesContainer }), React.createElement(Route, { name: "manage", path: "/Manage", handler: ManagePage }), React.createElement(Route, { name: "movieDetails", path: "/MovieDetails/:id", handler: MovieDetailsContainer }));
 
 ReactRouter.run(routes, function (Handler) {
   React.render(React.createElement(Handler, null), document.getElementById('innerContainer'));

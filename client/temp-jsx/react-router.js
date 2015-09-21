@@ -11,7 +11,8 @@ let routes = (
     React.createElement(Redirect, {from: "/", to: "/home"}), 
     React.createElement(Route, {name: "home", path: "/Home", handler: DiscoverMoviesContainer}), 
     React.createElement(Route, {name: "movies", path: "/Movies", handler: MoviesContainer}), 
-    React.createElement(Route, {name: "manage", path: "/Manage", handler: ManagePage})
+    React.createElement(Route, {name: "manage", path: "/Manage", handler: ManagePage}), 
+    React.createElement(Route, {name: "movieDetails", path: "/MovieDetails/:id", handler: MovieDetailsContainer})
   )
 );
 

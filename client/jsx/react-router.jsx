@@ -12,6 +12,7 @@ let routes = (
     <Route name="home" path="/Home" handler={DiscoverMoviesContainer} />
     <Route name="movies" path="/Movies" handler={MoviesContainer} />
     <Route name="manage" path="/Manage" handler={ManagePage} />
+    <Route name="movieDetails" path="/MovieDetails/:id" handler={MovieDetailsContainer} />
   </Route>
 );
 

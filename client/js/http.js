@@ -42,13 +42,15 @@ let http = {
     let overview = movies.modifyOverview(bestVoted.overview);
     let releaseDate = movies.modifyReleaseDate(bestVoted.release_date);
     let average = bestVoted.vote_average + ' ';
+    let movieId = bestVoted.id;
     let movie = new MovieElement(
       title,
       overview,
       average,
       releaseDate,
       backdropPath,
-      posterPath
+      posterPath,
+      movieId
     );
     let context = this;
     MyMoviesActions.addMovieToMyList(movie, context);
@@ -56,7 +58,6 @@ let http = {
   successDiscover: function (data) {
     let movieData;
     movieData = JSON.parse(data);
-
     for (let key in movieData.results) {
       let title = movies.modifyTitle(movieData.results[key].title);
       let backdropPath = movies.createImageUrl(movieData.results[key].backdrop_path);
@@ -64,13 +65,15 @@ let http = {
       let overview = movies.modifyOverview(movieData.results[key].overview);
       let releaseDate = movies.modifyReleaseDate(movieData.results[key].release_date);
       let average = movieData.results[key].vote_average + ' ';
+      let movieId = movieData.results[key].id;
       let movie = new MovieElement(
         title,
         overview,
         average,
         releaseDate,
         backdropPath,
-        posterPath
+        posterPath,
+        movieId
       );
       let context = this;
       DiscoverActions.addMovieToStore(movie, context);
