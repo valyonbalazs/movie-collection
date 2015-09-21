@@ -19,23 +19,45 @@ $screen-ultrahigh-min: 1200px;
 
 @media(min-width: $screen-ultrahigh-min) {
 
-  #movieDetailsCrew {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+  #movieDetailsContainer {
+    padding-left: 0;
+    box-shadow: 3px 3px 5px #888888;
 
-    .creditMember {
-      text-align: center;
+    #movieDetailsPoster {
+      padding-left: 0;
     }
 
-    .creditMemberPic {
-      max-height: 8em;
-      margin-left: 2em;
-      margin-right: 2em;
-      margin-top: 2em;
-      margin-bottom: 0.5;
+    background-color: #C7C9C9;
+
+    #movieDetailsCrew {
+
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+
+      .crewMember {
+        text-align: center;
+
+      }
+    }
+
+    #movieDetailsCredit {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      .creditMember {
+        text-align: center;
+      }
+
+      .creditMemberPic {
+        box-shadow: 3px 3px 5px #888888;
+        max-height: 8em;
+        margin-left: 2em;
+        margin-right: 2em;
+        margin-top: 2em;
+        margin-bottom: 0.5;
+      }
     }
   }
-
-
 }
