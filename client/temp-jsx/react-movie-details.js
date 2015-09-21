@@ -62,10 +62,10 @@ let MovieDetailsContainer = React.createClass({displayName: "MovieDetailsContain
     });
     return (
       React.createElement("div", {id: "movieDetailsContainer", className: "col-lg-12 col-md-12 col-xs-12 movie"}, 
-        React.createElement("div", {id: "movieDetailsPoster", className: "col-lg-5 col-md-6"}, 
+        React.createElement("div", {id: "movieDetailsPoster", className: "col-lg-5 col-md-5"}, 
           React.createElement("img", {src: this.state.data.posterPath})
         ), 
-        React.createElement("div", {id: "movieDetailsContent", className: "col-lg-7 col-md-6"}, 
+        React.createElement("div", {id: "movieDetailsContent", className: "col-lg-7 col-md-7"}, 
           React.createElement("div", {id: "movieDetailsTitle", className: "col-lg-12 col-md-12"}, 
             React.createElement("h3", null, React.createElement("b", null, this.state.data.title), " (", this.state.data.publishDate, ")")
           ), 
@@ -92,7 +92,7 @@ let MovieDetailsContainer = React.createClass({displayName: "MovieDetailsContain
             ), 
             React.createElement("div", {className: "col-lg-12 col-md-12"}, 
               React.createElement("iframe", {id: "youtubeTrailerHigh", width: "300", height: "169", src: this.state.video, frameborder: "0", allowfullscreen: true}), 
-              React.createElement("iframe", {id: "youtubeTrailerMedium", width: "212", height: "119", src: this.state.video, frameborder: "0", allowfullscreen: true})
+              React.createElement("iframe", {id: "youtubeTrailerMedium", width: "250", height: "141", src: this.state.video, frameborder: "0", allowfullscreen: true})
             )
           ), 
           React.createElement("div", {id: "movieDetailsHomepage", className: "col-lg-12 col-md-12"}, 

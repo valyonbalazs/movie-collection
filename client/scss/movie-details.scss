@@ -29,13 +29,14 @@ $screen-ultrahigh-min: 1200px;
       padding: 0;
 
       img {
-        max-height: 48.5em;
+        max-height: 44em;
       }
     }
 
     #movieDetailsContent {
 
       padding: 0;
+      padding-left: 1em;
       min-height: 100%;
 
       #movieDetailsTitle {

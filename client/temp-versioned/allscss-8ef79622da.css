@@ -242,9 +242,10 @@ body {
     #movieDetailsContainer #movieDetailsPoster {
       padding: 0; }
       #movieDetailsContainer #movieDetailsPoster img {
-        max-height: 48.5em; }
+        max-height: 44em; }
     #movieDetailsContainer #movieDetailsContent {
       padding: 0;
+      padding-left: 1em;
       min-height: 100%; }
       #movieDetailsContainer #movieDetailsContent #movieDetailsTitle {
         text-align: center;

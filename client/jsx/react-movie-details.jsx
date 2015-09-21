@@ -62,10 +62,10 @@ let MovieDetailsContainer = React.createClass({
     });
     return (
       <div id="movieDetailsContainer" className="col-lg-12 col-md-12 col-xs-12 movie">
-        <div id="movieDetailsPoster" className="col-lg-5 col-md-6">
+        <div id="movieDetailsPoster" className="col-lg-5 col-md-5">
           <img src={this.state.data.posterPath} />
         </div>
-        <div id="movieDetailsContent" className="col-lg-7 col-md-6">
+        <div id="movieDetailsContent" className="col-lg-7 col-md-7">
           <div id="movieDetailsTitle" className="col-lg-12 col-md-12">
             <h3><b>{this.state.data.title}</b> ({this.state.data.publishDate})</h3>
           </div>
@@ -92,7 +92,7 @@ let MovieDetailsContainer = React.createClass({
             </div>
             <div className="col-lg-12 col-md-12">
               <iframe id="youtubeTrailerHigh" width="300" height="169" src={this.state.video} frameborder="0" allowfullscreen></iframe>
-              <iframe id="youtubeTrailerMedium" width="212" height="119" src={this.state.video} frameborder="0" allowfullscreen></iframe>
+              <iframe id="youtubeTrailerMedium" width="250" height="141" src={this.state.video} frameborder="0" allowfullscreen></iframe>
             </div>
           </div>
           <div id="movieDetailsHomepage" className="col-lg-12 col-md-12">
