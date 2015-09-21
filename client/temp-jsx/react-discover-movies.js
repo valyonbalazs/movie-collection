@@ -43,7 +43,7 @@ let DiscoverMoviesContainer = React.createClass({displayName: "DiscoverMoviesCon
         React.createElement("div", {id: "moviesContainer", className: "col-lg-12 col-md-12 col-xs-12 moviesContainer"}, 
           React.createElement("div", {id: "discoveryChooserContainer", className: "col-lg-12 col-md-12 col-xs-12"}, 
             React.createElement("div", {id: "discoveryChooserLabel", className: "col-lg-8 col-md-7 col-xs-12"}, 
-              React.createElement("h3", {id: "discoverLabel"}, "Label")
+              React.createElement("h3", {id: "discoverLabel"})
             ), 
             React.createElement("div", {id: "discoveryChooserButtons", className: "col-lg-5 col-md-5 col-xs-12"}, 
               React.createElement("div", {className: "col-lg-5 col-md-6 col-xs-6 col-lg-offset-2"}, 

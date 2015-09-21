@@ -43,7 +43,7 @@ let DiscoverMoviesContainer = React.createClass({
         <div id="moviesContainer" className="col-lg-12 col-md-12 col-xs-12 moviesContainer" >
           <div id="discoveryChooserContainer" className="col-lg-12 col-md-12 col-xs-12">
             <div id="discoveryChooserLabel" className="col-lg-8 col-md-7 col-xs-12">
-              <h3 id="discoverLabel">Label</h3>
+              <h3 id="discoverLabel"></h3>
             </div>
             <div id="discoveryChooserButtons" className="col-lg-5 col-md-5 col-xs-12">
               <div className="col-lg-5 col-md-6 col-xs-6 col-lg-offset-2">

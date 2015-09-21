@@ -18,6 +18,8 @@ let MyMoviesActions = Reflux.createActions([
 let MovieDetailsActions = Reflux.createActions([
   'loadMovieData',
   'loadCredtisData',
+  'loadVideos',
   'addMovieData',
-  'addCreditsData'
+  'addCreditsData',
+  'addVideoUrl'
 ]);

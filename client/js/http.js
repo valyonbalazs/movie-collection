@@ -87,11 +87,12 @@ let http = {
       genre.push(' ' + movieData.genres[key].name);
     }
     let posterPath = movies.createImageUrl(movieData.poster_path);
+    let releaseDate = movies.modifyReleaseDate(movieData.release_date);
     let movie = new MovieDetails(
       movieData.original_title,
       movieData.overview,
       genre,
-      movieData.release_date,
+      releaseDate,
       movieData.runtime,
       movieData.vote_average,
       movieData.vote_count,
@@ -137,6 +138,15 @@ let http = {
 
     let context = this;
     MovieDetailsActions.addCreditsData(credits, crews, context);
+  },
+  successVideoUrl: function (data) {
+    let movieData;
+    movieData = JSON.parse(data);
+    let key = movieData.results[0].key;
+    let videoUrl = movieDetails.createVideoUrl(key);
+
+    let context = this;
+    MovieDetailsActions.addVideoUrl(videoUrl, context);
   }
 };
 

@@ -73,7 +73,8 @@ var http = {
       genre.push(' ' + movieData.genres[key].name);
     }
     var posterPath = movies.createImageUrl(movieData.poster_path);
-    var movie = new MovieDetails(movieData.original_title, movieData.overview, genre, movieData.release_date, movieData.runtime, movieData.vote_average, movieData.vote_count, movieData.homepage, posterPath);
+    var releaseDate = movies.modifyReleaseDate(movieData.release_date);
+    var movie = new MovieDetails(movieData.original_title, movieData.overview, genre, releaseDate, movieData.runtime, movieData.vote_average, movieData.vote_count, movieData.homepage, posterPath);
     var context = this;
     MovieDetailsActions.addMovieData(movie, context);
   },
@@ -113,6 +114,15 @@ var http = {
 
     var context = this;
     MovieDetailsActions.addCreditsData(credits, crews, context);
+  },
+  successVideoUrl: function successVideoUrl(data) {
+    var movieData = undefined;
+    movieData = JSON.parse(data);
+    var key = movieData.results[0].key;
+    var videoUrl = movieDetails.createVideoUrl(key);
+
+    var context = this;
+    MovieDetailsActions.addVideoUrl(videoUrl, context);
   }
 };
 
@@ -242,6 +252,18 @@ var movieDetails = {
     var urlSecondPart = '/credits';
     var urlFirstPart = 'https://api.themoviedb.org/3/movie/';
     var url = urlFirstPart + id + urlSecondPart + api_key;
+    return url;
+  },
+  createVideoGetterUrl: function createVideoGetterUrl(id) {
+    var api_key = '?' + tmdbApiKey;
+    var urlSecondPart = '/videos';
+    var urlFirstPart = 'https://api.themoviedb.org/3/movie/';
+    var url = urlFirstPart + id + urlSecondPart + api_key;
+    return url;
+  },
+  createVideoUrl: function createVideoUrl(key) {
+    var urlFirstPart = 'https://www.youtube.com/embed/';
+    var url = urlFirstPart + key;
     return url;
   }
 };
@@ -397,7 +419,7 @@ var DiscoverActions = Reflux.createActions(['addMovieToStore', 'oneMonthDiscover
 
 var MyMoviesActions = Reflux.createActions(['loadMovieTitles', 'loadMovies', 'addMovieToMyList', 'removeMovieFromDb', 'addMovieToDb']);
 
-var MovieDetailsActions = Reflux.createActions(['loadMovieData', 'loadCredtisData', 'addMovieData', 'addCreditsData']);
+var MovieDetailsActions = Reflux.createActions(['loadMovieData', 'loadCredtisData', 'loadVideos', 'addMovieData', 'addCreditsData', 'addVideoUrl']);
 /* jshint esnext: true */
 
 'use strict';
@@ -609,6 +631,7 @@ var movieDetailsActionStore = Reflux.createStore({
   movieData: {},
   movieCredits: [],
   movieCrew: [],
+  video: '',
   listenables: [MovieDetailsActions],
   init: function init() {
     // do initializtion
@@ -622,6 +645,10 @@ var movieDetailsActionStore = Reflux.createStore({
     this.movieCrew = crew;
     context.setState({ movieCredits: this.movieCredits });
     context.setState({ movieCrew: this.movieCrew });
+  },
+  addVideoUrl: function addVideoUrl(url, context) {
+    this.video = url;
+    context.setState({ video: this.video });
   },
   loadMovieData: function loadMovieData(id, that) {
     var context = that;
@@ -639,6 +666,16 @@ var movieDetailsActionStore = Reflux.createStore({
     var promise = function promise() {
       return new Promise(function (resolve, reject) {
         http.ajax(movieDetails.createCreditsUrl(id)).get().then(http.successDetailsCredits.bind(context));
+        resolve(function () {});
+      });
+    };
+    promise().then(function () {});
+  },
+  loadVideos: function loadVideos(id, that) {
+    var context = that;
+    var promise = function promise() {
+      return new Promise(function (resolve, reject) {
+        http.ajax(movieDetails.createVideoGetterUrl(id)).get().then(http.successVideoUrl.bind(context));
         resolve(function () {});
       });
     };
@@ -731,7 +768,7 @@ var DiscoverMoviesContainer = React.createClass({ displayName: "DiscoverMoviesCo
       return React.createElement(Movie, { movie: movie });
     });
 
-    return React.createElement("div", { id: "moviesContainer", className: "col-lg-12 col-md-12 col-xs-12 moviesContainer" }, React.createElement("div", { id: "discoveryChooserContainer", className: "col-lg-12 col-md-12 col-xs-12" }, React.createElement("div", { id: "discoveryChooserLabel", className: "col-lg-8 col-md-7 col-xs-12" }, React.createElement("h3", { id: "discoverLabel" }, "Label")), React.createElement("div", { id: "discoveryChooserButtons", className: "col-lg-5 col-md-5 col-xs-12" }, React.createElement("div", { className: "col-lg-5 col-md-6 col-xs-6 col-lg-offset-2" }, React.createElement("button", { id: "OneMonthButton", className: "btn btn-success", onClick: this.handleClick1 }, "LAST 1 MONTH")), React.createElement("div", { className: "col-lg-5 col-md-6 col-xs-6" }, React.createElement("button", { id: "ThreeMonthButton", className: "btn btn-warning", onClick: this.handleClick3 }, "LAST 3 MONTHS ")))), React.createElement("div", { id: "innerDiscoverContainer" }, React.createElement(ReactCSSTransitionGroup, { transitionName: "example" }, moviesArray)));
+    return React.createElement("div", { id: "moviesContainer", className: "col-lg-12 col-md-12 col-xs-12 moviesContainer" }, React.createElement("div", { id: "discoveryChooserContainer", className: "col-lg-12 col-md-12 col-xs-12" }, React.createElement("div", { id: "discoveryChooserLabel", className: "col-lg-8 col-md-7 col-xs-12" }, React.createElement("h3", { id: "discoverLabel" })), React.createElement("div", { id: "discoveryChooserButtons", className: "col-lg-5 col-md-5 col-xs-12" }, React.createElement("div", { className: "col-lg-5 col-md-6 col-xs-6 col-lg-offset-2" }, React.createElement("button", { id: "OneMonthButton", className: "btn btn-success", onClick: this.handleClick1 }, "LAST 1 MONTH")), React.createElement("div", { className: "col-lg-5 col-md-6 col-xs-6" }, React.createElement("button", { id: "ThreeMonthButton", className: "btn btn-warning", onClick: this.handleClick3 }, "LAST 3 MONTHS ")))), React.createElement("div", { id: "innerDiscoverContainer" }, React.createElement(ReactCSSTransitionGroup, { transitionName: "example" }, moviesArray)));
   }
 });
 
@@ -831,13 +868,13 @@ var ManagePage = React.createClass({ displayName: "ManagePage",
 
 var CreditMember = React.createClass({ displayName: "CreditMember",
   render: function render() {
-    return React.createElement("div", { className: "creditMember col-lg-5 col-md-3" }, React.createElement("img", { className: "creditMemberPic", src: this.props.credit.picture }), React.createElement("h5", null, React.createElement("b", null, this.props.credit.character)), React.createElement("h5", null, this.props.credit.name));
+    return React.createElement("tr", { className: "creditMember" }, React.createElement("td", null, React.createElement("img", { className: "creditMemberPic", src: this.props.credit.picture })), React.createElement("td", null, React.createElement("h5", null, React.createElement("b", null, this.props.credit.character))), React.createElement("td", null, React.createElement("h5", null, this.props.credit.name)));
   }
 });
 
 var CrewMember = React.createClass({ displayName: "CrewMember",
   render: function render() {
-    return React.createElement("div", { className: "crewMember col-lg-5 col-md-3" }, React.createElement("h4", null, React.createElement("b", null, this.props.crew.name)), React.createElement("h5", null, this.props.crew.job));
+    return React.createElement("tr", { className: "crewMember" }, React.createElement("td", null, React.createElement("h4", null, React.createElement("b", null, this.props.crew.name))), React.createElement("td", null, React.createElement("h5", null, this.props.crew.job)));
   }
 });
 
@@ -846,7 +883,8 @@ var MovieDetailsContainer = React.createClass({ displayName: "MovieDetailsContai
     return {
       data: [],
       movieCredits: [],
-      movieCrew: []
+      movieCrew: [],
+      video: ''
     };
   },
   componentDidMount: function componentDidMount() {
@@ -854,6 +892,7 @@ var MovieDetailsContainer = React.createClass({ displayName: "MovieDetailsContai
     var id = this.props.params.id;
     MovieDetailsActions.loadMovieData(id, context);
     MovieDetailsActions.loadCredtisData(id, context);
+    MovieDetailsActions.loadVideos(id, context);
   },
   render: function render() {
     var creditsArray = this.state.movieCredits.map(function (credit) {
@@ -862,7 +901,7 @@ var MovieDetailsContainer = React.createClass({ displayName: "MovieDetailsContai
     var crewArray = this.state.movieCrew.map(function (crew) {
       return React.createElement(CrewMember, { crew: crew });
     });
-    return React.createElement("div", { id: "movieDetailsContainer", className: "col-lg-12 col-md-12 col-xs-12 movie" }, React.createElement("div", { id: "movieDetailsPoster", className: "col-lg-5 col-md-6" }, React.createElement("img", { src: this.state.data.posterPath })), React.createElement("div", { id: "movieDetailsContent", className: "col-lg-7 col-md-6" }, React.createElement("div", { id: "movieDetailsTitle", className: "col-lg-12 col-md-12" }, React.createElement("h3", null, React.createElement("b", null, this.state.data.title))), React.createElement("div", { id: "movieDetailsYear", className: "col-lg-12 col-md-12" }, React.createElement("h5", null, this.state.data.publishDate, " ", this.state.data.genre, "  ", React.createElement("b", null, this.state.data.vote_average), React.createElement("i", { className: "fa fa-star" }))), React.createElement("div", { id: "movieDetailsOverview", className: "col-lg-12 col-md-12" }, React.createElement("h5", null, this.state.data.overview)), React.createElement("div", { id: "movieDetailsCredit", className: "col-lg-12 col-md-12" }, creditsArray), React.createElement("div", { id: "movieDetailsCrew", className: "col-lg-12 col-md-12" }, crewArray)));
+    return React.createElement("div", { id: "movieDetailsContainer", className: "col-lg-12 col-md-12 col-xs-12 movie" }, React.createElement("div", { id: "movieDetailsPoster", className: "col-lg-5 col-md-6" }, React.createElement("img", { src: this.state.data.posterPath })), React.createElement("div", { id: "movieDetailsContent", className: "col-lg-7 col-md-6" }, React.createElement("div", { id: "movieDetailsTitle", className: "col-lg-12 col-md-12" }, React.createElement("h3", null, React.createElement("b", null, this.state.data.title), " (", this.state.data.publishDate, ")")), React.createElement("div", { id: "movieDetailsYear", className: "col-lg-12 col-md-12" }, React.createElement("h5", null, this.state.data.genre, "  ", React.createElement("b", null, this.state.data.vote_average), React.createElement("i", { className: "fa fa-star" }))), React.createElement("div", { id: "movieDetailsOverview", className: "col-lg-12 col-md-12" }, React.createElement("h5", null, this.state.data.overview)), React.createElement("div", { id: "movieDetailsCredit", className: "col-lg-6 col-md-6" }, React.createElement("table", null, React.createElement("tbody", null, creditsArray))), React.createElement("div", { id: "movieDetailsCrew", className: "col-lg-6 col-md-6" }, React.createElement("div", { className: "col-lg-12 col-md-12" }, React.createElement("table", null, React.createElement("tbody", null, crewArray))), React.createElement("div", { className: "col-lg-12 col-md-12" }, React.createElement("iframe", { id: "youtubeTrailerHigh", width: "300", height: "169", src: this.state.video, frameborder: "0", allowfullscreen: true }), React.createElement("iframe", { id: "youtubeTrailerMedium", width: "212", height: "119", src: this.state.video, frameborder: "0", allowfullscreen: true }))), React.createElement("div", { id: "movieDetailsHomepage", className: "col-lg-12 col-md-12" }, React.createElement("h5", null, React.createElement("a", { href: this.state.data.homePage }, this.state.data.homePage)))));
   }
 });
 /* jshint esnext: true */

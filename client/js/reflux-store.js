@@ -170,6 +170,7 @@ let movieDetailsActionStore = Reflux.createStore({
   movieData: {},
   movieCredits: [],
   movieCrew: [],
+  video: '',
   listenables: [MovieDetailsActions],
   init: () => {
     // do initializtion
@@ -178,11 +179,15 @@ let movieDetailsActionStore = Reflux.createStore({
     this.movieData = item;
     context.setState({data: this.movieData});
   },
-  addCreditsData: function(credits, crew, context) {
+  addCreditsData: function (credits, crew, context) {
     this.movieCredits = credits;
     this.movieCrew = crew;
     context.setState({movieCredits: this.movieCredits});
     context.setState({movieCrew: this.movieCrew});
+  },
+  addVideoUrl: function (url, context) {
+    this.video = url;
+    context.setState({video: this.video});
   },
   loadMovieData: function (id, that) {
     let context = that;
@@ -204,6 +209,18 @@ let movieDetailsActionStore = Reflux.createStore({
           http.ajax(movieDetails.createCreditsUrl(id))
             .get()
             .then(http.successDetailsCredits.bind(context));
+          resolve(function () { });
+        });
+    };
+    promise().then(function () {});
+  },
+  loadVideos: function (id, that) {
+    let context = that;
+    let promise = function () {
+      return new Promise(function (resolve, reject) {
+          http.ajax(movieDetails.createVideoGetterUrl(id))
+            .get()
+            .then(http.successVideoUrl.bind(context));
           resolve(function () { });
         });
     };

@@ -37,5 +37,17 @@ let movieDetails = {
     let urlFirstPart = 'https://api.themoviedb.org/3/movie/';
     let url = urlFirstPart + id + urlSecondPart + api_key;
     return url;
+  },
+  createVideoGetterUrl: function (id) {
+    let api_key = '?' + tmdbApiKey;
+    let urlSecondPart = '/videos';
+    let urlFirstPart = 'https://api.themoviedb.org/3/movie/';
+    let url = urlFirstPart + id + urlSecondPart + api_key;
+    return url;
+  },
+  createVideoUrl: function (key) {
+    let urlFirstPart = 'https://www.youtube.com/embed/';
+    let url = urlFirstPart + key;
+    return url;
   }
 };
