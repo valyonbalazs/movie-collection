@@ -7,29 +7,32 @@ body {
 
 @media (max-width: 767px) {
   #discoveryChooserContainer {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    z-index: 3;
+    width: 100%;
     margin-top: 1em;
     padding: 0em 0.5em 0.5em 0.5em;
-    background-color: rgba(207, 211, 212, 0.7);
-    border-radius: 0.3em; }
+    background-color: rgba(207, 211, 212, 0.85); }
     #discoveryChooserContainer #discoveryChooserLabel {
-      text-align: center;
-      margin-top: 0.5em; }
-      #discoveryChooserContainer #discoveryChooserLabel h3 {
-        margin: 0;
-        margin-bottom: 0.3em;
-        font-size: 1.2em; }
-      #discoveryChooserContainer #discoveryChooserLabel div {
-        text-align: center;
-        font-size: 1.3em; }
+      display: none; }
     #discoveryChooserContainer #discoveryChooserButtons {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between; }
+      justify-content: space-between;
+      padding: 0.4em 0.8em 0em 0.8em; }
       #discoveryChooserContainer #discoveryChooserButtons div {
-        padding: 0; }
-      #discoveryChooserContainer #discoveryChooserButtons button {
-        font-size: 0.7em;
-        padding: 0.2em 0.2em 0.2em 0.2em; } }
+        text-align: center; }
+        #discoveryChooserContainer #discoveryChooserButtons div i {
+          font-size: 2em; }
+      #discoveryChooserContainer #discoveryChooserButtons .bootstrapBtn {
+        display: none; }
+      #discoveryChooserContainer #discoveryChooserButtons .fontawesomeBtn {
+        display: flex;
+        justify-content: center; }
+      #discoveryChooserContainer #discoveryChooserButtons .fontawesomeBtn:active {
+        color: blue; } }
 
 @media (min-width: 768px) {
   #discoveryChooserContainer {

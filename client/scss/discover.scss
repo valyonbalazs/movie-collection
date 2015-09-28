@@ -8,40 +8,45 @@ $screen-ultrahigh-min: 1200px;
 
   #discoveryChooserContainer {
 
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    z-index: 3;
+    width: 100%;
+
     margin-top: 1em;
     padding: 0em 0.5em 0.5em 0.5em;
-    background-color: rgba(207,211,212, 0.7);
-    border-radius: 0.3em;
+    background-color: rgba(207,211,212, 0.85);
 
     #discoveryChooserLabel {
-      text-align: center;
-      margin-top: 0.5em;
-
-      h3 {
-        margin: 0;
-        margin-bottom: 0.3em;
-        font-size: 1.2em;
-      }
-
-      div {
-        text-align: center;
-        font-size: 1.3em;
-      }
+      display: none;
     }
 
     #discoveryChooserButtons {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
+      padding: 0.4em 0.8em 0em 0.8em;
 
       div {
-        padding: 0;
+        text-align: center;
+
+        i {
+          font-size: 2em;
+        }
       }
 
-      button {
-        font-size: 0.7em;
-        padding: 0.2em 0.2em 0.2em 0.2em;
+      .bootstrapBtn {
+        display: none;
+      }
 
+      .fontawesomeBtn {
+        display: flex;
+        justify-content: center;
+      }
+
+      .fontawesomeBtn:active {
+        color: blue;
       }
     }
   }

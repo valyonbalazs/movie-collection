@@ -181,11 +181,10 @@ let http = {
     }
     console.log(movieData);
     let posterPath = movies.createImageUrl(movieData.poster_path);
-    let releaseDate = undefined;
+    let releaseDate;
     try {
       releaseDate = movies.modifyReleaseDate(movieData.release_date);
     } catch (error) {
-      console.log("date error: " + error);
       releaseDate = movies.modifyReleaseDate(movieData.first_air_date);
     }
 
