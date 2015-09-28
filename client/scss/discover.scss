@@ -9,7 +9,7 @@ $screen-ultrahigh-min: 1200px;
   #discoveryChooserContainer {
 
     margin-top: 1em;
-    padding: 0.5em;
+    padding: 0em 0.5em 0.5em 0.5em;
     background-color: rgba(207,211,212, 0.7);
     border-radius: 0.3em;
 
@@ -31,14 +31,16 @@ $screen-ultrahigh-min: 1200px;
 
     #discoveryChooserButtons {
       display: flex;
-      justify-content: flex-end;
+      flex-wrap: wrap;
+      justify-content: space-between;
 
       div {
         padding: 0;
       }
 
       button {
-        font-size: 0.8em;
+        font-size: 0.7em;
+        padding: 0.2em 0.2em 0.2em 0.2em;
 
       }
     }
@@ -89,5 +91,10 @@ $screen-ultrahigh-min: 1200px;
     div {
       text-align: center;
     }
+  }
+
+  #discoveryChooserButtons {
+    display: flex;
+    justify-content: space-between;
   }
 }

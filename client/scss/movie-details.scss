@@ -6,6 +6,95 @@ $screen-ultrahigh-min: 1200px;
 //SMALLEST RESOLUTION
 @media(max-width: $screen-small-max) {
 
+  #movieDetailsContainer {
+
+    margin-top: 1.5em;
+
+    #movieDetailsPoster {
+      padding: 0;
+      text-align: center;
+
+      img {
+        max-height: 28em;
+      }
+    }
+
+    #movieDetailsContent {
+      padding: 0;
+
+      #movieDetailsTitle {
+
+        h3 {
+          margin-top: 1em;
+        }
+      }
+
+      #movieDetailsOverview {
+
+        h5 {
+          text-align: justify;
+        }
+      }
+
+      #movieDetailsCredit {
+        display: flex;
+        flex-wrap: wrap;
+        padding-left: 0;
+
+        .creditMember {
+          text-align: right;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+
+          td {
+            border: 0px;
+          }
+
+          h5 {
+            margin-top: 0.2em;
+            margin-bottom: 0.2em;
+          }
+        }
+
+        .creditMemberPic {
+          box-shadow: 3px 3px 5px #888888;
+          max-height: 3em;
+        }
+      }
+
+      #movieDetailsCrew {
+
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding: 0;
+
+        .crewMember {
+          text-align: left;
+          padding: 0;
+
+          h4 {
+            font-size: 0.8em;
+          }
+        }
+      }
+
+      #movieDetailVideo {
+        padding: 0;
+      }
+
+      #movieDetailsHomepage {
+
+        text-align: center;
+        margin-top: 0.5em;
+        padding: 0;
+        a {
+          color: black;
+        }
+      }
+    }
+  }
 
 
 }

@@ -72,27 +72,27 @@ let MovieDetailsContainer = React.createClass({
     if (wasTvBtnClicked == false) {
       return (
         <div id="movieDetailsContainer" className="col-lg-12 col-md-12 col-xs-12 movie">
-          <div id="movieDetailsPoster" className="col-lg-5 col-md-5">
+          <div id="movieDetailsPoster" className="col-lg-5 col-md-5 col-xs-12">
             <img src={this.state.data.posterPath} />
           </div>
-          <div id="movieDetailsContent" className="col-lg-7 col-md-7">
-            <div id="movieDetailsTitle" className="col-lg-12 col-md-12">
+          <div id="movieDetailsContent" className="col-lg-7 col-md-7 col-xs-12">
+            <div id="movieDetailsTitle" className="col-lg-12 col-md-12 col-xs-12">
               <h3><b>{this.state.data.title}</b> ({this.state.data.publishDate})</h3>
             </div>
-            <div id="movieDetailsYear" className="col-lg-12 col-md-12">
+            <div id="movieDetailsYear" className="col-lg-12 col-md-12 col-xs-12">
               <h5>{this.state.data.genre}  <b>{this.state.data.vote_average}</b><i className="fa fa-star"></i></h5>
             </div>
-            <div id="movieDetailsOverview" className="col-lg-12 col-md-12">
+            <div id="movieDetailsOverview" className="col-lg-12 col-md-12 col-xs-12">
               <h5>{this.state.data.overview}</h5>
             </div>
-            <div id="movieDetailsCredit" className="col-lg-6 col-md-6">
+            <div id="movieDetailsCredit" className="col-lg-6 col-md-6 col-xs-12">
               <table>
                 <tbody>
                   {creditsArray}
                 </tbody>
               </table>
             </div>
-            <div id="movieDetailsCrew" className="col-lg-6 col-md-6">
+            <div id="movieDetailsCrew" className="col-lg-6 col-md-6 col-xs-12">
               <div className="col-lg-12 col-md-12">
                 <table>
                   <tbody>
@@ -100,9 +100,8 @@ let MovieDetailsContainer = React.createClass({
                   </tbody>
                 </table>
               </div>
-              <div className="col-lg-12 col-md-12">
+              <div id="movieDetailVideo" className="col-lg-12 col-md-12 col-xs-12">
                 <iframe id="youtubeTrailerHigh" width="300" height="169" src={this.state.video} frameborder="0" allowfullscreen></iframe>
-                <iframe id="youtubeTrailerMedium" width="250" height="141" src={this.state.video} frameborder="0" allowfullscreen></iframe>
               </div>
             </div>
             <div id="movieDetailsHomepage" className="col-lg-12 col-md-12">
@@ -117,30 +116,29 @@ let MovieDetailsContainer = React.createClass({
           <div id="movieDetailsPoster" className="col-lg-5 col-md-5">
             <img src={this.state.data.posterPath} />
           </div>
-          <div id="movieDetailsContent" className="col-lg-7 col-md-7">
-            <div id="movieDetailsTitle" className="col-lg-12 col-md-12">
+          <div id="movieDetailsContent" className="col-lg-7 col-md-7 col-xs-12">
+            <div id="movieDetailsTitle" className="col-lg-12 col-md-12 col-xs-12">
               <h3><b>{this.state.data.title}</b> ({this.state.data.publishDate})</h3>
             </div>
-            <div id="movieDetailsYear" className="col-lg-12 col-md-12">
+            <div id="movieDetailsYear" className="col-lg-12 col-md-12 col-xs-12">
               <h5>{this.state.data.genre}  <b>{this.state.data.vote_average}</b><i className="fa fa-star"></i></h5>
             </div>
-            <div id="movieDetailsOverview" className="col-lg-12 col-md-12">
+            <div id="movieDetailsOverview" className="col-lg-12 col-md-12 col-xs-12">
               <h5>{this.state.data.overview}</h5>
             </div>
-            <div id="movieDetailsCredit" className="col-lg-6 col-md-6">
+            <div id="movieDetailsCredit" className="col-lg-6 col-md-6 col-xs-12">
               <table>
                 <tbody>
                   {creditsArray}
                 </tbody>
               </table>
             </div>
-            <div id="movieDetailsHomepage" className="col-lg-12 col-md-12">
+            <div id="movieDetailsHomepage" className="col-lg-12 col-md-12 col-xs-12">
               <h5><a href={this.state.data.homePage}>{this.state.data.homePage}</a></h5>
             </div>
           </div>
         </div>
       );
     }
-
   }
 });

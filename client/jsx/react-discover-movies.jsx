@@ -54,20 +54,20 @@ let DiscoverMoviesContainer = React.createClass({
       return (
         <div id="moviesContainer" className="col-lg-12 col-md-12 col-xs-12 moviesContainer" >
           <div id="discoveryChooserContainer" className="col-lg-12 col-md-12 col-xs-12">
-            <div id="discoveryChooserLabel" className="col-lg-3 col-md-3 col-xs-12">
+            <div id="discoveryChooserLabel" className="col-lg-4 col-md-4 col-xs-12">
               <h3 id="discoverLabel"></h3>
             </div>
             <div id="discoveryChooserButtons" className="col-lg-9 col-md-9 col-xs-12">
-              <div className="col-lg-3 col-md-3 col-xs-6">
+              <div >
                   <button id="OneMonthButton" className="btn btn-success" onClick={this.handleClick1}>MOVIES - LAST MONTH</button>
               </div>
-              <div className="col-lg-3 col-md-3 col-xs-6">
+              <div >
                   <button id="ThreeMonthButton" className="btn btn-success" onClick={this.handleClick3}>MOVIES - LAST 3 MONTHS</button>
               </div>
-              <div className="col-lg-3 col-md-3 col-xs-6">
+              <div>
                   <button id="ThreeMonthButton" className="btn btn-warning" onClick={this.handleClickTvTop}>TV - TOP RATED</button>
               </div>
-              <div className="col-lg-3 col-md-3 col-xs-6">
+              <div >
                   <button id="ThreeMonthButton" className="btn btn-warning" onClick={this.handleClickTvAir}>TV - AIRING TODAY</button>
               </div>
             </div>

@@ -8,7 +8,7 @@ body {
 @media (max-width: 767px) {
   #discoveryChooserContainer {
     margin-top: 1em;
-    padding: 0.5em;
+    padding: 0em 0.5em 0.5em 0.5em;
     background-color: rgba(207, 211, 212, 0.7);
     border-radius: 0.3em; }
     #discoveryChooserContainer #discoveryChooserLabel {
@@ -23,11 +23,13 @@ body {
         font-size: 1.3em; }
     #discoveryChooserContainer #discoveryChooserButtons {
       display: flex;
-      justify-content: flex-end; }
+      flex-wrap: wrap;
+      justify-content: space-between; }
       #discoveryChooserContainer #discoveryChooserButtons div {
         padding: 0; }
       #discoveryChooserContainer #discoveryChooserButtons button {
-        font-size: 0.8em; } }
+        font-size: 0.7em;
+        padding: 0.2em 0.2em 0.2em 0.2em; } }
 
 @media (min-width: 768px) {
   #discoveryChooserContainer {
@@ -51,7 +53,10 @@ body {
     #discoveryChooserContainer #discoveryChooserLabel h3 {
       margin: 0; }
     #discoveryChooserContainer div {
-      text-align: center; } }
+      text-align: center; }
+  #discoveryChooserButtons {
+    display: flex;
+    justify-content: space-between; } }
 
 @media (max-width: 767px) {
   .center {
@@ -220,6 +225,56 @@ body {
       text-align: center; }
     #innerContainer #listMoviesFromDbContainer td {
       text-align: center; } }
+
+@media (max-width: 767px) {
+  #movieDetailsContainer {
+    margin-top: 1.5em; }
+    #movieDetailsContainer #movieDetailsPoster {
+      padding: 0;
+      text-align: center; }
+      #movieDetailsContainer #movieDetailsPoster img {
+        max-height: 28em; }
+    #movieDetailsContainer #movieDetailsContent {
+      padding: 0; }
+      #movieDetailsContainer #movieDetailsContent #movieDetailsTitle h3 {
+        margin-top: 1em; }
+      #movieDetailsContainer #movieDetailsContent #movieDetailsOverview h5 {
+        text-align: justify; }
+      #movieDetailsContainer #movieDetailsContent #movieDetailsCredit {
+        display: flex;
+        flex-wrap: wrap;
+        padding-left: 0; }
+        #movieDetailsContainer #movieDetailsContent #movieDetailsCredit .creditMember {
+          text-align: right;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center; }
+          #movieDetailsContainer #movieDetailsContent #movieDetailsCredit .creditMember td {
+            border: 0px; }
+          #movieDetailsContainer #movieDetailsContent #movieDetailsCredit .creditMember h5 {
+            margin-top: 0.2em;
+            margin-bottom: 0.2em; }
+        #movieDetailsContainer #movieDetailsContent #movieDetailsCredit .creditMemberPic {
+          box-shadow: 3px 3px 5px #888888;
+          max-height: 3em; }
+      #movieDetailsContainer #movieDetailsContent #movieDetailsCrew {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding: 0; }
+        #movieDetailsContainer #movieDetailsContent #movieDetailsCrew .crewMember {
+          text-align: left;
+          padding: 0; }
+          #movieDetailsContainer #movieDetailsContent #movieDetailsCrew .crewMember h4 {
+            font-size: 0.8em; }
+      #movieDetailsContainer #movieDetailsContent #movieDetailVideo {
+        padding: 0; }
+      #movieDetailsContainer #movieDetailsContent #movieDetailsHomepage {
+        text-align: center;
+        margin-top: 0.5em;
+        padding: 0; }
+        #movieDetailsContainer #movieDetailsContent #movieDetailsHomepage a {
+          color: black; } }
 
 @media (min-width: 768px) {
   #movieDetailsContainer {

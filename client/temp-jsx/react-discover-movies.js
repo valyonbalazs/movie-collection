@@ -54,20 +54,20 @@ let DiscoverMoviesContainer = React.createClass({displayName: "DiscoverMoviesCon
       return (
         React.createElement("div", {id: "moviesContainer", className: "col-lg-12 col-md-12 col-xs-12 moviesContainer"}, 
           React.createElement("div", {id: "discoveryChooserContainer", className: "col-lg-12 col-md-12 col-xs-12"}, 
-            React.createElement("div", {id: "discoveryChooserLabel", className: "col-lg-3 col-md-3 col-xs-12"}, 
+            React.createElement("div", {id: "discoveryChooserLabel", className: "col-lg-4 col-md-4 col-xs-12"}, 
               React.createElement("h3", {id: "discoverLabel"})
             ), 
             React.createElement("div", {id: "discoveryChooserButtons", className: "col-lg-9 col-md-9 col-xs-12"}, 
-              React.createElement("div", {className: "col-lg-3 col-md-3 col-xs-6"}, 
+              React.createElement("div", null, 
                   React.createElement("button", {id: "OneMonthButton", className: "btn btn-success", onClick: this.handleClick1}, "MOVIES - LAST MONTH")
               ), 
-              React.createElement("div", {className: "col-lg-3 col-md-3 col-xs-6"}, 
+              React.createElement("div", null, 
                   React.createElement("button", {id: "ThreeMonthButton", className: "btn btn-success", onClick: this.handleClick3}, "MOVIES - LAST 3 MONTHS")
               ), 
-              React.createElement("div", {className: "col-lg-3 col-md-3 col-xs-6"}, 
+              React.createElement("div", null, 
                   React.createElement("button", {id: "ThreeMonthButton", className: "btn btn-warning", onClick: this.handleClickTvTop}, "TV - TOP RATED")
               ), 
-              React.createElement("div", {className: "col-lg-3 col-md-3 col-xs-6"}, 
+              React.createElement("div", null, 
                   React.createElement("button", {id: "ThreeMonthButton", className: "btn btn-warning", onClick: this.handleClickTvAir}, "TV - AIRING TODAY")
               )
             )
