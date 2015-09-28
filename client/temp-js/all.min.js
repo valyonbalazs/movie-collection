@@ -65,6 +65,22 @@ var http = {
       DiscoverActions.addMovieToStore(movie, context);
     }
   },
+  successDiscoverTv: function successDiscoverTv(data) {
+    var movieData = undefined;
+    movieData = JSON.parse(data);
+    for (var key in movieData.results) {
+      var title = movies.modifyTitle(movieData.results[key].original_name);
+      var backdropPath = movies.createImageUrl(movieData.results[key].backdrop_path);
+      var posterPath = movies.createImageUrl(movieData.results[key].poster_path);
+      var overview = movies.modifyOverview(movieData.results[key].overview);
+      var releaseDate = movies.modifyReleaseDate(movieData.results[key].first_air_date);
+      var average = movieData.results[key].vote_average + ' ';
+      var movieId = movieData.results[key].id;
+      var movie = new MovieElement(title, overview, average, releaseDate, backdropPath, posterPath, movieId);
+      var context = this;
+      DiscoverActions.addMovieToStore(movie, context);
+    }
+  },
   successDetails: function successDetails(data) {
     var movieData = undefined;
     movieData = JSON.parse(data);
@@ -123,6 +139,27 @@ var http = {
 
     var context = this;
     MovieDetailsActions.addVideoUrl(videoUrl, context);
+  },
+  successDetailsTv: function successDetailsTv(data) {
+    var movieData = undefined;
+    movieData = JSON.parse(data);
+    var genre = [];
+    for (var key in movieData.genres) {
+      genre.push(' ' + movieData.genres[key].name);
+    }
+    console.log(movieData);
+    var posterPath = movies.createImageUrl(movieData.poster_path);
+    var releaseDate = undefined;
+    try {
+      releaseDate = movies.modifyReleaseDate(movieData.release_date);
+    } catch (error) {
+      console.log("date error: " + error);
+      releaseDate = movies.modifyReleaseDate(movieData.first_air_date);
+    }
+
+    var movie = new MovieDetails(movieData.original_name, movieData.overview, genre, releaseDate, movieData.networks, movieData.vote_average, movieData.vote_count, movieData.homepage, posterPath);
+    var context = this;
+    TvShowDetailsActions.addMovieData(movie, context);
   }
 };
 
@@ -415,11 +452,13 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 
 'use strict';
 
-var DiscoverActions = Reflux.createActions(['addMovieToStore', 'oneMonthDiscoverBtnClicked', 'threeMonthDiscoverBtnClicked', 'removeContainer']);
+var DiscoverActions = Reflux.createActions(['addMovieToStore', 'oneMonthDiscoverBtnClicked', 'threeMonthDiscoverBtnClicked', 'tvTopRatedBtnClicked', 'tvAiringBtnClicked', 'removeContainer']);
 
 var MyMoviesActions = Reflux.createActions(['loadMovieTitles', 'loadMovies', 'addMovieToMyList', 'removeMovieFromDb', 'addMovieToDb']);
 
 var MovieDetailsActions = Reflux.createActions(['loadMovieData', 'loadCredtisData', 'loadVideos', 'addMovieData', 'addCreditsData', 'addVideoUrl']);
+
+var TvShowDetailsActions = Reflux.createActions(['loadMovieData', 'loadCredtisData', 'loadVideos', 'addMovieData', 'addCreditsData', 'addVideoUrl']);
 /* jshint esnext: true */
 
 'use strict';
@@ -456,12 +495,27 @@ var discoverActionStore = Reflux.createStore({
     var context = that;
     this.btnClicked('Best movies of the last 3 months', context, movies.create3MonthDiscoverUrl());
   },
+  tvTopRatedBtnClicked: function tvTopRatedBtnClicked(that) {
+    var context = that;
+    this.btnClickedTv('Top rated TV shows', context, tvshows.createTvTopRatedUrl());
+  },
+  tvAiringBtnClicked: function tvAiringBtnClicked(that) {
+    var context = that;
+    this.btnClickedTv('Top rated TV shows', context, tvshows.createTvAiringUrl());
+  },
   btnClicked: function btnClicked(labelText, that, monthFunction) {
     var context = that;
     DiscoverActions.removeContainer();
     var label = document.getElementById('discoverLabel');
     label.innerHTML = labelText;
     http.ajax(monthFunction).get().then(http.successDiscover.bind(context));
+  },
+  btnClickedTv: function btnClickedTv(labelText, that, monthFunction) {
+    var context = that;
+    DiscoverActions.removeContainer();
+    var label = document.getElementById('discoverLabel');
+    label.innerHTML = labelText;
+    http.ajax(monthFunction).get().then(http.successDiscoverTv.bind(context));
   }
 });
 
@@ -682,6 +736,62 @@ var movieDetailsActionStore = Reflux.createStore({
     promise().then(function () {});
   }
 });
+
+var TvShowDetailsActionStore = Reflux.createStore({
+  movieData: {},
+  movieCredits: [],
+  movieCrew: [],
+  video: '',
+  listenables: [TvShowDetailsActions],
+  init: function init() {
+    // do initializtion
+  },
+  addMovieData: function addMovieData(item, context) {
+    this.movieData = item;
+    context.setState({ data: this.movieData });
+  },
+  addCreditsData: function addCreditsData(credits, crew, context) {
+    this.movieCredits = credits;
+    this.movieCrew = crew;
+    context.setState({ movieCredits: this.movieCredits });
+    context.setState({ movieCrew: this.movieCrew });
+  },
+  addVideoUrl: function addVideoUrl(url, context) {
+    this.video = url;
+    context.setState({ video: this.video });
+  },
+  loadMovieData: function loadMovieData(id, that) {
+    var context = that;
+    var promise = function promise() {
+      return new Promise(function (resolve, reject) {
+        http.ajax(tvshows.createTvShowUrl(id)).get().then(http.successDetailsTv.bind(context));
+        resolve(function () {});
+      });
+    };
+
+    promise().then(function () {});
+  },
+  loadCredtisData: function loadCredtisData(id, that) {
+    var context = that;
+    var promise = function promise() {
+      return new Promise(function (resolve, reject) {
+        http.ajax(movieDetails.createCreditsUrl(id)).get().then(http.successDetailsCredits.bind(context));
+        resolve(function () {});
+      });
+    };
+    promise().then(function () {});
+  },
+  loadVideos: function loadVideos(id, that) {
+    var context = that;
+    var promise = function promise() {
+      return new Promise(function (resolve, reject) {
+        http.ajax(movieDetails.createVideoGetterUrl(id)).get().then(http.successVideoUrl.bind(context));
+        resolve(function () {});
+      });
+    };
+    promise().then(function () {});
+  }
+});
 /* jshint esnext: true */
 
 'use strict';
@@ -733,6 +843,28 @@ var renderPage = {
 /* jshint esnext: true */
 /* jshint esnext: true */
 
+'use strict';
+
+var tvshows = {
+  createTvTopRatedUrl: function createTvTopRatedUrl() {
+    var urlFirstPart = 'http://api.themoviedb.org/3/tv/top_rated?';
+    var resultUrl = urlFirstPart + tmdbApiKey;
+    return resultUrl;
+  },
+  createTvAiringUrl: function createTvAiringUrl() {
+    var urlFirstPart = 'http://api.themoviedb.org/3/tv/airing_today?';
+    var resultUrl = urlFirstPart + tmdbApiKey;
+    return resultUrl;
+  },
+  createTvShowUrl: function createTvShowUrl(id) {
+    var urlFirstPart = 'http://api.themoviedb.org/3/tv/';
+    var api_key = '?' + tmdbApiKey;
+    var resultUrl = urlFirstPart + id + api_key;
+    return resultUrl;
+  }
+};
+/* jshint esnext: true */
+
 // for jsdom testing, it has to be uncommented during tests
 /*let React = require('react/addons');
 let http = require('../js/http.js');
@@ -756,19 +888,31 @@ var DiscoverMoviesContainer = React.createClass({ displayName: "DiscoverMoviesCo
     this.handleClick1();
   },
   handleClick1: function handleClick1() {
+    wasTvBtnClicked = false;
     var context = this;
     DiscoverActions.oneMonthDiscoverBtnClicked(context);
   },
   handleClick3: function handleClick3() {
+    wasTvBtnClicked = false;
     var context = this;
     DiscoverActions.threeMonthDiscoverBtnClicked(context);
+  },
+  handleClickTvTop: function handleClickTvTop() {
+    wasTvBtnClicked = true;
+    var context = this;
+    DiscoverActions.tvTopRatedBtnClicked(context);
+  },
+  handleClickTvAir: function handleClickTvAir() {
+    wasTvBtnClicked = true;
+    var context = this;
+    DiscoverActions.tvAiringBtnClicked(context);
   },
   render: function render() {
     var moviesArray = this.state.data.map(function (movie) {
       return React.createElement(Movie, { movie: movie });
     });
 
-    return React.createElement("div", { id: "moviesContainer", className: "col-lg-12 col-md-12 col-xs-12 moviesContainer" }, React.createElement("div", { id: "discoveryChooserContainer", className: "col-lg-12 col-md-12 col-xs-12" }, React.createElement("div", { id: "discoveryChooserLabel", className: "col-lg-8 col-md-7 col-xs-12" }, React.createElement("h3", { id: "discoverLabel" })), React.createElement("div", { id: "discoveryChooserButtons", className: "col-lg-5 col-md-5 col-xs-12" }, React.createElement("div", { className: "col-lg-5 col-md-6 col-xs-6 col-lg-offset-2" }, React.createElement("button", { id: "OneMonthButton", className: "btn btn-success", onClick: this.handleClick1 }, "LAST 1 MONTH")), React.createElement("div", { className: "col-lg-5 col-md-6 col-xs-6" }, React.createElement("button", { id: "ThreeMonthButton", className: "btn btn-warning", onClick: this.handleClick3 }, "LAST 3 MONTHS ")))), React.createElement("div", { id: "innerDiscoverContainer" }, React.createElement(ReactCSSTransitionGroup, { transitionName: "example" }, moviesArray)));
+    return React.createElement("div", { id: "moviesContainer", className: "col-lg-12 col-md-12 col-xs-12 moviesContainer" }, React.createElement("div", { id: "discoveryChooserContainer", className: "col-lg-12 col-md-12 col-xs-12" }, React.createElement("div", { id: "discoveryChooserLabel", className: "col-lg-3 col-md-3 col-xs-12" }, React.createElement("h3", { id: "discoverLabel" })), React.createElement("div", { id: "discoveryChooserButtons", className: "col-lg-9 col-md-9 col-xs-12" }, React.createElement("div", { className: "col-lg-3 col-md-3 col-xs-6" }, React.createElement("button", { id: "OneMonthButton", className: "btn btn-success", onClick: this.handleClick1 }, "MOVIES - LAST MONTH")), React.createElement("div", { className: "col-lg-3 col-md-3 col-xs-6" }, React.createElement("button", { id: "ThreeMonthButton", className: "btn btn-success", onClick: this.handleClick3 }, "MOVIES - LAST 3 MONTHS")), React.createElement("div", { className: "col-lg-3 col-md-3 col-xs-6" }, React.createElement("button", { id: "ThreeMonthButton", className: "btn btn-warning", onClick: this.handleClickTvTop }, "TV - TOP RATED")), React.createElement("div", { className: "col-lg-3 col-md-3 col-xs-6" }, React.createElement("button", { id: "ThreeMonthButton", className: "btn btn-warning", onClick: this.handleClickTvAir }, "TV - AIRING TODAY")))), React.createElement("div", { id: "innerDiscoverContainer" }, React.createElement(ReactCSSTransitionGroup, { transitionName: "example" }, moviesArray)));
   }
 });
 
@@ -866,6 +1010,8 @@ var ManagePage = React.createClass({ displayName: "ManagePage",
 
 "use strict";
 
+var wasTvBtnClicked = false;
+
 var CreditMember = React.createClass({ displayName: "CreditMember",
   render: function render() {
     return React.createElement("tr", { className: "creditMember" }, React.createElement("td", null, React.createElement("img", { className: "creditMemberPic", src: this.props.credit.picture })), React.createElement("td", null, React.createElement("h5", null, React.createElement("b", null, this.props.credit.character))), React.createElement("td", null, React.createElement("h5", null, this.props.credit.name)));
@@ -890,9 +1036,16 @@ var MovieDetailsContainer = React.createClass({ displayName: "MovieDetailsContai
   componentDidMount: function componentDidMount() {
     var context = this;
     var id = this.props.params.id;
-    MovieDetailsActions.loadMovieData(id, context);
-    MovieDetailsActions.loadCredtisData(id, context);
-    MovieDetailsActions.loadVideos(id, context);
+    if (wasTvBtnClicked == false) {
+      console.log("component mounted");
+      MovieDetailsActions.loadMovieData(id, context);
+      MovieDetailsActions.loadCredtisData(id, context);
+      MovieDetailsActions.loadVideos(id, context);
+    } else {
+      TvShowDetailsActions.loadMovieData(id, context);
+      // TvShowDetailsActions.loadCredtisData(id, context);
+      // TvShowDetailsActions.loadVideos(id, context);
+    }
   },
   render: function render() {
     var creditsArray = this.state.movieCredits.map(function (credit) {

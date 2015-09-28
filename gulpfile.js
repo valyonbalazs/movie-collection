@@ -310,7 +310,6 @@ gulp.task('build', function (cb) {
 gulp.task('connect', function () {
   connect.server({
     root: [directory.dest.build],
-    port: 80,
     livereload: true
   });
 });

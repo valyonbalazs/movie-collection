@@ -32,6 +32,14 @@ let discoverActionStore = Reflux.createStore({
     let context = that;
     this.btnClicked('Best movies of the last 3 months', context, movies.create3MonthDiscoverUrl());
   },
+  tvTopRatedBtnClicked: function (that) {
+    let context = that;
+    this.btnClickedTv('Top rated TV shows', context, tvshows.createTvTopRatedUrl());
+  },
+  tvAiringBtnClicked: function (that) {
+    let context = that;
+    this.btnClickedTv('Top rated TV shows', context, tvshows.createTvAiringUrl());
+  },
   btnClicked: function (labelText, that, monthFunction) {
     let context = that;
     DiscoverActions.removeContainer();
@@ -40,6 +48,15 @@ let discoverActionStore = Reflux.createStore({
     http.ajax(monthFunction)
       .get()
       .then(http.successDiscover.bind(context));
+  },
+  btnClickedTv: function (labelText, that, monthFunction) {
+    let context = that;
+    DiscoverActions.removeContainer();
+    var label = document.getElementById('discoverLabel');
+    label.innerHTML = labelText;
+    http.ajax(monthFunction)
+      .get()
+      .then(http.successDiscoverTv.bind(context));
   }
 });
 
@@ -196,6 +213,68 @@ let movieDetailsActionStore = Reflux.createStore({
           http.ajax(movieDetails.createMovieUrl(id))
             .get()
             .then(http.successDetails.bind(context));
+          resolve(function () { });
+        });
+    };
+
+    promise().then(function () {});
+  },
+  loadCredtisData: function(id, that) {
+    let context = that;
+    let promise = function () {
+      return new Promise(function (resolve, reject) {
+          http.ajax(movieDetails.createCreditsUrl(id))
+            .get()
+            .then(http.successDetailsCredits.bind(context));
+          resolve(function () { });
+        });
+    };
+    promise().then(function () {});
+  },
+  loadVideos: function (id, that) {
+    let context = that;
+    let promise = function () {
+      return new Promise(function (resolve, reject) {
+          http.ajax(movieDetails.createVideoGetterUrl(id))
+            .get()
+            .then(http.successVideoUrl.bind(context));
+          resolve(function () { });
+        });
+    };
+    promise().then(function () {});
+  }
+});
+
+let TvShowDetailsActionStore = Reflux.createStore({
+  movieData: {},
+  movieCredits: [],
+  movieCrew: [],
+  video: '',
+  listenables: [TvShowDetailsActions],
+  init: () => {
+    // do initializtion
+  },
+  addMovieData: function (item, context) {
+    this.movieData = item;
+    context.setState({data: this.movieData});
+  },
+  addCreditsData: function (credits, crew, context) {
+    this.movieCredits = credits;
+    this.movieCrew = crew;
+    context.setState({movieCredits: this.movieCredits});
+    context.setState({movieCrew: this.movieCrew});
+  },
+  addVideoUrl: function (url, context) {
+    this.video = url;
+    context.setState({video: this.video});
+  },
+  loadMovieData: function (id, that) {
+    let context = that;
+    let promise = function () {
+      return new Promise(function (resolve, reject) {
+          http.ajax(tvshows.createTvShowUrl(id))
+            .get()
+            .then(http.successDetailsTv.bind(context));
           resolve(function () { });
         });
     };

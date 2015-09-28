@@ -1,5 +1,7 @@
 /* jshint esnext: true */
 
+let wasTvBtnClicked = false;
+
 let CreditMember = React.createClass({displayName: "CreditMember",
   render: function () {
     return (
@@ -45,9 +47,16 @@ let MovieDetailsContainer = React.createClass({displayName: "MovieDetailsContain
   componentDidMount: function () {
     let context = this;
     let id = this.props.params.id;
-    MovieDetailsActions.loadMovieData(id, context);
-    MovieDetailsActions.loadCredtisData(id, context);
-    MovieDetailsActions.loadVideos(id, context);
+    if(wasTvBtnClicked == false) {
+      console.log("component mounted");
+      MovieDetailsActions.loadMovieData(id, context);
+      MovieDetailsActions.loadCredtisData(id, context);
+      MovieDetailsActions.loadVideos(id, context);
+    } else {
+      TvShowDetailsActions.loadMovieData(id, context);
+      // TvShowDetailsActions.loadCredtisData(id, context);
+      // TvShowDetailsActions.loadVideos(id, context);
+    }
   },
   render: function () {
     let creditsArray = this.state.movieCredits.map(function (credit) {

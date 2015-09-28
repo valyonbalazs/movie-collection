@@ -22,7 +22,8 @@ body {
         text-align: center;
         font-size: 1.3em; }
     #discoveryChooserContainer #discoveryChooserButtons {
-      text-align: center; }
+      display: flex;
+      justify-content: flex-end; }
       #discoveryChooserContainer #discoveryChooserButtons div {
         padding: 0; }
       #discoveryChooserContainer #discoveryChooserButtons button {

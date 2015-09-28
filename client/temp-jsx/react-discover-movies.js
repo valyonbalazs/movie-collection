@@ -25,12 +25,24 @@ let DiscoverMoviesContainer = React.createClass({displayName: "DiscoverMoviesCon
     this.handleClick1();
   },
   handleClick1: function () {
+    wasTvBtnClicked = false;
     let context = this;
     DiscoverActions.oneMonthDiscoverBtnClicked(context);
   },
   handleClick3: function () {
+    wasTvBtnClicked = false;
     let context = this;
     DiscoverActions.threeMonthDiscoverBtnClicked(context);
+  },
+  handleClickTvTop: function () {
+    wasTvBtnClicked = true;
+    let context = this;
+    DiscoverActions.tvTopRatedBtnClicked(context);
+  },
+  handleClickTvAir: function () {
+    wasTvBtnClicked = true;
+    let context = this;
+    DiscoverActions.tvAiringBtnClicked(context);
   },
   render: function () {
       let moviesArray = this.state.data.map(function (movie) {
@@ -42,15 +54,21 @@ let DiscoverMoviesContainer = React.createClass({displayName: "DiscoverMoviesCon
       return (
         React.createElement("div", {id: "moviesContainer", className: "col-lg-12 col-md-12 col-xs-12 moviesContainer"}, 
           React.createElement("div", {id: "discoveryChooserContainer", className: "col-lg-12 col-md-12 col-xs-12"}, 
-            React.createElement("div", {id: "discoveryChooserLabel", className: "col-lg-8 col-md-7 col-xs-12"}, 
+            React.createElement("div", {id: "discoveryChooserLabel", className: "col-lg-3 col-md-3 col-xs-12"}, 
               React.createElement("h3", {id: "discoverLabel"})
             ), 
-            React.createElement("div", {id: "discoveryChooserButtons", className: "col-lg-5 col-md-5 col-xs-12"}, 
-              React.createElement("div", {className: "col-lg-5 col-md-6 col-xs-6 col-lg-offset-2"}, 
-                  React.createElement("button", {id: "OneMonthButton", className: "btn btn-success", onClick: this.handleClick1}, "LAST 1 MONTH")
+            React.createElement("div", {id: "discoveryChooserButtons", className: "col-lg-9 col-md-9 col-xs-12"}, 
+              React.createElement("div", {className: "col-lg-3 col-md-3 col-xs-6"}, 
+                  React.createElement("button", {id: "OneMonthButton", className: "btn btn-success", onClick: this.handleClick1}, "MOVIES - LAST MONTH")
               ), 
-              React.createElement("div", {className: "col-lg-5 col-md-6 col-xs-6"}, 
-                  React.createElement("button", {id: "ThreeMonthButton", className: "btn btn-warning", onClick: this.handleClick3}, "LAST 3 MONTHS ")
+              React.createElement("div", {className: "col-lg-3 col-md-3 col-xs-6"}, 
+                  React.createElement("button", {id: "ThreeMonthButton", className: "btn btn-success", onClick: this.handleClick3}, "MOVIES - LAST 3 MONTHS")
+              ), 
+              React.createElement("div", {className: "col-lg-3 col-md-3 col-xs-6"}, 
+                  React.createElement("button", {id: "ThreeMonthButton", className: "btn btn-warning", onClick: this.handleClickTvTop}, "TV - TOP RATED")
+              ), 
+              React.createElement("div", {className: "col-lg-3 col-md-3 col-xs-6"}, 
+                  React.createElement("button", {id: "ThreeMonthButton", className: "btn btn-warning", onClick: this.handleClickTvAir}, "TV - AIRING TODAY")
               )
             )
           ), 

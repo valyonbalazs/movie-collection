@@ -25,12 +25,24 @@ let DiscoverMoviesContainer = React.createClass({
     this.handleClick1();
   },
   handleClick1: function () {
+    wasTvBtnClicked = false;
     let context = this;
     DiscoverActions.oneMonthDiscoverBtnClicked(context);
   },
   handleClick3: function () {
+    wasTvBtnClicked = false;
     let context = this;
     DiscoverActions.threeMonthDiscoverBtnClicked(context);
+  },
+  handleClickTvTop: function () {
+    wasTvBtnClicked = true;
+    let context = this;
+    DiscoverActions.tvTopRatedBtnClicked(context);
+  },
+  handleClickTvAir: function () {
+    wasTvBtnClicked = true;
+    let context = this;
+    DiscoverActions.tvAiringBtnClicked(context);
   },
   render: function () {
       let moviesArray = this.state.data.map(function (movie) {
@@ -42,15 +54,21 @@ let DiscoverMoviesContainer = React.createClass({
       return (
         <div id="moviesContainer" className="col-lg-12 col-md-12 col-xs-12 moviesContainer" >
           <div id="discoveryChooserContainer" className="col-lg-12 col-md-12 col-xs-12">
-            <div id="discoveryChooserLabel" className="col-lg-8 col-md-7 col-xs-12">
+            <div id="discoveryChooserLabel" className="col-lg-3 col-md-3 col-xs-12">
               <h3 id="discoverLabel"></h3>
             </div>
-            <div id="discoveryChooserButtons" className="col-lg-5 col-md-5 col-xs-12">
-              <div className="col-lg-5 col-md-6 col-xs-6 col-lg-offset-2">
-                  <button id="OneMonthButton" className="btn btn-success" onClick={this.handleClick1}>LAST 1 MONTH</button>
+            <div id="discoveryChooserButtons" className="col-lg-9 col-md-9 col-xs-12">
+              <div className="col-lg-3 col-md-3 col-xs-6">
+                  <button id="OneMonthButton" className="btn btn-success" onClick={this.handleClick1}>MOVIES - LAST MONTH</button>
               </div>
-              <div className="col-lg-5 col-md-6 col-xs-6">
-                  <button id="ThreeMonthButton" className="btn btn-warning" onClick={this.handleClick3}>LAST 3 MONTHS </button>
+              <div className="col-lg-3 col-md-3 col-xs-6">
+                  <button id="ThreeMonthButton" className="btn btn-success" onClick={this.handleClick3}>MOVIES - LAST 3 MONTHS</button>
+              </div>
+              <div className="col-lg-3 col-md-3 col-xs-6">
+                  <button id="ThreeMonthButton" className="btn btn-warning" onClick={this.handleClickTvTop}>TV - TOP RATED</button>
+              </div>
+              <div className="col-lg-3 col-md-3 col-xs-6">
+                  <button id="ThreeMonthButton" className="btn btn-warning" onClick={this.handleClickTvAir}>TV - AIRING TODAY</button>
               </div>
             </div>
           </div>

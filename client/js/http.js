@@ -79,6 +79,30 @@ let http = {
       DiscoverActions.addMovieToStore(movie, context);
     }
   },
+  successDiscoverTv: function (data) {
+    let movieData;
+    movieData = JSON.parse(data);
+    for (let key in movieData.results) {
+      let title = movies.modifyTitle(movieData.results[key].original_name);
+      let backdropPath = movies.createImageUrl(movieData.results[key].backdrop_path);
+      let posterPath = movies.createImageUrl(movieData.results[key].poster_path);
+      let overview = movies.modifyOverview(movieData.results[key].overview);
+      let releaseDate = movies.modifyReleaseDate(movieData.results[key].first_air_date);
+      let average = movieData.results[key].vote_average + ' ';
+      let movieId = movieData.results[key].id;
+      let movie = new MovieElement(
+        title,
+        overview,
+        average,
+        releaseDate,
+        backdropPath,
+        posterPath,
+        movieId
+      );
+      let context = this;
+      DiscoverActions.addMovieToStore(movie, context);
+    }
+  },
   successDetails: function (data) {
     let movieData;
     movieData = JSON.parse(data);
@@ -147,7 +171,38 @@ let http = {
 
     let context = this;
     MovieDetailsActions.addVideoUrl(videoUrl, context);
-  }
+  },
+  successDetailsTv: function (data) {
+    let movieData;
+    movieData = JSON.parse(data);
+    let genre = [];
+    for (var key in movieData.genres) {
+      genre.push(' ' + movieData.genres[key].name);
+    }
+    console.log(movieData);
+    let posterPath = movies.createImageUrl(movieData.poster_path);
+    let releaseDate = undefined;
+    try {
+      releaseDate = movies.modifyReleaseDate(movieData.release_date);
+    } catch (error) {
+      console.log("date error: " + error);
+      releaseDate = movies.modifyReleaseDate(movieData.first_air_date);
+    }
+
+    let movie = new MovieDetails(
+      movieData.original_name,
+      movieData.overview,
+      genre,
+      releaseDate,
+      movieData.networks,
+      movieData.vote_average,
+      movieData.vote_count,
+      movieData.homepage,
+      posterPath
+    );
+    let context = this;
+    TvShowDetailsActions.addMovieData(movie, context);
+  },
 };
 
 // module.exports for testing
