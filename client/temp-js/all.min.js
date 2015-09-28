@@ -160,6 +160,43 @@ var http = {
     var movie = new MovieDetails(movieData.original_name, movieData.overview, genre, releaseDate, movieData.networks, movieData.vote_average, movieData.vote_count, movieData.homepage, posterPath);
     var context = this;
     TvShowDetailsActions.addMovieData(movie, context);
+  },
+  successDetailsCreditsTv: function successDetailsCreditsTv(data) {
+    var movieData = undefined;
+    movieData = JSON.parse(data);
+    var credits = [];
+    var cast = movieData.cast;
+    var castCounter = 0;
+    for (var key in cast) {
+      if (castCounter < 6) {
+        castCounter++;
+        var actor = {};
+        actor.name = cast[key].name;
+        actor.character = cast[key].character;
+        actor.picture = movies.createImageUrl(cast[key].profile_path);
+        credits.push(actor);
+      } else {
+        break;
+      }
+    }
+
+    var crews = [];
+    var crewCounter = 0;
+    var crew = movieData.crew;
+    for (var key in crew) {
+      if (crewCounter < 4) {
+        crewCounter++;
+        var crewMember = {};
+        crewMember.job = crew[key].job;
+        crewMember.name = crew[key].name;
+        crews.push(crewMember);
+      } else {
+        break;
+      }
+    }
+
+    var context = this;
+    TvShowDetailsActions.addCreditsData(credits, crews, context);
   }
 };
 
@@ -775,7 +812,7 @@ var TvShowDetailsActionStore = Reflux.createStore({
     var context = that;
     var promise = function promise() {
       return new Promise(function (resolve, reject) {
-        http.ajax(movieDetails.createCreditsUrl(id)).get().then(http.successDetailsCredits.bind(context));
+        http.ajax(tvshows.createCreditsUrl(id)).get().then(http.successDetailsCreditsTv.bind(context));
         resolve(function () {});
       });
     };
@@ -861,6 +898,13 @@ var tvshows = {
     var api_key = '?' + tmdbApiKey;
     var resultUrl = urlFirstPart + id + api_key;
     return resultUrl;
+  },
+  createCreditsUrl: function createCreditsUrl(id) {
+    var api_key = '?' + tmdbApiKey;
+    var urlSecondPart = '/credits';
+    var urlFirstPart = 'https://api.themoviedb.org/3/tv/';
+    var url = urlFirstPart + id + urlSecondPart + api_key;
+    return url;
   }
 };
 /* jshint esnext: true */
@@ -1043,7 +1087,7 @@ var MovieDetailsContainer = React.createClass({ displayName: "MovieDetailsContai
       MovieDetailsActions.loadVideos(id, context);
     } else {
       TvShowDetailsActions.loadMovieData(id, context);
-      // TvShowDetailsActions.loadCredtisData(id, context);
+      TvShowDetailsActions.loadCredtisData(id, context);
       // TvShowDetailsActions.loadVideos(id, context);
     }
   },
@@ -1054,7 +1098,11 @@ var MovieDetailsContainer = React.createClass({ displayName: "MovieDetailsContai
     var crewArray = this.state.movieCrew.map(function (crew) {
       return React.createElement(CrewMember, { crew: crew });
     });
-    return React.createElement("div", { id: "movieDetailsContainer", className: "col-lg-12 col-md-12 col-xs-12 movie" }, React.createElement("div", { id: "movieDetailsPoster", className: "col-lg-5 col-md-5" }, React.createElement("img", { src: this.state.data.posterPath })), React.createElement("div", { id: "movieDetailsContent", className: "col-lg-7 col-md-7" }, React.createElement("div", { id: "movieDetailsTitle", className: "col-lg-12 col-md-12" }, React.createElement("h3", null, React.createElement("b", null, this.state.data.title), " (", this.state.data.publishDate, ")")), React.createElement("div", { id: "movieDetailsYear", className: "col-lg-12 col-md-12" }, React.createElement("h5", null, this.state.data.genre, "  ", React.createElement("b", null, this.state.data.vote_average), React.createElement("i", { className: "fa fa-star" }))), React.createElement("div", { id: "movieDetailsOverview", className: "col-lg-12 col-md-12" }, React.createElement("h5", null, this.state.data.overview)), React.createElement("div", { id: "movieDetailsCredit", className: "col-lg-6 col-md-6" }, React.createElement("table", null, React.createElement("tbody", null, creditsArray))), React.createElement("div", { id: "movieDetailsCrew", className: "col-lg-6 col-md-6" }, React.createElement("div", { className: "col-lg-12 col-md-12" }, React.createElement("table", null, React.createElement("tbody", null, crewArray))), React.createElement("div", { className: "col-lg-12 col-md-12" }, React.createElement("iframe", { id: "youtubeTrailerHigh", width: "300", height: "169", src: this.state.video, frameborder: "0", allowfullscreen: true }), React.createElement("iframe", { id: "youtubeTrailerMedium", width: "250", height: "141", src: this.state.video, frameborder: "0", allowfullscreen: true }))), React.createElement("div", { id: "movieDetailsHomepage", className: "col-lg-12 col-md-12" }, React.createElement("h5", null, React.createElement("a", { href: this.state.data.homePage }, this.state.data.homePage)))));
+    if (wasTvBtnClicked == false) {
+      return React.createElement("div", { id: "movieDetailsContainer", className: "col-lg-12 col-md-12 col-xs-12 movie" }, React.createElement("div", { id: "movieDetailsPoster", className: "col-lg-5 col-md-5" }, React.createElement("img", { src: this.state.data.posterPath })), React.createElement("div", { id: "movieDetailsContent", className: "col-lg-7 col-md-7" }, React.createElement("div", { id: "movieDetailsTitle", className: "col-lg-12 col-md-12" }, React.createElement("h3", null, React.createElement("b", null, this.state.data.title), " (", this.state.data.publishDate, ")")), React.createElement("div", { id: "movieDetailsYear", className: "col-lg-12 col-md-12" }, React.createElement("h5", null, this.state.data.genre, "  ", React.createElement("b", null, this.state.data.vote_average), React.createElement("i", { className: "fa fa-star" }))), React.createElement("div", { id: "movieDetailsOverview", className: "col-lg-12 col-md-12" }, React.createElement("h5", null, this.state.data.overview)), React.createElement("div", { id: "movieDetailsCredit", className: "col-lg-6 col-md-6" }, React.createElement("table", null, React.createElement("tbody", null, creditsArray))), React.createElement("div", { id: "movieDetailsCrew", className: "col-lg-6 col-md-6" }, React.createElement("div", { className: "col-lg-12 col-md-12" }, React.createElement("table", null, React.createElement("tbody", null, crewArray))), React.createElement("div", { className: "col-lg-12 col-md-12" }, React.createElement("iframe", { id: "youtubeTrailerHigh", width: "300", height: "169", src: this.state.video, frameborder: "0", allowfullscreen: true }), React.createElement("iframe", { id: "youtubeTrailerMedium", width: "250", height: "141", src: this.state.video, frameborder: "0", allowfullscreen: true }))), React.createElement("div", { id: "movieDetailsHomepage", className: "col-lg-12 col-md-12" }, React.createElement("h5", null, React.createElement("a", { href: this.state.data.homePage }, this.state.data.homePage)))));
+    } else {
+      return React.createElement("div", { id: "movieDetailsContainer", className: "col-lg-12 col-md-12 col-xs-12 movie" }, React.createElement("div", { id: "movieDetailsPoster", className: "col-lg-5 col-md-5" }, React.createElement("img", { src: this.state.data.posterPath })), React.createElement("div", { id: "movieDetailsContent", className: "col-lg-7 col-md-7" }, React.createElement("div", { id: "movieDetailsTitle", className: "col-lg-12 col-md-12" }, React.createElement("h3", null, React.createElement("b", null, this.state.data.title), " (", this.state.data.publishDate, ")")), React.createElement("div", { id: "movieDetailsYear", className: "col-lg-12 col-md-12" }, React.createElement("h5", null, this.state.data.genre, "  ", React.createElement("b", null, this.state.data.vote_average), React.createElement("i", { className: "fa fa-star" }))), React.createElement("div", { id: "movieDetailsOverview", className: "col-lg-12 col-md-12" }, React.createElement("h5", null, this.state.data.overview)), React.createElement("div", { id: "movieDetailsCredit", className: "col-lg-6 col-md-6" }, React.createElement("table", null, React.createElement("tbody", null, creditsArray))), React.createElement("div", { id: "movieDetailsHomepage", className: "col-lg-12 col-md-12" }, React.createElement("h5", null, React.createElement("a", { href: this.state.data.homePage }, this.state.data.homePage)))));
+    }
   }
 });
 /* jshint esnext: true */

@@ -285,9 +285,9 @@ let TvShowDetailsActionStore = Reflux.createStore({
     let context = that;
     let promise = function () {
       return new Promise(function (resolve, reject) {
-          http.ajax(movieDetails.createCreditsUrl(id))
+          http.ajax(tvshows.createCreditsUrl(id))
             .get()
-            .then(http.successDetailsCredits.bind(context));
+            .then(http.successDetailsCreditsTv.bind(context));
           resolve(function () { });
         });
     };

@@ -16,5 +16,12 @@ let tvshows = {
     let api_key = '?' + tmdbApiKey;
     let resultUrl = urlFirstPart + id + api_key;
     return resultUrl;
+  },
+  createCreditsUrl: function (id) {
+    let api_key = '?' + tmdbApiKey;
+    let urlSecondPart = '/credits';
+    let urlFirstPart = 'https://api.themoviedb.org/3/tv/';
+    let url = urlFirstPart + id + urlSecondPart + api_key;
+    return url;
   }
 };
