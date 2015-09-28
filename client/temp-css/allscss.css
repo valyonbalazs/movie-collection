@@ -231,35 +231,69 @@ body {
 
 @media (max-width: 767px) {
   #movieDetailsContainer {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&amp;0+0,0.65+100 */
+    background: -moz-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.65) 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, transparent), color-stop(100%, rgba(0, 0, 0, 0.65)));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.65) 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.65) 100%);
+    /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.65) 100%);
+    /* IE10+ */
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.65) 100%);
+    /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 );
+    /* IE6-9 */
+    box-shadow: 3px 3px 5px #888888;
     margin-top: 1.5em; }
     #movieDetailsContainer #movieDetailsPoster {
       padding: 0;
       text-align: center; }
       #movieDetailsContainer #movieDetailsPoster img {
-        max-height: 28em; }
+        max-height: 30em;
+        box-shadow: 3px 3px 5px #888888; }
     #movieDetailsContainer #movieDetailsContent {
       padding: 0; }
-      #movieDetailsContainer #movieDetailsContent #movieDetailsTitle h3 {
-        margin-top: 1em; }
+      #movieDetailsContainer #movieDetailsContent #movieDetailsTitle {
+        text-align: center; }
+        #movieDetailsContainer #movieDetailsContent #movieDetailsTitle h3 {
+          margin-top: 1em; }
+      #movieDetailsContainer #movieDetailsContent #movieDetailsYear {
+        text-align: center; }
       #movieDetailsContainer #movieDetailsContent #movieDetailsOverview h5 {
         text-align: justify; }
       #movieDetailsContainer #movieDetailsContent #movieDetailsCredit {
         display: flex;
         flex-wrap: wrap;
-        padding-left: 0; }
-        #movieDetailsContainer #movieDetailsContent #movieDetailsCredit .creditMember {
-          text-align: right;
-          display: flex;
-          justify-content: flex-start;
-          align-items: center; }
-          #movieDetailsContainer #movieDetailsContent #movieDetailsCredit .creditMember td {
-            border: 0px; }
-          #movieDetailsContainer #movieDetailsContent #movieDetailsCredit .creditMember h5 {
-            margin-top: 0.2em;
-            margin-bottom: 0.2em; }
-        #movieDetailsContainer #movieDetailsContent #movieDetailsCredit .creditMemberPic {
-          box-shadow: 3px 3px 5px #888888;
-          max-height: 3em; }
+        padding-left: 0;
+        color: #F0F0F0; }
+        #movieDetailsContainer #movieDetailsContent #movieDetailsCredit table {
+          width: 100%; }
+          #movieDetailsContainer #movieDetailsContent #movieDetailsCredit table .creditMember {
+            width: 100%;
+            text-align: right;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center; }
+            #movieDetailsContainer #movieDetailsContent #movieDetailsCredit table .creditMember #credtiPicTd {
+              width: 15%; }
+            #movieDetailsContainer #movieDetailsContent #movieDetailsCredit table .creditMember #creditCharacter {
+              width: 42%; }
+            #movieDetailsContainer #movieDetailsContent #movieDetailsCredit table .creditMember #creditActor {
+              width: 42%; }
+            #movieDetailsContainer #movieDetailsContent #movieDetailsCredit table .creditMember td {
+              justify-content: space-between;
+              padding-left: 0.5em;
+              padding-bottom: 0.2em;
+              border: 0px; }
+            #movieDetailsContainer #movieDetailsContent #movieDetailsCredit table .creditMember h5 {
+              margin-top: 0.2em;
+              margin-bottom: 0.2em; }
+          #movieDetailsContainer #movieDetailsContent #movieDetailsCredit table .creditMemberPic {
+            box-shadow: 3px 3px 5px #888888;
+            max-height: 3em; }
       #movieDetailsContainer #movieDetailsContent #movieDetailsCrew {
         display: flex;
         flex-wrap: wrap;
@@ -271,6 +305,7 @@ body {
           #movieDetailsContainer #movieDetailsContent #movieDetailsCrew .crewMember h4 {
             font-size: 0.8em; }
       #movieDetailsContainer #movieDetailsContent #movieDetailVideo {
+        text-align: center;
         padding: 0; }
       #movieDetailsContainer #movieDetailsContent #movieDetailsHomepage {
         text-align: center;

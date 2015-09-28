@@ -6,13 +6,13 @@ let CreditMember = React.createClass({displayName: "CreditMember",
   render: function () {
     return (
         React.createElement("tr", {className: "creditMember"}, 
-          React.createElement("td", null, 
+          React.createElement("td", {id: "credtiPicTd"}, 
             React.createElement("img", {className: "creditMemberPic", src: this.props.credit.picture})
           ), 
-          React.createElement("td", null, 
+          React.createElement("td", {id: "creditCharacter"}, 
             React.createElement("h5", null, React.createElement("b", null, this.props.credit.character))
           ), 
-          React.createElement("td", null, 
+          React.createElement("td", {id: "creditActor"}, 
             React.createElement("h5", null, this.props.credit.name)
           )
         )

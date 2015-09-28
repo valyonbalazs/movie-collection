@@ -6,13 +6,13 @@ let CreditMember = React.createClass({
   render: function () {
     return (
         <tr className="creditMember">
-          <td>
+          <td id="credtiPicTd">
             <img className="creditMemberPic" src={this.props.credit.picture} />
           </td>
-          <td>
+          <td id="creditCharacter">
             <h5><b>{this.props.credit.character}</b></h5>
           </td>
-          <td>
+          <td id="creditActor">
             <h5>{this.props.credit.name}</h5>
           </td>
         </tr>
