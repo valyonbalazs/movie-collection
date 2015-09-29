@@ -60,19 +60,19 @@ let DiscoverMoviesContainer = React.createClass({
             <div id="discoveryChooserButtons" className="col-lg-9 col-md-9 col-xs-12">
               <div >
                   <button id="OneMonthButton" className="bootstrapBtn btn btn-success" onClick={this.handleClick1}>MOVIES - LAST MONTH</button>
-                  <i className="fontawesomeBtn fa fa-film" onClick={this.handleClick1}></i>1 Month
+                  <i className="fontawesomeBtn fa fa-film" onClick={this.handleClick1}></i><p className="fontawesomeBtnText">1 Month</p>
             </div>
               <div >
                   <button id="ThreeMonthButton" className="bootstrapBtn btn btn-success" onClick={this.handleClick3}>MOVIES - LAST 3 MONTHS</button>
-                  <i className="fontawesomeBtn fa fa-film" onClick={this.handleClick3}></i>3 Month
+                  <i className="fontawesomeBtn fa fa-film" onClick={this.handleClick3}></i><p className="fontawesomeBtnText">3 Month</p>
             </div>
               <div>
                   <button id="ThreeMonthButton" className="bootstrapBtn btn btn-warning" onClick={this.handleClickTvTop}>TV - TOP RATED</button>
-                  <i className="fontawesomeBtn fa fa-tv" onClick={this.handleClickTvTop}></i>Top rated
+                  <i className="fontawesomeBtn fa fa-tv" onClick={this.handleClickTvTop}></i><p className="fontawesomeBtnText">Top rated</p>
             </div>
               <div >
                   <button id="ThreeMonthButton" className="bootstrapBtn btn btn-warning" onClick={this.handleClickTvAir}>TV - AIRING TODAY</button>
-                  <i className="fontawesomeBtn fa fa-television" onClick={this.handleClickTvAir}></i>Airing
+                  <i className="fontawesomeBtn fa fa-television" onClick={this.handleClickTvAir}></i><p className="fontawesomeBtnText">Airing</p>
             </div>
             </div>
           </div>
