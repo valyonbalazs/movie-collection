@@ -11,7 +11,6 @@ let Login = React.createClass({
         </div>
         <div id="loginInnerLowerDiv" className="col-lg-12 col-md-12 col-xs-12">
           <button className="btn btn-primary discoverBtn" onClick={this.handleClick}><i className="fa fa-facebook-official"></i> Facebook</button>
-          <button className="btn btn-warning discoverBtn" onClick={this.handleClick}>&nbsp;&nbsp;<i className="fa fa-google"></i> Google&nbsp;&nbsp;</button>
         </div>
       </div>
     );

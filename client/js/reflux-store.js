@@ -38,7 +38,7 @@ let discoverActionStore = Reflux.createStore({
   },
   tvAiringBtnClicked: function (that) {
     let context = that;
-    this.btnClickedTv('Top rated TV shows', context, tvshows.createTvAiringUrl());
+    this.btnClickedTv('Tv shows airing today', context, tvshows.createTvAiringUrl());
   },
   btnClicked: function (labelText, that, monthFunction) {
     let context = that;

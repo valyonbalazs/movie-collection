@@ -10,8 +10,7 @@ let Login = React.createClass({displayName: "Login",
           React.createElement("i", {className: "fa fa-user"})
         ), 
         React.createElement("div", {id: "loginInnerLowerDiv", className: "col-lg-12 col-md-12 col-xs-12"}, 
-          React.createElement("button", {className: "btn btn-primary discoverBtn", onClick: this.handleClick}, React.createElement("i", {className: "fa fa-facebook-official"}), " Facebook"), 
-          React.createElement("button", {className: "btn btn-warning discoverBtn", onClick: this.handleClick}, "  ", React.createElement("i", {className: "fa fa-google"}), " Google  ")
+          React.createElement("button", {className: "btn btn-primary discoverBtn", onClick: this.handleClick}, React.createElement("i", {className: "fa fa-facebook-official"}), " Facebook")
         )
       )
     );
